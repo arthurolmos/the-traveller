@@ -28,6 +28,14 @@ interface ItemProps {
 function FadeCarouselItem({ active, item }: ItemProps) {
   return (
     <FadeCarouselItemStyled active={active}>
+      <Image
+        src={item.image}
+        alt={item.title}
+        layout="fill"
+        objectFit="cover"
+        priority={active}
+      />
+
       <FadeCarouselItemDescription>
         <FadeCarouselItemTitle>{item.title}</FadeCarouselItemTitle>
         <FadeCarouselItemSubtitle>
@@ -36,12 +44,6 @@ function FadeCarouselItem({ active, item }: ItemProps) {
           mollitia!
         </FadeCarouselItemSubtitle>
       </FadeCarouselItemDescription>
-      <Image
-        src={item.image}
-        alt={item.title}
-        layout="fill"
-        objectFit="cover"
-      />
     </FadeCarouselItemStyled>
   );
 }

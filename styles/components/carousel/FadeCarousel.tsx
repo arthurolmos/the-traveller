@@ -67,10 +67,8 @@ export const FadeCarouselIndicatorStyled = styled.span<{ direction: string }>`
 export const FadeCarouselItemStyled = styled.div<{
   active: boolean;
 }>`
+  position: relative;
   flex: 1;
-  backgroundcolor: blue;
-  position: absolute;
-  inset: 0;
   visibility: ${({ active }) => (active ? "visible" : "hidden")};
   display: ${({ active }) => (active ? "block" : "none")};
 
