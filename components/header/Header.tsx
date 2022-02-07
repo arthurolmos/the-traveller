@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import Link from "next/link";
 import React from "react";
 import {
@@ -17,6 +18,11 @@ import { FaBars } from "react-icons/fa";
 interface MenuOption {
   title: string;
   link: string;
+}
+
+interface ItemMenuProps {
+  item: MenuOption;
+  route: string;
 }
 
 const menuOptions: MenuOption[] = [
@@ -42,10 +48,12 @@ const menuOptions: MenuOption[] = [
   },
 ];
 
-function HeaderMenuItem({ item }: { item: MenuOption }) {
+function HeaderMenuItem({ item, route }: ItemMenuProps) {
+  const active = route === item.link;
+
   return (
     <Link href={item.link} passHref>
-      <li>{item.title}</li>
+      <li className={active ? "active" : ""}>{item.title}</li>
     </Link>
   );
 }
@@ -65,15 +73,17 @@ function HeaderMenuButton({
 }
 
 export default function Header() {
-  const [offset, setOffset] = React.useState(0);
+  const { route } = useRouter();
+
   const [open, setOpen] = React.useState(false);
+  const [collapsed, setCollapsed] = React.useState(false);
 
   const toggle = () => setOpen(!open);
 
   const onScroll = () => {
     const offset = window.scrollY;
 
-    setOffset(offset);
+    setCollapsed(offset >= 200);
   };
 
   React.useEffect(() => {
@@ -83,11 +93,11 @@ export default function Header() {
   }, []);
 
   return (
-    <HeaderStyled offset={offset}>
+    <HeaderStyled collapsed={collapsed}>
       <HeaderLogoStyled src="assets/logo.png" />
       <HeaderMenuStyled>
         {menuOptions.map((item) => {
-          return <HeaderMenuItem item={item} key={item.title} />;
+          return <HeaderMenuItem item={item} key={item.title} route={route} />;
         })}
       </HeaderMenuStyled>
 
@@ -99,19 +109,18 @@ export default function Header() {
       <HeaderMenuButtonContainerStyled>
         <HeaderMenuButton onClick={toggle} open={open} />
       </HeaderMenuButtonContainerStyled>
-      {open && (
-        <HeaderCollapsableMenuStyled>
-          <HeaderCollapsableMenuListContainerStyled>
-            {menuOptions.map((item, index) => {
-              return <li key={index}>{item.title}</li>;
-            })}
-          </HeaderCollapsableMenuListContainerStyled>
-          <HeaderCollapsableMenuSignContainerStyled>
-            <SignButtonStyled>Sign in</SignButtonStyled>
-            <SignButtonStyled inverted>Sign up</SignButtonStyled>
-          </HeaderCollapsableMenuSignContainerStyled>
-        </HeaderCollapsableMenuStyled>
-      )}
+
+      <HeaderCollapsableMenuStyled open={open} collapsed={collapsed}>
+        <HeaderCollapsableMenuListContainerStyled>
+          {menuOptions.map((item, index) => {
+            return <HeaderMenuItem item={item} key={index} route={route} />;
+          })}
+        </HeaderCollapsableMenuListContainerStyled>
+        <HeaderCollapsableMenuSignContainerStyled>
+          <SignButtonStyled>Sign in</SignButtonStyled>
+          <SignButtonStyled inverted>Sign up</SignButtonStyled>
+        </HeaderCollapsableMenuSignContainerStyled>
+      </HeaderCollapsableMenuStyled>
     </HeaderStyled>
   );
 }

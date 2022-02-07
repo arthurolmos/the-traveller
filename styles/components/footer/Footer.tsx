@@ -13,7 +13,7 @@ export const FooterStyled = styled.footer`
   }
 
   svg:hover {
-    color: #c86420;
+    color: ${({ theme }) => theme.main.orange};
   }
 `;
 
@@ -39,6 +39,6 @@ export const FooterStyledLink = styled.a`
   transition: all 0.5s ease;
 
   &:hover {
-    color: #c86420;
+    color: ${({ theme }) => theme.main.orange};
   }
 `;
