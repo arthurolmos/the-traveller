@@ -102,8 +102,12 @@ export default function Header() {
       </HeaderMenuStyled>
 
       <HeaderSignButtonsContainerStyled>
-        <SignButtonStyled>Sign in</SignButtonStyled>
-        <SignButtonStyled inverted>Sign up</SignButtonStyled>
+        <Link href="/signin" passHref>
+          <SignButtonStyled>Sign in</SignButtonStyled>
+        </Link>
+        <Link href="/signup" passHref>
+          <SignButtonStyled inverted>Sign up</SignButtonStyled>
+        </Link>
       </HeaderSignButtonsContainerStyled>
 
       <HeaderMenuButtonContainerStyled>
@@ -117,8 +121,12 @@ export default function Header() {
           })}
         </HeaderCollapsableMenuListContainerStyled>
         <HeaderCollapsableMenuSignContainerStyled>
-          <SignButtonStyled>Sign in</SignButtonStyled>
-          <SignButtonStyled inverted>Sign up</SignButtonStyled>
+          <Link href="/signin" passHref>
+            <SignButtonStyled>Sign in</SignButtonStyled>
+          </Link>
+          <Link href="/signup" passHref>
+            <SignButtonStyled inverted>Sign up</SignButtonStyled>
+          </Link>
         </HeaderCollapsableMenuSignContainerStyled>
       </HeaderCollapsableMenuStyled>
     </HeaderStyled>

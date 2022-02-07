@@ -1,6 +1,7 @@
 import { ThemeProvider } from "styled-components";
 import "../styles/globals.css";
 import { theme } from "../styles/theme";
+import "../firebase/config";
 
 function MyApp({ Component, pageProps }) {
   return (
