@@ -1,8 +1,8 @@
-import React from "react";
-import SearchInput from "../../components/input/SearchInput";
-import MainContainer from "../../components/layout/MainContainer";
-import PageComponent from "../../components/layout/PageComponent";
-import SimpleMap from "../../components/map/SimpleMap";
+import React from 'react';
+import SearchInput from '../../components/input/SearchInput';
+import MainContainer from '../../components/layout/MainContainer';
+import PageComponent from '../../components/layout/PageComponent';
+import SimpleMap from '../../components/map/SimpleMap';
 import {
   ListStyled,
   ListItemStyled,
@@ -11,13 +11,13 @@ import {
   ContentSearchStyled,
   ContentMapStyled,
   ContentReviewsContainer,
-} from "../../styles/pages/Locations";
+} from '../../styles/pages/Locations';
 
 export default function Locations() {
   const [loading, setLoading] = React.useState(false);
-  const [search, setSearch] = React.useState("");
+  const [search, setSearch] = React.useState('');
   const [location, setLocation] = React.useState({
-    name: "",
+    name: '',
     lat: 0,
     lng: 0,
   });
@@ -29,7 +29,7 @@ export default function Locations() {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         const location = {
-          name: "",
+          name: '',
           lat: coords.latitude,
           lng: coords.longitude,
         };
@@ -49,24 +49,24 @@ export default function Locations() {
 
     let loc = { ...location };
 
-    if (search == "japan")
+    if (search == 'japan')
       loc = {
-        name: "japan",
+        name: 'japan',
         lat: 35.658581,
         lng: 139.745438,
       };
 
-    if (search == "finland")
+    if (search == 'finland')
       loc = {
-        name: "finland",
+        name: 'finland',
         lat: 60.192059,
         lng: 24.945831,
       };
 
     setLocation(loc);
 
-    const url = new URL("http://localhost:3000/api/locations");
-    url.searchParams.append("location", search);
+    const url = new URL('http://localhost:3000/api/locations');
+    url.searchParams.append('location', search);
 
     fetch(url.toString())
       .then((resp) => resp.json())
@@ -76,8 +76,6 @@ export default function Locations() {
         setLoading(false);
       });
   };
-
-  React.useEffect(() => console.log({ reviews }), [reviews]);
 
   const items = React.useMemo(() => {
     return reviews?.map(

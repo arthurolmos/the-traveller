@@ -1,10 +1,10 @@
-import { GetServerSideProps, GetStaticProps } from "next";
-import React from "react";
-import GuideItem from "../../components/guides/GuideItem";
-import MainContainer from "../../components/layout/MainContainer";
-import PageComponent from "../../components/layout/PageComponent";
-import { IGuideItem } from "../../interfaces/IGuideItem";
-import { GuidesContentStyled } from "../../styles/pages/Guides";
+import { GetServerSideProps } from 'next';
+import React from 'react';
+import GuideItem from '../../components/guides/GuideItem';
+import MainContainer from '../../components/layout/MainContainer';
+import PageComponent from '../../components/layout/PageComponent';
+import { IGuideItem } from '../../interfaces/IGuideItem';
+import { GuidesContentStyled } from '../../styles/pages/Guides';
 
 export default function Guides({ data }) {
   return (
@@ -28,7 +28,7 @@ export default function Guides({ data }) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    const url = new URL("http://localhost:3000/api/guides");
+    const url = new URL('http://localhost:3000/api/guides');
 
     const resp = await fetch(url.toString());
 
