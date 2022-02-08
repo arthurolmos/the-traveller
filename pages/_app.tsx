@@ -1,12 +1,15 @@
-import { ThemeProvider } from "styled-components";
-import "../styles/globals.css";
-import { theme } from "../styles/theme";
-import "../firebase/config";
+import '../firebase/init';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '../styles/theme';
+import Toast from '../components/toast/Toast';
+import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
+
+      <Toast />
     </ThemeProvider>
   );
 }
