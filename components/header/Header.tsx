@@ -1,19 +1,20 @@
-import { useRouter } from "next/router";
-import Link from "next/link";
-import React from "react";
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import React from 'react';
 import {
   HeaderStyled,
   HeaderLogoStyled,
   HeaderMenuStyled,
   HeaderSignButtonsContainerStyled,
-  SignButtonStyled,
   HeaderMenuButtonStyled,
   HeaderMenuButtonContainerStyled,
   HeaderCollapsableMenuStyled,
   HeaderCollapsableMenuListContainerStyled,
   HeaderCollapsableMenuSignContainerStyled,
-} from "../../styles/components/header/Header";
-import { FaBars } from "react-icons/fa";
+} from '../../styles/components/header/Header';
+import { FaBars } from 'react-icons/fa';
+import SignButton from '../buttons/SignButton';
+import { useAuthUser } from 'next-firebase-auth';
 
 interface MenuOption {
   title: string;
@@ -27,24 +28,24 @@ interface ItemMenuProps {
 
 const menuOptions: MenuOption[] = [
   {
-    title: "Home",
-    link: "/",
+    title: 'Home',
+    link: '/',
   },
   {
-    title: "Locations ",
-    link: "/locations",
+    title: 'Locations ',
+    link: '/locations',
   },
   {
-    title: "Guides",
-    link: "/guides",
+    title: 'Guides',
+    link: '/guides',
   },
   {
-    title: "Network ",
-    link: "/network",
+    title: 'Network ',
+    link: '/network',
   },
   {
-    title: "About Us ",
-    link: "/about-us",
+    title: 'About Us ',
+    link: '/about-us',
   },
 ];
 
@@ -53,7 +54,7 @@ function HeaderMenuItem({ item, route }: ItemMenuProps) {
 
   return (
     <Link href={item.link} passHref>
-      <li className={active ? "active" : ""}>{item.title}</li>
+      <li className={active ? 'active' : ''}>{item.title}</li>
     </Link>
   );
 }
@@ -75,6 +76,9 @@ function HeaderMenuButton({
 export default function Header() {
   const { route } = useRouter();
 
+  const AuthUser = useAuthUser();
+  const user = AuthUser.id ? AuthUser : null;
+
   const [open, setOpen] = React.useState(false);
   const [collapsed, setCollapsed] = React.useState(false);
 
@@ -87,9 +91,9 @@ export default function Header() {
   };
 
   React.useEffect(() => {
-    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
 
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
@@ -102,12 +106,16 @@ export default function Header() {
       </HeaderMenuStyled>
 
       <HeaderSignButtonsContainerStyled>
-        <Link href="/signin" passHref>
-          <SignButtonStyled>Sign in</SignButtonStyled>
-        </Link>
-        <Link href="/signup" passHref>
-          <SignButtonStyled inverted>Sign up</SignButtonStyled>
-        </Link>
+        {user ? (
+          // <Link href={`/users/${user.id}`} passHref>
+          <div onClick={() => user.signOut()}>Hello, {user.displayName}</div>
+        ) : (
+          // </Link>
+          <>
+            <SignButton title="Sign in" href="/signin" />
+            <SignButton title="Sign up" href="/signup" inverted />
+          </>
+        )}
       </HeaderSignButtonsContainerStyled>
 
       <HeaderMenuButtonContainerStyled>
@@ -121,12 +129,14 @@ export default function Header() {
           })}
         </HeaderCollapsableMenuListContainerStyled>
         <HeaderCollapsableMenuSignContainerStyled>
-          <Link href="/signin" passHref>
-            <SignButtonStyled>Sign in</SignButtonStyled>
-          </Link>
-          <Link href="/signup" passHref>
-            <SignButtonStyled inverted>Sign up</SignButtonStyled>
-          </Link>
+          {user ? (
+            <div onClick={() => user.signOut()}>Hello, {user.displayName}</div>
+          ) : (
+            <>
+              <SignButton title="Sign in" href="/signin" />
+              <SignButton title="Sign up" href="/signup" inverted />
+            </>
+          )}
         </HeaderCollapsableMenuSignContainerStyled>
       </HeaderCollapsableMenuStyled>
     </HeaderStyled>

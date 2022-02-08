@@ -1,12 +1,12 @@
-import React from "react";
-import Head from "next/head";
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
-import { MainContainerStyled } from "../../styles/components/layout/MainContainer";
+import React from 'react';
+import Head from 'next/head';
+import Header from '../header/Header';
+import Footer from '../footer/Footer';
+import { MainContainerStyled } from '../../styles/components/layout/MainContainer';
 
 interface Props {
   title: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export default function MainContainer({ title, children }: Props) {

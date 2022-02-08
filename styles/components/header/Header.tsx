@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const HeaderStyled = styled.nav<{ collapsed: boolean }>`
   position: sticky;
@@ -6,7 +6,7 @@ export const HeaderStyled = styled.nav<{ collapsed: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: ${({ collapsed }) => (collapsed ? "1rem 2rem" : "2rem 2rem")};
+  padding: ${({ collapsed }) => (collapsed ? '1rem 2rem' : '2rem 2rem')};
   border-bottom: ${({ theme }) => `1px solid ${theme.main.gray}`};
   background: white;
   transition: all 0.5s ease;
@@ -18,6 +18,10 @@ export const HeaderStyled = styled.nav<{ collapsed: boolean }>`
 export const HeaderLogoStyled = styled.img`
   object-fit: contain;
   width: 300px;
+
+  @media (max-width: 600px) {
+    width: 200px;
+  }
 `;
 
 export const HeaderMenuStyled = styled.ul`
@@ -53,48 +57,9 @@ export const HeaderSignButtonsContainerStyled = styled.div`
   gap: 2rem;
   position: relative;
 
-  > span {
-    transition: all 0.5s ease;
-    cursor: pointer;
-
-    &:hover {
-      color: ${({ theme }) => theme.main.orange};
-      transform: scale(1.1);
-    }
-  }
-
   @media (max-width: 1300px) {
     display: none;
   }
-`;
-
-export const SignButtonStyled = styled.div<{ inverted?: boolean }>`
-  border-width: 3px;
-  border-style: solid;
-  border-radius: 25px;
-  border-color: ${({ theme }) => theme.main.orange};
-  background: ${({ inverted, theme }) =>
-    inverted ? theme.main.orange : theme.main.white};
-  padding: 5px 10px;
-  width: 120px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all .5s ease;
-  color ${({ inverted, theme }) =>
-    inverted ? theme.main.white : theme.main.orange};
-
-    &:hover {
-        color ${({ inverted, theme }) => !!!inverted && theme.main.darkOrange};
-        background ${({ inverted, theme }) =>
-          inverted && theme.main.darkOrange};
-        border-color: ${({ theme }) => theme.main.darkOrange};
-        // font-size: 1.1em;
-
-    }
-
 `;
 
 export const HeaderMenuButtonContainerStyled = styled.div`
@@ -120,7 +85,7 @@ export const HeaderMenuButtonStyled = styled.div<{ open: boolean }>`
 
   > svg {
     transition: all 0.5s ease;
-    fill: ${({ open }) => (open ? "#c86420" : "6f6f6f")};
+    fill: ${({ open }) => (open ? '#c86420' : '6f6f6f')};
   }
 
   &:hover {
@@ -139,7 +104,7 @@ export const HeaderCollapsableMenuStyled = styled.div<{
   collapsed: boolean;
 }>`
   position: absolute;
-  top: ${({ collapsed }) => (collapsed ? "100px" : "130px")};
+  top: ${({ collapsed }) => (collapsed ? '100px' : '130px')};
   left: 0;
   right: 0;
   bottom: 0;
@@ -151,7 +116,7 @@ export const HeaderCollapsableMenuStyled = styled.div<{
   flex-direction: row;
   overflow: hidden;
   transition: all 0.5s ease;
-  height: ${({ open }) => (open ? "180px" : 0)};
+  height: ${({ open }) => (open ? '180px' : 0)};
 
   * {
     overflow: hidden;
@@ -159,6 +124,11 @@ export const HeaderCollapsableMenuStyled = styled.div<{
 
   @media (min-width: 1300px) {
     display: none;
+  }
+
+  @media (max-width: 600px) {
+    height: ${({ open }) => (open ? '400px' : 0)};
+    flex-direction: column;
   }
 `;
 
@@ -186,8 +156,6 @@ export const HeaderCollapsableMenuListContainerStyled = styled.ul`
 export const HeaderCollapsableMenuSignContainerStyled = styled.div`
   flex: 1;
   display: flex;
-  // background: green;
-  // flex-direction: column;
   gap: 20px;
   align-items: center;
   justify-content: center;

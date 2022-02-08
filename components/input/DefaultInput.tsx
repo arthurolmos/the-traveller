@@ -1,8 +1,8 @@
-import React from "react";
-import { DefaultInputStyled } from "../../styles/components/input/DefaultInput";
+import React from 'react';
+import { DefaultInputStyled } from '../../styles/components/input/DefaultInput';
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {}
-
-export default function DefaultInput({ ...rest }: Props) {
+export default function DefaultInput({
+  ...rest
+}: React.InputHTMLAttributes<HTMLInputElement>) {
   return <DefaultInputStyled {...rest} />;
 }
