@@ -15,7 +15,7 @@ export const HeaderStyled = styled.nav<{ collapsed: boolean }>`
   max-height: 130px;
 `;
 
-export const HeaderLogoStyled = styled.img`
+export const LogoStyled = styled.img`
   object-fit: contain;
   width: 300px;
 
@@ -24,7 +24,7 @@ export const HeaderLogoStyled = styled.img`
   }
 `;
 
-export const HeaderMenuStyled = styled.ul`
+export const MenuStyled = styled.ul`
   flex: 2;
   display: flex;
   flex-direction: row;
@@ -50,10 +50,15 @@ export const HeaderMenuStyled = styled.ul`
   }
 `;
 
-export const HeaderSignButtonsContainerStyled = styled.div`
+export const PanelContainerStyled = styled.div`
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  position: relative;
+`;
+
+export const AuthContainerStyled = styled.div`
+  display: flex;
   gap: 2rem;
 
   @media (max-width: 1300px) {
@@ -61,18 +66,9 @@ export const HeaderSignButtonsContainerStyled = styled.div`
   }
 `;
 
-export const HeaderMenuButtonContainerStyled = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  position: relative;
+export const SignButtonsContainerStyled = styled.div``;
 
-  @media (min-width: 1300px) {
-    display: none;
-  }
-`;
-
-export const HeaderMenuButtonStyled = styled.div<{ open: boolean }>`
+export const HamburgerButtonStyled = styled.div<{ open: boolean }>`
   border: 1px solid gray;
   border-radius: 10px;
   box-shadow: ${({ theme }) => `5px 2px 5px ${theme.main.gray}`};
@@ -84,7 +80,7 @@ export const HeaderMenuButtonStyled = styled.div<{ open: boolean }>`
 
   > svg {
     transition: all 0.5s ease;
-    fill: ${({ open }) => (open ? '#c86420' : '6f6f6f')};
+    fill: ${({ open, theme }) => (open ? theme.main.orange : theme.main.gray)};
   }
 
   &:hover {
@@ -93,12 +89,17 @@ export const HeaderMenuButtonStyled = styled.div<{ open: boolean }>`
     }
   }
 
+  @media (max-width: 600px) {
+    height: 40px;
+    width: 40px;
+  }
+
   @media (min-width: 1300px) {
     display: none;
   }
 `;
 
-export const HeaderCollapsableMenuStyled = styled.div<{
+export const CollapsableMenuStyled = styled.div<{
   open: boolean;
   collapsed: boolean;
 }>`
@@ -108,14 +109,12 @@ export const HeaderCollapsableMenuStyled = styled.div<{
   right: 0;
   bottom: 0;
   background: white;
-  // background: red;
-  // opacity: 0.3;
   margin-top: 0;
   display: flex;
   flex-direction: row;
   overflow: hidden;
   transition: all 0.5s ease;
-  height: ${({ open }) => (open ? '180px' : 0)};
+  height: ${({ open }) => (open ? '200px' : 0)};
 
   * {
     overflow: hidden;
@@ -127,11 +126,12 @@ export const HeaderCollapsableMenuStyled = styled.div<{
 
   @media (max-width: 600px) {
     height: ${({ open }) => (open ? '400px' : 0)};
+    top: ${({ collapsed }) => (collapsed ? '70px' : '100px')};
     flex-direction: column;
   }
 `;
 
-export const HeaderCollapsableMenuListContainerStyled = styled.ul`
+export const CollapsableMenuListContainerStyled = styled.ul`
   flex: 1;
 
   > li {
@@ -152,7 +152,7 @@ export const HeaderCollapsableMenuListContainerStyled = styled.ul`
   }
 `;
 
-export const HeaderCollapsableMenuSignContainerStyled = styled.div`
+export const CollapsableMenuSignContainerStyled = styled.div`
   flex: 1;
   display: flex;
   gap: 20px;
@@ -160,8 +160,10 @@ export const HeaderCollapsableMenuSignContainerStyled = styled.div`
   justify-content: center;
 `;
 
-export const HeaderUserMenuContainerStyled = styled.div`
+export const UserMenuContainerStyled = styled.div`
   position: relative;
+  display: flex;
+  margin-bottom: 20px;
 
   > span {
     cursor: pointer;
@@ -172,40 +174,15 @@ export const HeaderUserMenuContainerStyled = styled.div`
   }
 `;
 
-export const HeaderUserMenuStyled = styled.div`
-  width: 300px;
-  padding: 15px;
-  border-color: ${({ theme }) => theme.main.orange};
-  border-width: 2px;
-  border-radius: 0 15px 0 15px;
-  border-style: solid;
-  background: white;
-  position: absolute;
-  top: 20px;
-  right: 0;
+export const CollapsablePanelContainerStyled = styled.div`
   display: flex;
-  flex-direction: column;
+  flex: 1;
+  flex-direction: row;
+  padding: 20px;
+  justify-content: end;
+  gap: 2em;
 
-  > ul {
-    list-style-type: none;
-    padding: 0;
-
-    > li {
-      cursor: pointer;
-      margin-bottom: 20px;
-
-      > svg {
-        margin-right: 10px;
-      }
-    }
-
-    > li:last-child {
-      margin-bottom: 0;
-      color: red;
-    }
-
-    > li:hover {
-      font-weight: bold;
-    }
+  @media (max-width: 600px) {
+    justify-content: center;
   }
 `;

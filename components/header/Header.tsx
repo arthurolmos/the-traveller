@@ -3,21 +3,20 @@ import Link from 'next/link';
 import React from 'react';
 import {
   HeaderStyled,
-  HeaderLogoStyled,
-  HeaderMenuStyled,
-  HeaderSignButtonsContainerStyled,
-  HeaderMenuButtonStyled,
-  HeaderMenuButtonContainerStyled,
-  HeaderCollapsableMenuStyled,
-  HeaderCollapsableMenuListContainerStyled,
-  HeaderCollapsableMenuSignContainerStyled,
-  HeaderUserMenuContainerStyled,
-  HeaderUserMenuStyled,
-} from '../../styles/components/header/Header';
+  LogoStyled,
+  MenuStyled,
+  PanelContainerStyled,
+  HamburgerButtonStyled,
+  CollapsableMenuStyled,
+  UserMenuContainerStyled,
+  AuthContainerStyled,
+  CollapsableMenuListContainerStyled,
+  CollapsablePanelContainerStyled,
+} from '../../styles/components/header';
 import { FaBars } from 'react-icons/fa';
 import SignButton from '../buttons/SignButton';
-import { useAuthUser } from 'next-firebase-auth';
-import { FaPen, FaUser, FaDoorOpen } from 'react-icons/fa';
+import { AuthUser, useAuthUser } from 'next-firebase-auth';
+import UserMenu from './UserMenu';
 
 interface MenuOption {
   title: string;
@@ -62,7 +61,7 @@ function HeaderMenuItem({ item, route }: ItemMenuProps) {
   );
 }
 
-function HeaderMenuButton({
+function HamburgerButton({
   onClick,
   open,
 }: {
@@ -70,9 +69,9 @@ function HeaderMenuButton({
   open: boolean;
 }) {
   return (
-    <HeaderMenuButtonStyled onClick={onClick} open={open}>
+    <HamburgerButtonStyled onClick={onClick} open={open}>
       <FaBars size={32} />
-    </HeaderMenuButtonStyled>
+    </HamburgerButtonStyled>
   );
 }
 
@@ -103,63 +102,51 @@ export default function Header() {
 
   return (
     <HeaderStyled collapsed={collapsed}>
-      <HeaderLogoStyled src="assets/logo.png" />
-      <HeaderMenuStyled>
+      <LogoStyled src="assets/logo.png" />
+      <MenuStyled>
         {menuOptions.map((item) => {
           return <HeaderMenuItem item={item} key={item.title} route={route} />;
         })}
-      </HeaderMenuStyled>
+      </MenuStyled>
 
-      <HeaderSignButtonsContainerStyled>
-        {user ? (
-          <HeaderUserMenuContainerStyled>
-            <span onClick={toggleUserMenu}>Hello, {user.displayName}</span>
-            {userMenu && (
-              <HeaderUserMenuStyled>
-                <ul>
-                  <li>
-                    <FaPen /> Write a Review!
-                  </li>
-                  <li></li>
-                  <li>
-                    <FaUser /> Account Settings
-                  </li>
-                  <li>
-                    <FaDoorOpen /> Sign Out
-                  </li>
-                </ul>
-              </HeaderUserMenuStyled>
-            )}
-          </HeaderUserMenuContainerStyled>
-        ) : (
-          <>
-            <SignButton title="Sign in" href="/signin" />
-            <SignButton title="Sign up" href="/signup" inverted />
-          </>
-        )}
-      </HeaderSignButtonsContainerStyled>
-
-      <HeaderMenuButtonContainerStyled>
-        <HeaderMenuButton onClick={toggle} open={open} />
-      </HeaderMenuButtonContainerStyled>
-
-      <HeaderCollapsableMenuStyled open={open} collapsed={collapsed}>
-        <HeaderCollapsableMenuListContainerStyled>
-          {menuOptions.map((item, index) => {
-            return <HeaderMenuItem item={item} key={index} route={route} />;
-          })}
-        </HeaderCollapsableMenuListContainerStyled>
-        <HeaderCollapsableMenuSignContainerStyled>
+      <PanelContainerStyled>
+        <AuthContainerStyled>
           {user ? (
-            <div onClick={() => user.signOut()}>Hello, {user.displayName}</div>
+            <UserMenuContainerStyled>
+              <span onClick={toggleUserMenu}>Hello, {user.displayName}</span>
+              {userMenu && <UserMenu user={user} />}
+            </UserMenuContainerStyled>
           ) : (
             <>
               <SignButton title="Sign in" href="/signin" />
               <SignButton title="Sign up" href="/signup" inverted />
             </>
           )}
-        </HeaderCollapsableMenuSignContainerStyled>
-      </HeaderCollapsableMenuStyled>
+        </AuthContainerStyled>
+
+        <HamburgerButton onClick={toggle} open={open} />
+      </PanelContainerStyled>
+
+      <CollapsableMenuStyled open={open} collapsed={collapsed}>
+        <CollapsableMenuListContainerStyled>
+          {menuOptions.map((item, index) => {
+            return <HeaderMenuItem item={item} key={index} route={route} />;
+          })}
+        </CollapsableMenuListContainerStyled>
+        <CollapsablePanelContainerStyled>
+          {user ? (
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div>Hello, {user.displayName}</div>
+              <UserMenu user={user} />
+            </div>
+          ) : (
+            <>
+              <SignButton title="Sign in" href="/signin" />
+              <SignButton title="Sign up" href="/signup" inverted />
+            </>
+          )}
+        </CollapsablePanelContainerStyled>
+      </CollapsableMenuStyled>
     </HeaderStyled>
   );
 }
