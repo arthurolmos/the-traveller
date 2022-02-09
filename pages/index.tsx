@@ -2,12 +2,7 @@ import FadeCarousel from '../components/carousel/FadeCarousel';
 import GenericSection from '../components/home/GenericSection';
 import MainContainer from '../components/layout/MainContainer';
 import { ContentContainerStyled } from '../styles/pages/Home';
-import {
-  AuthAction,
-  useAuthUser,
-  withAuthUser,
-  withAuthUserTokenSSR,
-} from 'next-firebase-auth';
+import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 
 interface CarouselItem {
   title: string;
