@@ -33,6 +33,13 @@ const initAuth = () => {
         // privateKey: process.env.FIREBASE_PRIVATE_KEY
         //     ? JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
         //     : undefined,
+
+        // privateKey:
+        //   process.env.NODE_ENV !== 'development'
+        //     ? process.env.FIREBASE_PRIVATE_KEY
+        //     : process.env.FIREBASE_PRIVATE_KEY
+        //     ? JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
+        //     : undefined,
       },
       databaseURL: 'https://my-example-app.firebaseio.com',
     },
