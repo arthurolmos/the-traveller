@@ -55,7 +55,6 @@ export const HeaderSignButtonsContainerStyled = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 2rem;
-  position: relative;
 
   @media (max-width: 1300px) {
     display: none;
@@ -159,4 +158,54 @@ export const HeaderCollapsableMenuSignContainerStyled = styled.div`
   gap: 20px;
   align-items: center;
   justify-content: center;
+`;
+
+export const HeaderUserMenuContainerStyled = styled.div`
+  position: relative;
+
+  > span {
+    cursor: pointer;
+  }
+
+  > span:hover {
+    font-weight: bold;
+  }
+`;
+
+export const HeaderUserMenuStyled = styled.div`
+  width: 300px;
+  padding: 15px;
+  border-color: ${({ theme }) => theme.main.orange};
+  border-width: 2px;
+  border-radius: 0 15px 0 15px;
+  border-style: solid;
+  background: white;
+  position: absolute;
+  top: 20px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+
+  > ul {
+    list-style-type: none;
+    padding: 0;
+
+    > li {
+      cursor: pointer;
+      margin-bottom: 20px;
+
+      > svg {
+        margin-right: 10px;
+      }
+    }
+
+    > li:last-child {
+      margin-bottom: 0;
+      color: red;
+    }
+
+    > li:hover {
+      font-weight: bold;
+    }
+  }
 `;

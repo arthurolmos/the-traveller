@@ -11,10 +11,13 @@ import {
   HeaderCollapsableMenuStyled,
   HeaderCollapsableMenuListContainerStyled,
   HeaderCollapsableMenuSignContainerStyled,
+  HeaderUserMenuContainerStyled,
+  HeaderUserMenuStyled,
 } from '../../styles/components/header/Header';
 import { FaBars } from 'react-icons/fa';
 import SignButton from '../buttons/SignButton';
 import { useAuthUser } from 'next-firebase-auth';
+import { FaPen, FaUser, FaDoorOpen } from 'react-icons/fa';
 
 interface MenuOption {
   title: string;
@@ -79,9 +82,11 @@ export default function Header() {
   const AuthUser = useAuthUser();
   const user = AuthUser.id ? AuthUser : null;
 
+  const [userMenu, setUserMenu] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [collapsed, setCollapsed] = React.useState(false);
 
+  const toggleUserMenu = () => setUserMenu(!userMenu);
   const toggle = () => setOpen(!open);
 
   const onScroll = () => {
@@ -107,10 +112,26 @@ export default function Header() {
 
       <HeaderSignButtonsContainerStyled>
         {user ? (
-          // <Link href={`/users/${user.id}`} passHref>
-          <div onClick={() => user.signOut()}>Hello, {user.displayName}</div>
+          <HeaderUserMenuContainerStyled>
+            <span onClick={toggleUserMenu}>Hello, {user.displayName}</span>
+            {userMenu && (
+              <HeaderUserMenuStyled>
+                <ul>
+                  <li>
+                    <FaPen /> Write a Review!
+                  </li>
+                  <li></li>
+                  <li>
+                    <FaUser /> Account Settings
+                  </li>
+                  <li>
+                    <FaDoorOpen /> Sign Out
+                  </li>
+                </ul>
+              </HeaderUserMenuStyled>
+            )}
+          </HeaderUserMenuContainerStyled>
         ) : (
-          // </Link>
           <>
             <SignButton title="Sign in" href="/signin" />
             <SignButton title="Sign up" href="/signup" inverted />
