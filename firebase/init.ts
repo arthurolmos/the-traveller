@@ -27,12 +27,12 @@ const initAuth = () => {
         // The private key must not be accessible on the client side.
 
         //Use this on production
-        privateKey: process.env.FIREBASE_PRIVATE_KEY,
+        // privateKey: process.env.FIREBASE_PRIVATE_KEY,
 
         // Use this on development
-        // privateKey: process.env.FIREBASE_PRIVATE_KEY
-        //     ? JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
-        //     : undefined,
+        privateKey: process.env.FIREBASE_PRIVATE_KEY
+          ? JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
+          : undefined,
 
         // privateKey:
         //   process.env.NODE_ENV !== 'development'
