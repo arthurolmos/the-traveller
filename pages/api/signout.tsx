@@ -1,7 +1,7 @@
-// ./pages/api/logout
-// ./pages/api/login
 import { unsetAuthCookies } from 'next-firebase-auth';
-import '../../firebase/init'; // the module you created above
+import initAuth from '../../firebase/init'; // the module you created above
+
+initAuth();
 
 const handler = async (req, res) => {
   try {

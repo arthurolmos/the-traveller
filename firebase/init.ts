@@ -14,7 +14,7 @@ const firebaseConfig = {
 
 const initAuth = () => {
   init({
-    authPageURL: '/auth',
+    authPageURL: '/signin',
     appPageURL: '/',
     loginAPIEndpoint: '/api/signin', // required
     logoutAPIEndpoint: '/api/signout', // required
@@ -27,10 +27,13 @@ const initAuth = () => {
     // firebaseAuthEmulatorHost: 'localhost:9099',
     firebaseAdminInitConfig: {
       credential: {
-        projectId: 'my-example-app-id',
-        clientEmail: 'example-abc123@my-example-app.iam.gserviceaccount.com',
+        projectId: firebaseConfig.projectId,
+        clientEmail:
+          'firebase-adminsdk-xs9ji@the-traveller-b17d4.iam.gserviceaccount.com',
         // The private key must not be accessible on the client side.
-        privateKey: process.env.FIREBASE_PRIVATE_KEY,
+        privateKey: process.env.FIREBASE_PRIVATE_KEY
+          ? JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
+          : undefined,
       },
       databaseURL: 'https://my-example-app.firebaseio.com',
     },
@@ -47,7 +50,7 @@ const initAuth = () => {
       databaseURL: 'https://my-example-app.firebaseio.com',
     },
     cookies: {
-      name: 'ExampleApp', // required
+      name: 'TheTraveller', // required
       // Keys are required unless you set `signed` to `false`.
       // The keys cannot be accessible on the client side.
       keys: [
@@ -73,3 +76,5 @@ const initAuth = () => {
 
 initializeApp(firebaseConfig);
 initAuth();
+
+export default initAuth;
