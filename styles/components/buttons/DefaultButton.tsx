@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const DefaultButtonStyled = styled.div<{ inverted?: boolean }>`
+export const DefaultButtonStyled = styled.button<{ inverted?: boolean }>`
 border-width: 3px;
 border-style: solid;
 border-radius: 25px;
