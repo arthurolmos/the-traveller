@@ -17,7 +17,7 @@ import {
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
 import {
-  SignUpFormStyled,
+  SignFormStyled,
   SpinnerContainerStyled,
 } from '../../styles/pages/SignUp';
 import Link from 'next/link';
@@ -76,16 +76,7 @@ export function SignUp() {
   return (
     <MainContainer title="Sign Up">
       <PageComponent title="Sign Up">
-        <SignUpFormStyled
-          style={{
-            gap: 20,
-            display: 'flex',
-            flexDirection: 'column',
-            marginBottom: 30,
-            width: 500,
-          }}
-          onSubmit={submit}
-        >
+        <SignFormStyled onSubmit={submit}>
           <DefaultInput
             placeholder="First Name"
             type="text"
@@ -126,7 +117,7 @@ export function SignUp() {
           ) : (
             <DefaultButton title="Create Account" inverted onClick={submit} />
           )}
-        </SignUpFormStyled>
+        </SignFormStyled>
 
         <p style={{ textAlign: 'center' }}>
           Already have an account? <Link href="/signin">Click here!</Link>

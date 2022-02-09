@@ -1,12 +1,5 @@
 import styled from 'styled-components';
-
-export const SignUpFormStyled = styled.form`
-  gap: 20px;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 30px;
-  width: 500px;
-`;
+export { SignFormStyled } from '../components/forms/SignForm';
 
 export const SpinnerContainerStyled = styled.div`
   display: flex;

@@ -13,7 +13,7 @@ import {
 } from 'next-firebase-auth';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import {
-  SignInFormStyled,
+  SignFormStyled,
   SpinnerContainerStyled,
 } from '../../styles/pages/SignIn';
 import Link from 'next/link';
@@ -51,7 +51,7 @@ export function SignIn() {
   return (
     <MainContainer title="Sign In">
       <PageComponent title="Sign In">
-        <SignInFormStyled>
+        <SignFormStyled>
           <DefaultInput
             placeholder="Email"
             type="email"
@@ -71,7 +71,7 @@ export function SignIn() {
           ) : (
             <DefaultButton title="Create Account" inverted onClick={submit} />
           )}
-        </SignInFormStyled>
+        </SignFormStyled>
 
         <p style={{ textAlign: 'center' }}>
           Don`t have an account? <Link href="/signin">Click here!</Link>
