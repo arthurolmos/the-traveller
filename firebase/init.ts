@@ -25,12 +25,14 @@ const initAuth = () => {
         clientEmail:
           'firebase-adminsdk-xs9ji@the-traveller-b17d4.iam.gserviceaccount.com',
         // The private key must not be accessible on the client side.
-        privateKey:
-          process.env.NODE_ENV !== 'development'
-            ? process.env.FIREBASE_PRIVATE_KEY
-            : process.env.FIREBASE_PRIVATE_KEY
-            ? JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
-            : undefined,
+
+        //Use this on production
+        privateKey: process.env.FIREBASE_PRIVATE_KEY,
+
+        // Use this on development
+        // privateKey: process.env.FIREBASE_PRIVATE_KEY
+        //     ? JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
+        //     : undefined,
       },
       databaseURL: 'https://my-example-app.firebaseio.com',
     },
