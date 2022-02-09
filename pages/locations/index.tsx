@@ -1,3 +1,4 @@
+import { withAuthUser } from 'next-firebase-auth';
 import React from 'react';
 import SearchInput from '../../components/input/SearchInput';
 import MainContainer from '../../components/layout/MainContainer';
@@ -13,7 +14,7 @@ import {
   ContentReviewsContainer,
 } from '../../styles/pages/Locations';
 
-export default function Locations() {
+export function Locations() {
   const [loading, setLoading] = React.useState(false);
   const [search, setSearch] = React.useState('');
   const [location, setLocation] = React.useState({
@@ -116,7 +117,7 @@ export default function Locations() {
               </form>
 
               <ContentReviewsContainer>
-                <ListStyled>{items}</ListStyled>
+                {!loading && <ListStyled>{items}</ListStyled>}
               </ContentReviewsContainer>
             </ContentSearchStyled>
           </ContentPanelStyled>
@@ -128,3 +129,5 @@ export default function Locations() {
     </MainContainer>
   );
 }
+
+export default withAuthUser()(Locations);

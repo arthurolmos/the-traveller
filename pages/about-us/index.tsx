@@ -1,8 +1,9 @@
-import React from "react";
-import MainContainer from "../../components/layout/MainContainer";
-import PageComponent from "../../components/layout/PageComponent";
+import { withAuthUser } from 'next-firebase-auth';
+import React from 'react';
+import MainContainer from '../../components/layout/MainContainer';
+import PageComponent from '../../components/layout/PageComponent';
 
-export default function AboutUs() {
+export function AboutUs() {
   return (
     <MainContainer title="About Us">
       <PageComponent title="About Us">
@@ -15,3 +16,5 @@ export default function AboutUs() {
     </MainContainer>
   );
 }
+
+export default withAuthUser()(AboutUs);

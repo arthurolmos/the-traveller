@@ -18,12 +18,6 @@ const initAuth = () => {
     appPageURL: '/',
     loginAPIEndpoint: '/api/signin', // required
     logoutAPIEndpoint: '/api/signout', // required
-    onLoginRequestError: (err) => {
-      console.error(err);
-    },
-    onLogoutRequestError: (err) => {
-      console.error(err);
-    },
     // firebaseAuthEmulatorHost: 'localhost:9099',
     firebaseAdminInitConfig: {
       credential: {

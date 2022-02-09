@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import React from 'react';
 import GuideItem from '../../components/guides/GuideItem';
 import MainContainer from '../../components/layout/MainContainer';
@@ -6,7 +6,11 @@ import PageComponent from '../../components/layout/PageComponent';
 import { IGuideItem } from '../../interfaces/IGuideItem';
 import { GuidesContentStyled } from '../../styles/pages/Guides';
 
-export default function Guides({ data }) {
+interface Props {
+  data: IGuideItem[];
+}
+
+export function Guides({ data }: Props) {
   return (
     <MainContainer title="Guides">
       <PageComponent title="Guides">
@@ -26,7 +30,7 @@ export default function Guides({ data }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps = withAuthUserTokenSSR()(async () => {
   try {
     const url = new URL('http://localhost:3000/api/guides');
 
@@ -48,4 +52,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
-};
+});
+
+export default withAuthUser<Props>()(Guides);
