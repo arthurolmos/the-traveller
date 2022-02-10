@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const GuideItemDescriptionStyled = styled.div`
   display: flex;
@@ -13,6 +13,14 @@ export const GuideItemDescriptionStyled = styled.div`
   color: black;
   padding: 15px;
   overflow: hidden;
+
+  @media (max-width: 600px) {
+    height: 100px;
+
+    > p {
+      display: none;
+    }
+  }
 `;
 
 export const GuideItemStyled = styled.div`
@@ -49,6 +57,16 @@ export const GuideItemStyled = styled.div`
       opacity: 0.8;
     }
   }
+
+  @media (max-width: 1070px) {
+    width: 400px;
+    height: 275px;
+  }
+
+  @media (max-width: 860px) {
+    width: 300px;
+    height: 175px;
+  }
 `;
 
 export const GuideItemHeaderStyled = styled.div`
@@ -63,5 +81,25 @@ export const GuideItemHeaderStyled = styled.div`
   > span {
     flex: 1;
     text-align: end;
+  }
+
+  @media (max-width: 1000px) {
+    > h1 {
+      font-size: 1em;
+    }
+
+    > span {
+      font-size: 0.8em;
+    }
+  }
+
+  @media (max-width: 600px) {
+    > h1 {
+      font-size: 1.5em;
+    }
+
+    > span {
+      font-size: 1em;
+    }
   }
 `;
