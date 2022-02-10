@@ -16,12 +16,10 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
-import {
-  SignFormStyled,
-  SpinnerContainerStyled,
-} from '../../styles/pages/SignUp';
+import { SpinnerContainerStyled } from '../../styles/pages/SignUp';
 import Link from 'next/link';
 import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
+import DefaultForm from '../../components/form/DefaultForm';
 
 export function SignUp() {
   const auth = getAuth();
@@ -76,26 +74,30 @@ export function SignUp() {
   return (
     <MainContainer title="Sign Up">
       <PageComponent title="Sign Up">
-        <SignFormStyled onSubmit={submit}>
+        <DefaultForm onSubmit={submit}>
           <DefaultInput
+            value={firstName}
             placeholder="First Name"
             type="text"
             onChange={(e) => setFirstName(e.target.value)}
           />
 
           <DefaultInput
+            value={lastName}
             placeholder="Last Name"
             type="text"
             onChange={(e) => setLastName(e.target.value)}
           />
 
           <DefaultInput
+            value={email}
             placeholder="Email"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <DefaultInput
+            value={password}
             type="new-password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
@@ -105,6 +107,7 @@ export function SignUp() {
             style={{
               borderColor: password === confirmPassword ? 'lightgreen' : 'red',
             }}
+            value={confirmPassword}
             type="new-password"
             placeholder="Confirm Password"
             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -117,7 +120,7 @@ export function SignUp() {
           ) : (
             <DefaultButton title="Create Account" inverted onClick={submit} />
           )}
-        </SignFormStyled>
+        </DefaultForm>
 
         <p style={{ textAlign: 'center' }}>
           Already have an account? <Link href="/signin">Click here!</Link>

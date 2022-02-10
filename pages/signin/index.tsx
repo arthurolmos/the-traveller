@@ -12,12 +12,10 @@ import {
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import {
-  SignFormStyled,
-  SpinnerContainerStyled,
-} from '../../styles/pages/SignIn';
+import { SpinnerContainerStyled } from '../../styles/pages/SignIn';
 import Link from 'next/link';
 import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
+import DefaultForm from '../../components/form/DefaultForm';
 
 export function SignIn() {
   const auth = getAuth();
@@ -51,17 +49,19 @@ export function SignIn() {
   return (
     <MainContainer title="Sign In">
       <PageComponent title="Sign In">
-        <SignFormStyled>
+        <DefaultForm>
           <DefaultInput
             placeholder="Email"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
+            value={email}
           />
 
           <DefaultInput
             type="new-password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
 
           {loading ? (
@@ -71,7 +71,7 @@ export function SignIn() {
           ) : (
             <DefaultButton title="Create Account" inverted onClick={submit} />
           )}
-        </SignFormStyled>
+        </DefaultForm>
 
         <p style={{ textAlign: 'center' }}>
           Don`t have an account? <Link href="/signin">Click here!</Link>

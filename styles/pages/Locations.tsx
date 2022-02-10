@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
 const fadeIn = keyframes`
     0% {
@@ -34,6 +34,10 @@ export const ContentStyled = styled.div`
   gap: 20px;
   margin-top: 50px;
   flex: 1;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 export const ContentPanelStyled = styled.div`
@@ -57,9 +61,24 @@ export const ContentSearchStyled = styled.div`
 export const ContentReviewsContainer = styled.div`
   height: 500px;
   overflow: auto;
+  display: flex;
+`;
+
+export const ContentReviewsDefaultContainer = styled(ContentReviewsContainer)`
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
+export const ContentReviewsSmallContainer = styled(ContentReviewsContainer)`
+  @media (min-width: 600px) {
+    display: none;
+  }
 `;
 
 export const ContentMapStyled = styled.div`
   display: flex;
   flex: 2;
+  flex-direction: column;
+  gap: 20px;
 `;
