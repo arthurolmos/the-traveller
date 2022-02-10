@@ -9,7 +9,7 @@ export function BeatLoaderSpinner({ loading = false }: Props) {
     <BeatLoader
       color="#c86420"
       loading={loading}
-      size={30}
+      size={20}
       speedMultiplier={0.5}
     />
   );
