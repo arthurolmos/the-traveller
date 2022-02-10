@@ -31,24 +31,11 @@ export default function Header() {
   const { route } = useRouter();
 
   const [open, setOpen] = React.useState(false);
-  const [collapsed, setCollapsed] = React.useState(false);
 
   const toggle = () => setOpen(!open);
 
-  const onScroll = () => {
-    const offset = window.scrollY;
-
-    setCollapsed(offset >= 200);
-  };
-
-  React.useEffect(() => {
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
   return (
-    <HeaderStyled collapsed={collapsed}>
+    <HeaderStyled>
       <LogoStyled src="assets/logo.png" />
       <MenuStyled>
         {menuOptions.map((item) => {
@@ -62,7 +49,7 @@ export default function Header() {
         <HamburgerButton onClick={toggle} open={open} />
       </PanelContainerStyled>
 
-      <CollapsableMenu open={open} collapsed={collapsed} />
+      <CollapsableMenu open={open} />
     </HeaderStyled>
   );
 }

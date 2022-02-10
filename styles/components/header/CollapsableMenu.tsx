@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 
-export const CollapsableMenuStyled = styled.div<{
-  open: boolean;
-  collapsed: boolean;
-}>`
+export const CollapsableMenuStyled = styled.div<{ open: boolean }>`
   position: absolute;
-  top: ${({ collapsed }) => (collapsed ? '100px' : '130px')};
+  top: 80px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -27,7 +24,6 @@ export const CollapsableMenuStyled = styled.div<{
 
   @media (max-width: 600px) {
     height: ${({ open }) => (open ? '400px' : 0)};
-    top: ${({ collapsed }) => (collapsed ? '70px' : '100px')};
     flex-direction: column;
   }
 `;

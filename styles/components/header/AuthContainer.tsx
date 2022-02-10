@@ -3,7 +3,8 @@ import styled from 'styled-components';
 export const UserMenuContainerStyled = styled.div`
   position: relative;
   display: flex;
-  margin-bottom: 20px;
+  align-items: center;
+  justify-content: center;
 
   > span {
     cursor: pointer;

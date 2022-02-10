@@ -1,23 +1,23 @@
 import styled from 'styled-components';
 
-export const HeaderStyled = styled.nav<{ collapsed: boolean }>`
+export const HeaderStyled = styled.nav`
   position: sticky;
   top: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: ${({ collapsed }) => (collapsed ? '1rem 2rem' : '2rem 2rem')};
+  padding: 1rem;
   border-bottom: ${({ theme }) => `1px solid ${theme.main.gray}`};
   background: white;
   transition: all 0.5s ease;
   box-shadow: 0 5px 10px gray;
   z-index: 9;
-  max-height: 130px;
+  height: 80px;
 `;
 
 export const LogoStyled = styled.img`
   object-fit: contain;
-  width: 300px;
+  width: 250px;
 
   @media (max-width: 600px) {
     width: 200px;
@@ -66,6 +66,8 @@ export const HamburgerButtonStyled = styled.div<{ open: boolean }>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  height: 40px;
+  width: 40px;
 
   > svg {
     transition: all 0.5s ease;
@@ -76,11 +78,6 @@ export const HamburgerButtonStyled = styled.div<{ open: boolean }>`
     > svg {
       fill: #c86420;
     }
-  }
-
-  @media (max-width: 600px) {
-    height: 40px;
-    width: 40px;
   }
 
   @media (min-width: 1300px) {
