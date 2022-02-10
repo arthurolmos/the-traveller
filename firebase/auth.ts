@@ -1,16 +1,6 @@
 // ./initAuth.js
-import { initializeApp } from 'firebase/app';
 import { init } from 'next-firebase-auth';
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyC6pbpJKRQOi_iIRjw-nw1c6VWXgMSC50E',
-  authDomain: 'the-traveller-b17d4.firebaseapp.com',
-  projectId: 'the-traveller-b17d4',
-  storageBucket: 'the-traveller-b17d4.appspot.com',
-  messagingSenderId: '841764313667',
-  appId: '1:841764313667:web:e6254f12d3e783ef8bd2f6',
-  measurementId: 'G-K2WMWLDPQ6',
-};
+import { firebaseConfig } from './config';
 
 const initAuth = () => {
   init({
@@ -25,21 +15,9 @@ const initAuth = () => {
         clientEmail:
           'firebase-adminsdk-xs9ji@the-traveller-b17d4.iam.gserviceaccount.com',
         // The private key must not be accessible on the client side.
-
-        //Use this on production
-        // privateKey: process.env.FIREBASE_PRIVATE_KEY,
-
-        // Use this on development
         privateKey: process.env.FIREBASE_PRIVATE_KEY
           ? JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
           : undefined,
-
-        // privateKey:
-        //   process.env.NODE_ENV !== 'development'
-        //     ? process.env.FIREBASE_PRIVATE_KEY
-        //     : process.env.FIREBASE_PRIVATE_KEY
-        //     ? JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
-        //     : undefined,
       },
       databaseURL: 'https://my-example-app.firebaseio.com',
     },
@@ -79,8 +57,5 @@ const initAuth = () => {
     },
   });
 };
-
-initializeApp(firebaseConfig);
-initAuth();
 
 export default initAuth;
