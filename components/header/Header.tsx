@@ -36,7 +36,7 @@ export default function Header() {
 
   return (
     <HeaderStyled>
-      <LogoStyled src="assets/logo.png" />
+      <LogoStyled src="/assets/logo.png" />
       <MenuStyled>
         {menuOptions.map((item) => {
           return <MenuItem item={item} key={item.title} route={route} />;
