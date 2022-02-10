@@ -14,7 +14,7 @@ import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../firebase/db';
 
-export function WriteReview() {
+export function NewPost() {
   const [loading, setLoading] = React.useState(false);
   const [title, setTitle] = React.useState('');
   const [text, setText] = React.useState('');
@@ -35,8 +35,8 @@ export function WriteReview() {
   };
 
   return (
-    <MainContainer title="Write a Review!">
-      <PageComponent title="Write a Review!">
+    <MainContainer title="Write a Post!">
+      <PageComponent title="Write a Post!">
         <DefaultForm onSubmit={submit}>
           <DefaultInput
             value={title}
@@ -47,7 +47,7 @@ export function WriteReview() {
 
           <QuillInput
             value={text}
-            placeholder="Write your review..."
+            placeholder="Write your Post..."
             onChange={setText}
           />
 
@@ -81,4 +81,4 @@ export const getServerSideProps = withAuthUserTokenSSR({
 
 export default withAuthUser({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
-})(WriteReview);
+})(NewPost);
