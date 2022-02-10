@@ -12,9 +12,11 @@ export default function UserMenu({ user }: Props) {
   return (
     <UserMenuStyled>
       <ul>
-        <li>
-          <FaPen /> Write a Review!
-        </li>
+        <Link href="/write-review" passHref>
+          <li>
+            <FaPen /> Write a Review!
+          </li>
+        </Link>
         <li></li>
         <Link href="/user" passHref>
           <li>
