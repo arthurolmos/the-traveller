@@ -12,6 +12,8 @@ import {
   ContentSearchStyled,
   ContentMapStyled,
   ContentReviewsContainer,
+  ContentReviewsDefaultContainer,
+  ContentReviewsSmallContainer,
 } from '../../styles/pages/Locations';
 
 export function Locations() {
@@ -116,13 +118,17 @@ export function Locations() {
                 />
               </form>
 
-              <ContentReviewsContainer>
+              <ContentReviewsDefaultContainer>
                 {!loading && <ListStyled>{items}</ListStyled>}
-              </ContentReviewsContainer>
+              </ContentReviewsDefaultContainer>
             </ContentSearchStyled>
           </ContentPanelStyled>
           <ContentMapStyled>
             <SimpleMap lat={location.lat} lng={location.lng} />
+
+            <ContentReviewsSmallContainer>
+              {!loading && <ListStyled>{items}</ListStyled>}
+            </ContentReviewsSmallContainer>
           </ContentMapStyled>
         </ContentStyled>
       </PageComponent>
