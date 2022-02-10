@@ -1,4 +1,4 @@
-import { withAuthUser } from 'next-firebase-auth';
+import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import React from 'react';
 import MainContainer from '../../components/layout/MainContainer';
 import PageComponent from '../../components/layout/PageComponent';
@@ -16,5 +16,7 @@ export function AboutUs() {
     </MainContainer>
   );
 }
+
+export const getServerSideProps = withAuthUserTokenSSR({})();
 
 export default withAuthUser()(AboutUs);

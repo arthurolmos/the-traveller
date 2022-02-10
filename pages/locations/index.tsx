@@ -1,4 +1,4 @@
-import { withAuthUser } from 'next-firebase-auth';
+import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import React from 'react';
 import SearchInput from '../../components/input/SearchInput';
 import MainContainer from '../../components/layout/MainContainer';
@@ -134,5 +134,7 @@ export function Locations() {
     </MainContainer>
   );
 }
+
+export const getServerSideProps = withAuthUserTokenSSR({})();
 
 export default withAuthUser()(Locations);
