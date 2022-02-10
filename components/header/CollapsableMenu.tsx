@@ -13,17 +13,16 @@ import MenuItem from './MenuItem';
 
 interface Props {
   open: boolean;
-  collapsed: boolean;
 }
 
-export default function CollapsableMenu({ open, collapsed }: Props) {
+export default function CollapsableMenu({ open }: Props) {
   const { route } = useRouter();
 
   const AuthUser = useAuthUser();
   const user = AuthUser.id ? AuthUser : null;
 
   return (
-    <CollapsableMenuStyled open={open} collapsed={collapsed}>
+    <CollapsableMenuStyled open={open}>
       <CollapsableMenuListContainerStyled>
         {menuOptions.map((item, index) => {
           return <MenuItem item={item} key={index} route={route} />;
