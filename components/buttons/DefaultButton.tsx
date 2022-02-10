@@ -8,7 +8,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export default function DefaultButton(props: Props) {
-  const { title, inverted = false, onClick, ...rest } = props;
+  const { title, inverted = false, onClick } = props;
 
   return (
     <DefaultButtonStyled inverted={inverted} onClick={onClick}>

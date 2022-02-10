@@ -11,7 +11,6 @@ import {
   ContentPanelStyled,
   ContentSearchStyled,
   ContentMapStyled,
-  ContentReviewsContainer,
   ContentReviewsDefaultContainer,
   ContentReviewsSmallContainer,
 } from '../../styles/pages/Locations';

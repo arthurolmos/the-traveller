@@ -1,8 +1,8 @@
 import React from 'react';
-import { DefaultFormStyled } from '../../styles/pages/SignIn';
+import { DefaultFormStyled } from '../../styles/components/forms/DefaultForm';
 
-interface Props extends React.FormHTMLAttributes<HTMLFormElement> {}
-
-export default function DefaultForm({ children }: Props) {
+export default function DefaultForm({
+  children,
+}: React.FormHTMLAttributes<HTMLFormElement>) {
   return <DefaultFormStyled>{children}</DefaultFormStyled>;
 }
