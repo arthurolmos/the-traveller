@@ -10,6 +10,7 @@ import PageComponent from '../../components/layout/PageComponent';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../../firebase/db';
 import { CircleLoaderSpinner } from '../../components/spinners/CircleLoader';
+import Link from 'next/link';
 
 export function Posts() {
   const AuthUser = useAuthUser();
@@ -66,11 +67,13 @@ export function Posts() {
   const publishedPostsItems = React.useMemo(() => {
     return publishedPosts.map((item) => {
       return (
-        <div key={item.id}>
-          <div>{item.id}</div>
-          <div>{item.title}</div>
-          <div>{item.uid}</div>
-        </div>
+        <Link href={`/posts/${item.id}`} passHref>
+          <div key={item.id}>
+            <div>{item.id}</div>
+            <div>{item.title}</div>
+            <div>{item.uid}</div>
+          </div>
+        </Link>
       );
     });
   }, [publishedPosts]);
@@ -78,11 +81,13 @@ export function Posts() {
   const postsUnderReviewItems = React.useMemo(() => {
     return postsUnderReview.map((item) => {
       return (
-        <div key={item.id}>
-          <div>{item.id}</div>
-          <div>{item.title}</div>
-          <div>{item.uid}</div>
-        </div>
+        <Link href={`/posts/${item.id}`} passHref>
+          <div key={item.id}>
+            <div>{item.id}</div>
+            <div>{item.title}</div>
+            <div>{item.uid}</div>
+          </div>
+        </Link>
       );
     });
   }, [postsUnderReview]);
