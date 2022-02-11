@@ -15,7 +15,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { SpinnerContainerStyled } from '../../styles/pages/SignIn';
 import Link from 'next/link';
 import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
-import DefaultForm from '../../components/form/DefaultForm';
+import SignForm from '../../components/form/SignForm';
 
 export function SignIn() {
   const auth = getAuth();
@@ -49,7 +49,7 @@ export function SignIn() {
   return (
     <MainContainer title="Sign In">
       <PageComponent title="Sign In">
-        <DefaultForm>
+        <SignForm>
           <DefaultInput
             placeholder="Email"
             type="email"
@@ -71,7 +71,7 @@ export function SignIn() {
           ) : (
             <DefaultButton title="Create Account" inverted onClick={submit} />
           )}
-        </DefaultForm>
+        </SignForm>
 
         <p style={{ textAlign: 'center' }}>
           Don`t have an account? <Link href="/signin">Click here!</Link>

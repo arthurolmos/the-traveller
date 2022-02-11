@@ -19,7 +19,7 @@ import {
 import { SpinnerContainerStyled } from '../../styles/pages/SignUp';
 import Link from 'next/link';
 import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
-import DefaultForm from '../../components/form/DefaultForm';
+import SignForm from '../../components/form/SignForm';
 
 export function SignUp() {
   const auth = getAuth();
@@ -74,7 +74,7 @@ export function SignUp() {
   return (
     <MainContainer title="Sign Up">
       <PageComponent title="Sign Up">
-        <DefaultForm onSubmit={submit}>
+        <SignForm onSubmit={submit}>
           <DefaultInput
             value={firstName}
             placeholder="First Name"
@@ -120,7 +120,7 @@ export function SignUp() {
           ) : (
             <DefaultButton title="Create Account" inverted onClick={submit} />
           )}
-        </DefaultForm>
+        </SignForm>
 
         <p style={{ textAlign: 'center' }}>
           Already have an account? <Link href="/signin">Click here!</Link>

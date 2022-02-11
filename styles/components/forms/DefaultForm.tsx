@@ -5,9 +5,4 @@ export const DefaultFormStyled = styled.form`
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  width: 500px;
-
-  @media (max-width: 600px) {
-    width: 300px;
-  }
 `;
