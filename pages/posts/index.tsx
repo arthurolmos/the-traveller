@@ -1,14 +1,13 @@
+import React from 'react';
 import {
   AuthAction,
   useAuthUser,
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
-import React from 'react';
 import MainContainer from '../../components/layout/MainContainer';
 import PageComponent from '../../components/layout/PageComponent';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import { db } from '../../firebase/db';
+import { db, collection, onSnapshot, query, where } from '../../firebase/db';
 import { CircleLoaderSpinner } from '../../components/spinners/CircleLoader';
 import Link from 'next/link';
 
