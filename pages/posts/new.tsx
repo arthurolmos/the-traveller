@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   AuthAction,
+  useAuthUser,
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
@@ -13,8 +14,14 @@ import DefaultButton from '../../components/buttons/DefaultButton';
 import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../firebase/db';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 export function NewPost() {
+  const router = useRouter();
+  const AuthUser = useAuthUser();
+  const uid = AuthUser.id;
+
   const [loading, setLoading] = React.useState(false);
   const [title, setTitle] = React.useState('');
   const [text, setText] = React.useState('');
@@ -23,13 +30,22 @@ export function NewPost() {
     e.preventDefault();
 
     try {
-      const docRef = await addDoc(collection(db, 'reviews'), {
+      setLoading(true);
+
+      const docRef = await addDoc(collection(db, `posts`), {
+        uid,
         title,
         text,
+        review: true,
       });
 
-      console.log('Document written with ID: ', docRef.id);
+      toast.success(`Document written with ID: ${docRef.id}`);
+
+      setLoading(false);
+
+      router.push('/posts');
     } catch (e) {
+      setLoading(false);
       console.error('Error adding document: ', e);
     }
   };
