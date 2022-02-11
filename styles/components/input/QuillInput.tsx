@@ -11,4 +11,16 @@ const ReactQuill = dynamic(
 
 export const QuillInputStyled = styled(ReactQuill)`
   height: 300px;
+  width: 100%;
+`;
+
+export const QuillInputContainerStyled = styled.div`
+  margin-bottom: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 600px) {
+    margin-bottom: 80px;
+  }
 `;

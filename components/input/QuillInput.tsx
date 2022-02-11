@@ -1,4 +1,7 @@
-import { QuillInputStyled } from '../../styles/components/input/QuillInput';
+import {
+  QuillInputContainerStyled,
+  QuillInputStyled,
+} from '../../styles/components/input/QuillInput';
 
 interface Props {
   onChange: React.Dispatch<React.SetStateAction<string>>;
@@ -7,5 +10,9 @@ interface Props {
 }
 
 export default function QuillInput({ ...rest }: Props) {
-  return <QuillInputStyled theme="snow" {...rest} />;
+  return (
+    <QuillInputContainerStyled>
+      <QuillInputStyled theme="snow" {...rest} />;
+    </QuillInputContainerStyled>
+  );
 }

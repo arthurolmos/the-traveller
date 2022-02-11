@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const DefaultInputStyled = styled.input`
   border: ${({ theme }) => `1px solid ${theme.main.gray}`};
