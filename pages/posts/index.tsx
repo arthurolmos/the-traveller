@@ -5,20 +5,21 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
-import MainContainer from '../../components/layout/MainContainer';
-import PageComponent from '../../components/layout/PageComponent';
+import MainContainer from '../../components/layouts/MainContainer';
+import PageComponent from '../../components/layouts/PageComponent';
 import { db, collection, onSnapshot, query, where } from '../../firebase/db';
-import { CircleLoaderSpinner } from '../../components/spinners/CircleLoader';
-import Link from 'next/link';
+import { IPost } from '../../interfaces';
+import { PostsGridStyled } from '../../styles/pages/posts/Posts';
+import PostsSection from '../../components/posts/PostsSection';
 
 export function Posts() {
   const AuthUser = useAuthUser();
   const uid = AuthUser.id;
 
-  const [publishedPosts, setPublishedPosts] = React.useState([]);
+  const [publishedPosts, setPublishedPosts] = React.useState<IPost[]>([]);
   const [loadingPublishedPosts, setLoadingPublishedPosts] =
     React.useState(false);
-  const [postsUnderReview, setPostsUnderReview] = React.useState([]);
+  const [postsUnderReview, setPostsUnderReview] = React.useState<IPost[]>([]);
   const [loadingPostsUnderReview, setLoadingPostsUnderReview] =
     React.useState(false);
 
@@ -29,13 +30,15 @@ export function Posts() {
     const publishedQuery = query(
       collection(db, 'posts'),
       where('review', '==', false),
-      where('uid', '==', uid)
+      where('author', '==', uid)
     );
 
-    const unsubUnderReview = onSnapshot(publishedQuery, (querySnapshot) => {
+    const unsubPublished = onSnapshot(publishedQuery, (querySnapshot) => {
       const posts = [];
       querySnapshot.forEach((doc) => {
-        posts.push(doc.data());
+        const post = doc.data();
+        post.id = doc.id;
+        posts.push(post);
       });
       setLoadingPublishedPosts(false);
       setPublishedPosts([...posts]);
@@ -44,9 +47,10 @@ export function Posts() {
     const reviewQuery = query(
       collection(db, 'posts'),
       where('review', '==', true),
-      where('uid', '==', uid)
+      where('author', '==', uid)
     );
-    const unsubPublished = onSnapshot(reviewQuery, (querySnapshot) => {
+
+    const unsubUnderReview = onSnapshot(reviewQuery, (querySnapshot) => {
       const posts = [];
       querySnapshot.forEach((doc) => {
         const post = doc.data();
@@ -63,113 +67,28 @@ export function Posts() {
     };
   }, []);
 
-  const publishedPostsItems = React.useMemo(() => {
-    return publishedPosts.map((item) => {
-      return (
-        <Link href={`/posts/${item.id}`} passHref>
-          <div key={item.id}>
-            <div>{item.id}</div>
-            <div>{item.title}</div>
-            <div>{item.uid}</div>
-          </div>
-        </Link>
-      );
-    });
-  }, [publishedPosts]);
-
-  const postsUnderReviewItems = React.useMemo(() => {
-    return postsUnderReview.map((item) => {
-      return (
-        <Link href={`/posts/${item.id}`} passHref>
-          <div key={item.id}>
-            <div>{item.id}</div>
-            <div>{item.title}</div>
-            <div>{item.uid}</div>
-          </div>
-        </Link>
-      );
-    });
-  }, [postsUnderReview]);
-
-  React.useEffect(() => {
-    console.log({ publishedPosts, postsUnderReview });
-  }, [publishedPosts, postsUnderReview]);
-
   return (
     <MainContainer title="My Posts">
       <PageComponent title="My Posts">
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
-            gap: 40,
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              flex: 1,
-            }}
-          >
-            <h2
-              style={{
-                textAlign: 'center',
-              }}
-            >
-              Posts awaiting review
-            </h2>
-            <div>
-              {loadingPostsUnderReview ? (
-                <CircleLoaderSpinner loading={loadingPostsUnderReview} />
-              ) : (
-                postsUnderReviewItems
-              )}
-            </div>
-          </div>
+        <PostsGridStyled>
+          <PostsSection
+            posts={publishedPosts}
+            title="Published Posts"
+            loading={loadingPublishedPosts}
+          />
 
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              flex: 1,
-            }}
-          >
-            <h2
-              style={{
-                textAlign: 'center',
-              }}
-            >
-              Published Posts
-            </h2>
+          <PostsSection
+            posts={postsUnderReview}
+            title="Posts under Review"
+            loading={loadingPostsUnderReview}
+          />
 
-            <div>
-              {loadingPublishedPosts ? (
-                <CircleLoaderSpinner loading={loadingPublishedPosts} />
-              ) : (
-                publishedPostsItems
-              )}
-            </div>
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              flex: 1,
-            }}
-          >
-            <h2
-              style={{
-                textAlign: 'center',
-              }}
-            >
-              What else?
-            </h2>
-
-            <div>...</div>
-          </div>
-        </div>
+          <PostsSection
+            posts={postsUnderReview}
+            title="Posts under Review"
+            loading={loadingPostsUnderReview}
+          />
+        </PostsGridStyled>
       </PageComponent>
     </MainContainer>
   );
