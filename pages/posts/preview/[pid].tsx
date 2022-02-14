@@ -4,129 +4,13 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
-import MainContainer from '../../../components/layouts/MainContainer';
 import { db, getDoc, doc } from '../../../firebase/db';
-import {
-  storage,
-  ref,
-  getDownloadURL,
-  listAll,
-} from '../../../firebase/storage';
-import Image from 'next/image';
-import { BeatLoaderSpinner } from '../../../components/spinners/BeatLoader';
-import {
-  CoverImageContainerStyled,
-  CoverImageDescriptionStyled,
-  GalleryImageContainerStyled,
-  PageContainerStyled,
-  ContentContainerStyled,
-  TextSectionStyled,
-  GallerySectionStyled,
-  GalleryGridStyled,
-  ImageDisplayStyled,
-  ImageDisplayContainerStyled,
-} from '../../../styles/pages/posts/Post';
-import { FaTimes } from 'react-icons/fa';
+import { Post as PreviewPost } from '../[pid]';
+import { IPost } from '../../../interfaces';
+import { Timestamp } from 'firebase/firestore';
 
-export function PreviewPost(props) {
-  const { post } = props;
-
-  const [loading, setLoading] = React.useState(false);
-  const [coverImage, setCoverImage] = React.useState('');
-  const [galleryImages, setGalleryImages] = React.useState<string[]>([]);
-  const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
-
-  React.useEffect(() => {
-    async function getCoverImage() {
-      setLoading(true);
-
-      const coverImageRef = ref(storage, `posts/${post.id}/${post.coverImage}`);
-      const url = await getDownloadURL(coverImageRef);
-
-      setLoading(false);
-      setCoverImage(url);
-    }
-
-    async function getGalleryImagesPaths() {
-      try {
-        const galleryImagesRef = ref(storage, `posts/${post.id}/gallery`);
-        const files = await listAll(galleryImagesRef);
-
-        if (files?.items?.length > 0) {
-          const paths = files.items.map((item) => item.fullPath);
-
-          for (let i = 0; i < paths.length; i++) {
-            const imageRef = ref(storage, paths[i]);
-            const url = await getDownloadURL(imageRef);
-
-            galleryImages.push(url);
-
-            setGalleryImages([...galleryImages]);
-          }
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    getCoverImage();
-    getGalleryImagesPaths();
-  }, [post]);
-
-  const galleryImageItems = React.useMemo(() => {
-    return galleryImages.map((image, index) => {
-      return (
-        <GalleryImageContainerStyled
-          key={index}
-          onClick={() => setSelectedImage(image)}
-        >
-          <Image src={image} objectFit="cover" layout="fill" />
-        </GalleryImageContainerStyled>
-      );
-    });
-  }, [galleryImages]);
-
-  return (
-    <MainContainer title={post.title}>
-      {selectedImage && (
-        <ImageDisplayStyled>
-          <ImageDisplayContainerStyled>
-            <FaTimes onClick={() => setSelectedImage(null)} size={32} />
-            <Image src={selectedImage} layout="fill" objectFit="contain" />
-          </ImageDisplayContainerStyled>
-        </ImageDisplayStyled>
-      )}
-      <PageContainerStyled>
-        <CoverImageContainerStyled>
-          {loading ? (
-            <BeatLoaderSpinner loading={loading} />
-          ) : (
-            coverImage && (
-              <Image objectFit="cover" layout="fill" src={coverImage} />
-            )
-          )}
-          <CoverImageDescriptionStyled>
-            <h1>{post.title}</h1>
-            <h2>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Obcaecati, cupiditate?
-            </h2>
-            <h3>By {post.author}</h3>
-          </CoverImageDescriptionStyled>
-        </CoverImageContainerStyled>
-
-        <ContentContainerStyled>
-          <TextSectionStyled dangerouslySetInnerHTML={{ __html: post.text }} />
-
-          <GallerySectionStyled>
-            <h2 style={{ textAlign: 'center' }}>Gallery</h2>
-
-            <GalleryGridStyled>{galleryImageItems}</GalleryGridStyled>
-          </GallerySectionStyled>
-        </ContentContainerStyled>
-      </PageContainerStyled>
-    </MainContainer>
-  );
+interface Props {
+  post: IPost;
 }
 
 export const getServerSideProps = withAuthUserTokenSSR({
@@ -141,7 +25,13 @@ export const getServerSideProps = withAuthUserTokenSSR({
     const post = docSnap.data();
     post.id = docSnap.id;
 
-    if (AuthUser.id !== post.author) {
+    post.createdAt = post.createdAt as Timestamp;
+    post.createdAt = post.createdAt.toDate().toString();
+
+    post.updatedAt = post.updatedAt as Timestamp;
+    post.updatedAt = post.updatedAt.toDate().toString();
+
+    if (AuthUser.id !== post.authorId) {
       return {
         notFound: true,
       };
@@ -159,6 +49,6 @@ export const getServerSideProps = withAuthUserTokenSSR({
   }
 });
 
-export default withAuthUser({
+export default withAuthUser<Props>({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
 })(PreviewPost);
