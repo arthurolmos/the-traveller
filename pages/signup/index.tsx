@@ -98,7 +98,7 @@ export function SignUp() {
 
           <DefaultInput
             value={password}
-            type="new-password"
+            type="password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -108,7 +108,7 @@ export function SignUp() {
               borderColor: password === confirmPassword ? 'lightgreen' : 'red',
             }}
             value={confirmPassword}
-            type="new-password"
+            type="password"
             placeholder="Confirm Password"
             onChange={(e) => setConfirmPassword(e.target.value)}
           />

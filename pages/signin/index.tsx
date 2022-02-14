@@ -58,7 +58,7 @@ export function SignIn() {
           />
 
           <DefaultInput
-            type="new-password"
+            type="password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
