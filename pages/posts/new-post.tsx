@@ -5,10 +5,10 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
-import DefaultInput from '../../components/input/DefaultInput';
-import MainContainer from '../../components/layout/MainContainer';
-import PageComponent from '../../components/layout/PageComponent';
-import QuillInput from '../../components/input/QuillInput';
+import DefaultInput from '../../components/inputs/DefaultInput';
+import MainContainer from '../../components/layouts/MainContainer';
+import PageComponent from '../../components/layouts/PageComponent';
+import QuillInput from '../../components/inputs/QuillInput';
 import DefaultButton from '../../components/buttons/DefaultButton';
 import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
 import { db, collection, addDoc } from '../../firebase/db';
@@ -20,10 +20,13 @@ import {
   FormStyled,
   InfoStyled,
   LabelStyled,
+  SubmitContainerStyled,
   ThumbnailPreviewContainerStyled,
   ThumbnailPreviewStyled,
-} from '../../styles/pages/NewPost';
-import LabelInput from '../../components/input/LabelInput';
+} from '../../styles/pages/posts/NewPost';
+import LabelInput from '../../components/inputs/LabelInput';
+import Image from 'next/image';
+import { IPost } from '../../interfaces';
 
 export function NewPost() {
   const router = useRouter();
@@ -52,14 +55,15 @@ export function NewPost() {
         coverImageTitle = `${name}-${Date.now()}.${ext}`;
       }
 
-      // Creates the Document on Firestore
-      const docRef = await addDoc(collection(db, `posts`), {
-        uid,
+      const newPost: IPost = {
+        author: uid,
         title,
         text,
         review: true,
-        coverImageTitle,
-      });
+        coverImage: coverImageTitle,
+      };
+      // Creates the Document on Firestore
+      const docRef = await addDoc(collection(db, `posts`), newPost);
 
       // Uploads Cover Image to Storage
       if (coverImageTitle !== '') {
@@ -137,7 +141,11 @@ export function NewPost() {
           onClick={() => removeFromGallery(image.name)}
           key={index}
         >
-          <img src={URL.createObjectURL(image)} />
+          <Image
+            src={URL.createObjectURL(image)}
+            layout="fill"
+            objectFit="cover"
+          />
         </ThumbnailPreviewStyled>
       );
     });
@@ -179,7 +187,11 @@ export function NewPost() {
               <CoverImagePreviewStyled
                 onClick={() => coverImageInputRef.current.click()}
               >
-                <img src={URL.createObjectURL(coverImage)} />
+                <Image
+                  src={URL.createObjectURL(coverImage)}
+                  layout="fill"
+                  objectFit="cover"
+                />
               </CoverImagePreviewStyled>
             )}
 
@@ -199,14 +211,7 @@ export function NewPost() {
             {galleryThumbnails}
           </ThumbnailPreviewContainerStyled>
 
-          <div
-            style={{
-              marginTop: 40,
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
+          <SubmitContainerStyled>
             {loading ? (
               <BeatLoaderSpinner loading={loading} />
             ) : (
@@ -216,7 +221,7 @@ export function NewPost() {
                 onClick={submit}
               />
             )}
-          </div>
+          </SubmitContainerStyled>
         </FormStyled>
       </PageComponent>
     </MainContainer>
