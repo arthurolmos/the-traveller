@@ -5,8 +5,8 @@ import {
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
 import React from 'react';
-import MainContainer from '../../components/layout/MainContainer';
-import PageComponent from '../../components/layout/PageComponent';
+import MainContainer from '../../components/layouts/MainContainer';
+import PageComponent from '../../components/layouts/PageComponent';
 
 export function User() {
   const AuthUser = useAuthUser();

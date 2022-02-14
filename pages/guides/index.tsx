@@ -1,8 +1,8 @@
 import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import React from 'react';
 import GuideItem from '../../components/guides/GuideItem';
-import MainContainer from '../../components/layout/MainContainer';
-import PageComponent from '../../components/layout/PageComponent';
+import MainContainer from '../../components/layouts/MainContainer';
+import PageComponent from '../../components/layouts/PageComponent';
 import { IGuideItem } from '../../interfaces/IGuideItem';
 import { GuidesContentStyled } from '../../styles/pages/Guides';
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import MainContainer from '../../components/layout/MainContainer';
-import PageComponent from '../../components/layout/PageComponent';
-import DefaultInput from '../../components/input/DefaultInput';
+import MainContainer from '../../components/layouts/MainContainer';
+import PageComponent from '../../components/layouts/PageComponent';
+import DefaultInput from '../../components/inputs/DefaultInput';
 import DefaultButton from '../../components/buttons/DefaultButton';
 import { toast } from 'react-toastify';
 import exceptionHandler from '../../lib/exceptionHandler';
@@ -15,7 +15,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { SpinnerContainerStyled } from '../../styles/pages/SignIn';
 import Link from 'next/link';
 import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
-import SignForm from '../../components/form/SignForm';
+import SignForm from '../../components/forms/SignForm';
 
 export function SignIn() {
   const auth = getAuth();
