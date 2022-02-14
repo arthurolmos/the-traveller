@@ -30,8 +30,10 @@ import { IPost, IPostStatus } from '../../interfaces';
 
 export function NewPost() {
   const router = useRouter();
+
   const AuthUser = useAuthUser();
   const uid = AuthUser.id;
+  const name = AuthUser.displayName;
 
   const [loading, setLoading] = React.useState(false);
   const [title, setTitle] = React.useState('');
@@ -56,11 +58,14 @@ export function NewPost() {
       }
 
       const newPost: IPost = {
-        author: uid,
+        authorId: uid,
+        authorName: name,
         title,
         text,
         status: IPostStatus.PENDING_APPROVAL,
         coverImage: coverImageTitle,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
       // Creates the Document on Firestore
       const docRef = await addDoc(collection(db, `posts`), newPost);

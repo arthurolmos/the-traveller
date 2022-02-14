@@ -34,7 +34,7 @@ export function Posts() {
     const approvedPostsQuery = query(
       collection(db, 'posts'),
       where('status', '==', IPostStatus.APPROVED),
-      where('author', '==', uid)
+      where('authorId', '==', uid)
     );
 
     const unsubApprovedPosts = onSnapshot(
@@ -54,7 +54,7 @@ export function Posts() {
     const postsPendingApprovalQuery = query(
       collection(db, 'posts'),
       where('status', '==', IPostStatus.PENDING_APPROVAL),
-      where('author', '==', uid)
+      where('authorId', '==', uid)
     );
 
     const unsubPostsPendingApproval = onSnapshot(
@@ -74,7 +74,7 @@ export function Posts() {
     const rejectedPostsQuery = query(
       collection(db, 'posts'),
       where('status', '==', IPostStatus.REJECTED),
-      where('author', '==', uid)
+      where('authorId', '==', uid)
     );
 
     const unsubRejectedPosts = onSnapshot(
