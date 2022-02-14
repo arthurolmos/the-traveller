@@ -22,6 +22,7 @@ import {
   ImageDisplayContainerStyled,
 } from '../../styles/pages/posts/Post';
 import { FaTimes } from 'react-icons/fa';
+import { IPostStatus } from '../../interfaces';
 
 export function Post(props) {
   const { post } = props;
@@ -125,7 +126,7 @@ export function Post(props) {
 
 export const getServerSideProps = withAuthUserTokenSSR({
   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
-})(async ({ AuthUser, params }) => {
+})(async ({ params }) => {
   const { pid } = params;
 
   const docRef = doc(db, 'posts', pid as string);
@@ -134,6 +135,12 @@ export const getServerSideProps = withAuthUserTokenSSR({
   if (docSnap.exists()) {
     const post = docSnap.data();
     post.id = docSnap.id;
+
+    if (post.status !== IPostStatus.APPROVED) {
+      return {
+        notFound: true,
+      };
+    }
 
     return {
       props: {

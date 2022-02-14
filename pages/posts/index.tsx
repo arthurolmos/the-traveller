@@ -23,6 +23,8 @@ export function Posts() {
   >([]);
   const [loadingPostsPendingApproval, setLoadingPostsPendingApproval] =
     React.useState(false);
+  const [rejectedPosts, setRejectedPosts] = React.useState<IPost[]>([]);
+  const [loadingRejectedPosts, setLoadingRejectedPosts] = React.useState(false);
 
   React.useEffect(() => {
     setLoadingApprovedPosts(true);
@@ -68,32 +70,55 @@ export function Posts() {
       }
     );
 
+    const rejectedPostsQuery = query(
+      collection(db, 'posts'),
+      where('status', '==', IPostStatus.REJECTED),
+      where('author', '==', uid)
+    );
+
+    const unsubRejectedPosts = onSnapshot(
+      rejectedPostsQuery,
+      (querySnapshot) => {
+        const posts = [];
+        querySnapshot.forEach((doc) => {
+          const post = doc.data();
+          post.id = doc.id;
+          posts.push(post);
+        });
+        setLoadingRejectedPosts(false);
+        setRejectedPosts([...posts]);
+      }
+    );
+
     return () => {
-      unsubPostsPendingApproval();
       unsubApprovedPosts();
+      unsubPostsPendingApproval();
+      unsubRejectedPosts();
     };
   }, []);
 
   return (
     <MainContainer title="My Posts">
       <PageComponent title="My Posts">
-        <PostsSection
-          posts={postsPendingApproval}
-          title="Posts under Review"
-          loading={loadingPostsPendingApproval}
-        />
-
-        <PostsSection
-          posts={postsPendingApproval}
-          title="Posts under Review"
-          loading={loadingPostsPendingApproval}
-        />
-
         <PostsGridStyled>
           <PostsSection
             posts={approvedPosts}
-            title="Approved Posts"
+            title={IPostStatus.APPROVED}
             loading={loadingApprovedPosts}
+          />
+
+          <PostsSection
+            posts={postsPendingApproval}
+            title={IPostStatus.PENDING_APPROVAL}
+            loading={loadingPostsPendingApproval}
+            preview={true}
+          />
+
+          <PostsSection
+            posts={rejectedPosts}
+            title={IPostStatus.REJECTED}
+            loading={loadingRejectedPosts}
+            preview={true}
           />
         </PostsGridStyled>
       </PageComponent>
