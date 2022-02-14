@@ -1,7 +1,7 @@
 import {
   QuillInputContainerStyled,
   QuillInputStyled,
-} from '../../styles/components/input/QuillInput';
+} from '../../styles/components/inputs/QuillInput';
 
 interface Props {
   onChange: React.Dispatch<React.SetStateAction<string>>;

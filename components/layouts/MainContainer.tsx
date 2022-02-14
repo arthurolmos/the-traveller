@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
-import { MainContainerStyled } from '../../styles/components/layout/MainContainer';
+import { MainContainerStyled } from '../../styles/components/layouts/MainContainer';
 
 interface Props {
   title: string;

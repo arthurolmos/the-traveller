@@ -1,6 +1,6 @@
 import React from 'react';
-import { DefaultInputStyled } from '../../styles/components/input/DefaultInput';
-import { SearchButtonStyled } from '../../styles/components/input/SearchInput';
+import { DefaultInputStyled } from '../../styles/components/inputs/DefaultInput';
+import { SearchButtonStyled } from '../../styles/components/inputs/SearchInput';
 import { FaSearch } from 'react-icons/fa';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {

@@ -4,7 +4,7 @@ import {
   LabelInputWrapperStyled,
   InputInfoStyled,
   InputLabelStyled,
-} from '../../styles/components/input/LabelInput';
+} from '../../styles/components/inputs/LabelInput';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;

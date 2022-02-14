@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultInputStyled } from '../../styles/components/input/DefaultInput';
+import { DefaultInputStyled } from '../../styles/components/inputs/DefaultInput';
 
 const DefaultInput = React.forwardRef(
   (

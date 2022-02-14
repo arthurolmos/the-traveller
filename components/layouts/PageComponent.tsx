@@ -1,5 +1,5 @@
-import React from "react";
-import { PageComponentStyled } from "../../styles/components/layout/PageComponent";
+import React from 'react';
+import { PageComponentStyled } from '../../styles/components/layouts/PageComponent';
 
 interface Props {
   title: string;
