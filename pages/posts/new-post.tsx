@@ -87,7 +87,7 @@ export function NewPost() {
         });
       }
 
-      toast.success(`Document written with ID: ${docRef.id}`);
+      toast.success(`Post successfully published!`);
 
       setLoading(false);
 
@@ -101,7 +101,6 @@ export function NewPost() {
   const handleCoverFileInput = (e: React.FormEvent<HTMLInputElement>) => {
     const file = (e.target as HTMLInputElement).files[0];
 
-    console.log(file.size);
     if (file?.size > 1024 * 1000 * 1000) {
       toast.warn('File size cannot exceed more than 10MB');
       setCoverImage(null);
