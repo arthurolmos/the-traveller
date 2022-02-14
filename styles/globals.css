@@ -18,3 +18,9 @@ a {
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
+
+p,
+span,
+div {
+  line-height: 1.6em;
+}
