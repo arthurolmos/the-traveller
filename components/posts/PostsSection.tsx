@@ -4,7 +4,7 @@ import {
   ContentStyled,
   PostsSectionStyled,
 } from '../../styles/components/posts/PostsSection';
-import { CircleLoaderSpinner } from '../spinners/CircleLoader';
+import { ClipLoaderSpinner } from '../spinners/ClipLoader';
 import PostListItem from './PostListItem';
 
 interface Props {
@@ -38,7 +38,7 @@ export default function PostsSection({
       <h2>{title}</h2>
       <ContentStyled>
         {loading ? (
-          <CircleLoaderSpinner loading={loading} />
+          <ClipLoaderSpinner loading={loading} />
         ) : (
           <ul>{postsItems}</ul>
         )}

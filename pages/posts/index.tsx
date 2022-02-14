@@ -29,6 +29,7 @@ export function Posts() {
   React.useEffect(() => {
     setLoadingApprovedPosts(true);
     setLoadingPostsPendingApproval(true);
+    setLoadingRejectedPosts(true);
 
     const approvedPostsQuery = query(
       collection(db, 'posts'),
