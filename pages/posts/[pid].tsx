@@ -20,7 +20,7 @@ import {
   GalleryGridStyled,
   ImageDisplayStyled,
   ImageDisplayContainerStyled,
-} from '../../styles/pages/posts/Posts';
+} from '../../styles/pages/posts/Post';
 import { FaTimes } from 'react-icons/fa';
 
 export function Post(props) {

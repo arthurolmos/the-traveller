@@ -8,7 +8,7 @@ import {
 import MainContainer from '../../components/layouts/MainContainer';
 import PageComponent from '../../components/layouts/PageComponent';
 import { db, collection, onSnapshot, query, where } from '../../firebase/db';
-import { IPost } from '../../interfaces';
+import { IPost, IPostStatus } from '../../interfaces';
 import { PostsGridStyled } from '../../styles/pages/posts/Posts';
 import PostsSection from '../../components/posts/PostsSection';
 
@@ -16,77 +16,84 @@ export function Posts() {
   const AuthUser = useAuthUser();
   const uid = AuthUser.id;
 
-  const [publishedPosts, setPublishedPosts] = React.useState<IPost[]>([]);
-  const [loadingPublishedPosts, setLoadingPublishedPosts] =
-    React.useState(false);
-  const [postsUnderReview, setPostsUnderReview] = React.useState<IPost[]>([]);
-  const [loadingPostsUnderReview, setLoadingPostsUnderReview] =
+  const [approvedPosts, setApprovedPosts] = React.useState<IPost[]>([]);
+  const [loadingApprovedPosts, setLoadingApprovedPosts] = React.useState(false);
+  const [postsPendingApproval, setPostsPendingApproval] = React.useState<
+    IPost[]
+  >([]);
+  const [loadingPostsPendingApproval, setLoadingPostsPendingApproval] =
     React.useState(false);
 
   React.useEffect(() => {
-    setLoadingPublishedPosts(true);
-    setLoadingPostsUnderReview(true);
+    setLoadingApprovedPosts(true);
+    setLoadingPostsPendingApproval(true);
 
-    const publishedQuery = query(
+    const approvedPostsQuery = query(
       collection(db, 'posts'),
-      where('review', '==', false),
+      where('status', '==', IPostStatus.APPROVED),
       where('author', '==', uid)
     );
 
-    const unsubPublished = onSnapshot(publishedQuery, (querySnapshot) => {
-      const posts = [];
-      querySnapshot.forEach((doc) => {
-        const post = doc.data();
-        post.id = doc.id;
-        posts.push(post);
-      });
-      setLoadingPublishedPosts(false);
-      setPublishedPosts([...posts]);
-    });
+    const unsubApprovedPosts = onSnapshot(
+      approvedPostsQuery,
+      (querySnapshot) => {
+        const posts = [];
+        querySnapshot.forEach((doc) => {
+          const post = doc.data();
+          post.id = doc.id;
+          posts.push(post);
+        });
+        setLoadingApprovedPosts(false);
+        setApprovedPosts([...posts]);
+      }
+    );
 
-    const reviewQuery = query(
+    const postsPendingApprovalQuery = query(
       collection(db, 'posts'),
-      where('review', '==', true),
+      where('status', '==', IPostStatus.PENDING_APPROVAL),
       where('author', '==', uid)
     );
 
-    const unsubUnderReview = onSnapshot(reviewQuery, (querySnapshot) => {
-      const posts = [];
-      querySnapshot.forEach((doc) => {
-        const post = doc.data();
-        post.id = doc.id;
-        posts.push(post);
-      });
-      setLoadingPostsUnderReview(false);
-      setPostsUnderReview([...posts]);
-    });
+    const unsubPostsPendingApproval = onSnapshot(
+      postsPendingApprovalQuery,
+      (querySnapshot) => {
+        const posts = [];
+        querySnapshot.forEach((doc) => {
+          const post = doc.data();
+          post.id = doc.id;
+          posts.push(post);
+        });
+        setLoadingPostsPendingApproval(false);
+        setPostsPendingApproval([...posts]);
+      }
+    );
 
     return () => {
-      unsubUnderReview();
-      unsubPublished();
+      unsubPostsPendingApproval();
+      unsubApprovedPosts();
     };
   }, []);
 
   return (
     <MainContainer title="My Posts">
       <PageComponent title="My Posts">
+        <PostsSection
+          posts={postsPendingApproval}
+          title="Posts under Review"
+          loading={loadingPostsPendingApproval}
+        />
+
+        <PostsSection
+          posts={postsPendingApproval}
+          title="Posts under Review"
+          loading={loadingPostsPendingApproval}
+        />
+
         <PostsGridStyled>
           <PostsSection
-            posts={publishedPosts}
-            title="Published Posts"
-            loading={loadingPublishedPosts}
-          />
-
-          <PostsSection
-            posts={postsUnderReview}
-            title="Posts under Review"
-            loading={loadingPostsUnderReview}
-          />
-
-          <PostsSection
-            posts={postsUnderReview}
-            title="Posts under Review"
-            loading={loadingPostsUnderReview}
+            posts={approvedPosts}
+            title="Approved Posts"
+            loading={loadingApprovedPosts}
           />
         </PostsGridStyled>
       </PageComponent>

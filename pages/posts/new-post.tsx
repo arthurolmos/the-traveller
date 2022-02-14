@@ -26,7 +26,7 @@ import {
 } from '../../styles/pages/posts/NewPost';
 import LabelInput from '../../components/inputs/LabelInput';
 import Image from 'next/image';
-import { IPost } from '../../interfaces';
+import { IPost, IPostStatus } from '../../interfaces';
 
 export function NewPost() {
   const router = useRouter();
@@ -59,7 +59,7 @@ export function NewPost() {
         author: uid,
         title,
         text,
-        review: true,
+        status: IPostStatus.PENDING_APPROVAL,
         coverImage: coverImageTitle,
       };
       // Creates the Document on Firestore
