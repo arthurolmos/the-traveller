@@ -36,10 +36,7 @@ export function Post(props) {
     async function getCoverImage() {
       setLoading(true);
 
-      const coverImageRef = ref(
-        storage,
-        `posts/${post.id}/${post.coverImageTitle}`
-      );
+      const coverImageRef = ref(storage, `posts/${post.id}/${post.coverImage}`);
       const url = await getDownloadURL(coverImageRef);
 
       setLoading(false);
@@ -125,7 +122,7 @@ export function Post(props) {
 }
 
 export const getServerSideProps = withAuthUserTokenSSR({
-  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+  // whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
 })(async ({ params }) => {
   const { pid } = params;
 
@@ -157,5 +154,5 @@ export const getServerSideProps = withAuthUserTokenSSR({
 });
 
 export default withAuthUser({
-  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+  // whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
 })(Post);

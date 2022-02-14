@@ -40,10 +40,7 @@ export function PreviewPost(props) {
     async function getCoverImage() {
       setLoading(true);
 
-      const coverImageRef = ref(
-        storage,
-        `posts/${post.id}/${post.coverImageTitle}`
-      );
+      const coverImageRef = ref(storage, `posts/${post.id}/${post.coverImage}`);
       const url = await getDownloadURL(coverImageRef);
 
       setLoading(false);
