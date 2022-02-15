@@ -1,11 +1,11 @@
-import React from "react";
-import Image from "next/image";
-import { IGuideItem } from "../../interfaces/IGuideItem";
+import React from 'react';
+import Image from 'next/image';
+import { IGuideItem } from '../../interfaces/IGuideItem';
 import {
   GuideItemDescriptionStyled,
   GuideItemHeaderStyled,
   GuideItemStyled,
-} from "../../styles/components/guides/GuideItem";
+} from '../../styles/components/guides/GuideItem';
 
 interface Props {
   item: IGuideItem;
@@ -23,7 +23,7 @@ export default function GuideItem({ item }: Props) {
       />
       <GuideItemDescriptionStyled>
         <GuideItemHeaderStyled>
-          <h1>{item.title}</h1>
+          <h2>{item.title}</h2>
           <span>by {item.author}</span>
         </GuideItemHeaderStyled>
         <p>{item.subtitle}</p>
