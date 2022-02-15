@@ -8,6 +8,7 @@ import {
   PostImageContainerStyled,
 } from '../../styles/components/home/LatestPostItem';
 import DefaultImage from '../image/DefaultImage';
+import Link from 'next/link';
 
 interface Props {
   post: IPost;
@@ -42,20 +43,22 @@ export function LatestPostItem({ post }: Props) {
   }, [post]);
 
   return (
-    <LatestPostItemStyled>
-      <PostImageContainerStyled>
-        {loading ? (
-          <BeatLoaderSpinner loading={loading} />
-        ) : (
-          <DefaultImage src={coverImage} layout="fill" />
-        )}
-      </PostImageContainerStyled>
+    <Link href={`/posts/${post.id}`} passHref>
+      <LatestPostItemStyled>
+        <PostImageContainerStyled>
+          {loading ? (
+            <BeatLoaderSpinner loading={loading} />
+          ) : (
+            <DefaultImage src={coverImage} layout="fill" objectFit="cover" />
+          )}
+        </PostImageContainerStyled>
 
-      <PostDescriptionContainerStyled>
-        <h2>{post.title}</h2>
-        <span>By {post.authorName}</span>
-        <span>Posted at {post.approvedAt}</span>
-      </PostDescriptionContainerStyled>
-    </LatestPostItemStyled>
+        <PostDescriptionContainerStyled>
+          <h2>{post.title}</h2>
+          <span>By {post.authorName}</span>
+          <span>Posted at {post.approvedAt}</span>
+        </PostDescriptionContainerStyled>
+      </LatestPostItemStyled>
+    </Link>
   );
 }

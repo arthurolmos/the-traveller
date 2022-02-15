@@ -13,7 +13,7 @@ export default function LatestPostsSection({ latestPosts }: Props) {
     <HomeSection title="Latest Community Posts">
       <GridStyled>
         {latestPosts.map((post) => {
-          return <LatestPostItem post={post} />;
+          return <LatestPostItem post={post} key={post.id} />;
         })}
       </GridStyled>
     </HomeSection>

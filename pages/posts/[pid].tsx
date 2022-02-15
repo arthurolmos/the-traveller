@@ -20,6 +20,7 @@ import {
 import { FaTimes } from 'react-icons/fa';
 import { IPost, IPostStatus } from '../../interfaces';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
+import DefaultImage from '../../components/image/DefaultImage';
 
 interface Props {
   post: IPost;
@@ -83,7 +84,7 @@ export function Post(props: Props) {
           key={index}
           onClick={() => setSelectedImage(image)}
         >
-          <Image src={image} objectFit="cover" layout="fill" />
+          <DefaultImage src={image} objectFit="cover" layout="fill" />
         </GalleryImageContainerStyled>
       );
     });
@@ -95,7 +96,7 @@ export function Post(props: Props) {
         <ImageDisplayStyled>
           <ImageDisplayContainerStyled>
             <FaTimes onClick={() => setSelectedImage(null)} size={32} />
-            <Image
+            <DefaultImage
               src={selectedImage}
               layout="fill"
               objectFit="contain"
@@ -109,9 +110,7 @@ export function Post(props: Props) {
           {loading ? (
             <BeatLoaderSpinner loading={loading} />
           ) : (
-            coverImage && (
-              <Image objectFit="cover" layout="fill" src={coverImage} />
-            )
+            <DefaultImage objectFit="cover" layout="fill" src={coverImage} />
           )}
           <CoverImageDescriptionStyled
             style={{ color: coverImage ? 'white' : 'black' }}

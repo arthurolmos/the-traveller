@@ -24,6 +24,16 @@ export const LatestPostItemStyled = styled.div`
       transform: scale(1.1);
     }
   }
+
+  @media (max-width: 1200px) {
+    width: 400px;
+    height: 200px;
+  }
+
+  @media (max-width: 680px) {
+    width: 300px;
+    height: 200px;
+  }
 `;
 
 export const PostImageContainerStyled = styled.div`
