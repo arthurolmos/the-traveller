@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  AuthAction,
-  withAuthUser,
-  withAuthUserTokenSSR,
-} from 'next-firebase-auth';
+import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import MainContainer from '../../components/layouts/MainContainer';
 import { db, getDoc, doc } from '../../firebase/db';
 import { storage, ref, getDownloadURL, listAll } from '../../firebase/storage';
@@ -23,7 +19,7 @@ import {
 } from '../../styles/pages/posts/Post';
 import { FaTimes } from 'react-icons/fa';
 import { IPost, IPostStatus } from '../../interfaces';
-import { Timestamp } from 'firebase/firestore';
+import convertTimestampToDate from '../../lib/covertTimestampToDate';
 
 interface Props {
   post: IPost;
@@ -156,14 +152,9 @@ export const getServerSideProps = withAuthUserTokenSSR({})(
       const post = docSnap.data();
       post.id = docSnap.id;
 
-      post.createdAt = post.createdAt as Timestamp;
-      post.createdAt = post.createdAt.toDate().toString();
-
-      post.updatedAt = post.updatedAt as Timestamp;
-      post.updatedAt = post.updatedAt.toDate().toString();
-
-      post.approvedAt = post.approvedAt as Timestamp;
-      post.approvedAt = post.approvedAt.toDate().toString();
+      post.createdAt = convertTimestampToDate(post.createdAt);
+      post.updatedAt = convertTimestampToDate(post.updatedAt);
+      post.approvedAt = convertTimestampToDate(post.approvedAt);
 
       if (post.status !== IPostStatus.APPROVED) {
         return {

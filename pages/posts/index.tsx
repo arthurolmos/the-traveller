@@ -44,6 +44,7 @@ export function Posts() {
         querySnapshot.forEach((doc) => {
           const post = doc.data();
           post.id = doc.id;
+
           posts.push(post);
         });
         setLoadingApprovedPosts(false);
