@@ -12,7 +12,7 @@ interface Props {
 export default function QuillInput({ ...rest }: Props) {
   return (
     <QuillInputContainerStyled>
-      <QuillInputStyled theme="snow" {...rest} />;
+      <QuillInputStyled theme="snow" {...rest} />
     </QuillInputContainerStyled>
   );
 }
