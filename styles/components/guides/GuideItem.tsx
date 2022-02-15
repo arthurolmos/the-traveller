@@ -39,7 +39,7 @@ export const GuideItemStyled = styled.div`
       transition: background 0.5s ease;
       background: rgba(0, 0, 0, 0.8);
 
-      h1,
+      h2,
       span {
         transition: color 0.5s ease;
         color: white;
@@ -74,30 +74,18 @@ export const GuideItemHeaderStyled = styled.div`
   flex-direction: row;
   align-items: center;
 
-  > h1 {
-    font-size: 2em;
-  }
-
   > span {
     flex: 1;
     text-align: end;
   }
 
   @media (max-width: 1000px) {
-    > h1 {
-      font-size: 1em;
-    }
-
     > span {
       font-size: 0.8em;
     }
   }
 
   @media (max-width: 600px) {
-    > h1 {
-      font-size: 1.5em;
-    }
-
     > span {
       font-size: 1em;
     }

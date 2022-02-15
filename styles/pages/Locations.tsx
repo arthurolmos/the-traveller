@@ -16,7 +16,7 @@ export const ListItemStyled = styled.li<{ index: number }>`
 
   > h1 {
     color: black;
-    font-size: 20px;
+    // font-size: 20px;
   }
 `;
 
