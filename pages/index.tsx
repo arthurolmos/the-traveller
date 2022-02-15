@@ -3,6 +3,18 @@ import GenericSection from '../components/home/GenericSection';
 import MainContainer from '../components/layouts/MainContainer';
 import { ContentContainerStyled } from '../styles/pages/Home';
 import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
+import {
+  db,
+  query,
+  collection,
+  where,
+  orderBy,
+  limit,
+  getDocs,
+} from '../firebase/db';
+import { IPost, IPostStatus } from '../interfaces';
+import convertTimestampToDate from '../lib/covertTimestampToDate';
+import LatestPostsSection from '../components/home/LatestPostsSection';
 
 interface CarouselItem {
   title: string;
@@ -31,13 +43,21 @@ const carouselItems: CarouselItem[] = [
   },
 ];
 
-export function Home() {
+interface Props {
+  latestPosts: IPost[];
+}
+
+export function Home(props: Props) {
+  const { latestPosts } = props;
+
   return (
     <MainContainer title="Home">
       <FadeCarousel items={carouselItems} />
 
       <ContentContainerStyled>
         <GenericSection />
+
+        <LatestPostsSection latestPosts={latestPosts} />
 
         <GenericSection backgroundColor="lightgreen" />
 
@@ -47,6 +67,33 @@ export function Home() {
   );
 }
 
-export const getServerSideProps = withAuthUserTokenSSR({})();
+export const getServerSideProps = withAuthUserTokenSSR({})(async () => {
+  const latestPostsQuery = query(
+    collection(db, 'posts'),
+    where('status', '==', IPostStatus.APPROVED),
+    orderBy('approvedAt', `desc`),
+    limit(6)
+  );
 
-export default withAuthUser()(Home);
+  const docs = await getDocs(latestPostsQuery);
+
+  const latestPosts = [];
+  docs.forEach((doc) => {
+    const post = doc.data();
+    post.id = doc.id;
+
+    post.createdAt = convertTimestampToDate(post.createdAt);
+    post.updatedAt = convertTimestampToDate(post.updatedAt);
+    post.approvedAt = convertTimestampToDate(post.approvedAt);
+
+    latestPosts.push(post);
+  });
+
+  return {
+    props: {
+      latestPosts,
+    },
+  };
+});
+
+export default withAuthUser<Props>()(Home);
