@@ -12,7 +12,7 @@ export const CollapsableMenuStyled = styled.div<{ open: boolean }>`
   flex-direction: row;
   overflow: hidden;
   transition: all 0.5s ease;
-  height: ${({ open }) => (open ? '200px' : 0)};
+  height: ${({ open }) => (open ? '250px' : 0)};
 
   * {
     overflow: hidden;
@@ -23,7 +23,7 @@ export const CollapsableMenuStyled = styled.div<{ open: boolean }>`
   }
 
   @media (max-width: 600px) {
-    height: ${({ open }) => (open ? '400px' : 0)};
+    height: ${({ open }) => (open ? '450px' : 0)};
     flex-direction: column;
   }
 `;
