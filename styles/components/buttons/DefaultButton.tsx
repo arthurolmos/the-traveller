@@ -13,6 +13,7 @@ align-items: center;
 justify-content: center;
 cursor: pointer;
 transition: all .5s ease;
+min-width: 100px;
 color ${({ inverted, theme }) =>
   inverted ? theme.main.white : theme.main.orange};
 
