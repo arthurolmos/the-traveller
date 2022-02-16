@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { menuOptions } from './menuOptions';
 import MenuItem from './MenuItem';
 import AdminMenu from './AdminMenu';
+import { db, getDoc, doc } from '../../firebase/db';
 
 interface Props {
   open: boolean;
@@ -21,6 +22,27 @@ export default function CollapsableMenu({ open }: Props) {
 
   const AuthUser = useAuthUser();
   const user = AuthUser.id ? AuthUser : null;
+
+  const [isAdmin, setIsAdmin] = React.useState(false);
+
+  React.useEffect(() => {
+    async function isAdmin() {
+      const docRef = doc(db, 'users', user.id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const user = docSnap.data();
+
+        setIsAdmin(user.isAdmin);
+      }
+    }
+
+    if (user) isAdmin();
+  }, [user]);
+
+  const menu = React.useMemo(() => {
+    return isAdmin ? <AdminMenu user={user} /> : <UserMenu user={user} />;
+  }, [isAdmin, user]);
 
   return (
     <CollapsableMenuStyled open={open}>
@@ -33,8 +55,7 @@ export default function CollapsableMenu({ open }: Props) {
         {user ? (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div>Hello, {user.displayName}</div>
-            <AdminMenu user={user} />
-            {/* <UserMenu user={user} /> */}
+            {menu}
           </div>
         ) : (
           <>
