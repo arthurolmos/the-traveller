@@ -136,33 +136,41 @@ export function Post(props: Props) {
   );
 }
 
+async function getPost(pid: string) {
+  const docRef = doc(db, 'posts', pid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    const post = docSnap.data();
+    post.id = docSnap.id;
+
+    post.createdAt = convertTimestampToDate(post.createdAt);
+    post.updatedAt = convertTimestampToDate(post.updatedAt);
+    post.approvedAt = convertTimestampToDate(post.approvedAt);
+
+    return post;
+  } else {
+    return null;
+  }
+}
+
 export const getServerSideProps = withAuthUserTokenSSR({})(
   async ({ params }) => {
-    const { pid } = params;
+    try {
+      const { pid } = params;
 
-    const docRef = doc(db, 'posts', pid as string);
-    const docSnap = await getDoc(docRef);
+      const post = await getPost(pid as string);
 
-    if (docSnap.exists()) {
-      const post = docSnap.data();
-      post.id = docSnap.id;
-
-      post.createdAt = convertTimestampToDate(post.createdAt);
-      post.updatedAt = convertTimestampToDate(post.updatedAt);
-      post.approvedAt = convertTimestampToDate(post.approvedAt);
-
-      if (post.status !== IPostStatus.APPROVED) {
-        return {
-          notFound: true,
-        };
-      }
+      if (!post) throw new Error();
 
       return {
         props: {
           post,
         },
       };
-    } else {
+    } catch (err) {
+      console.error(err);
+
       return {
         props: {
           post: null,

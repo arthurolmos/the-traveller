@@ -8,6 +8,7 @@ import { db, getDoc, doc } from '../../../firebase/db';
 import { Post as PreviewPost } from '../[pid]';
 import { IPost } from '../../../interfaces';
 import { Timestamp } from 'firebase/firestore';
+import convertTimestampToDate from '../../../lib/covertTimestampToDate';
 
 interface Props {
   post: IPost;
@@ -21,11 +22,8 @@ async function getPost(pid: string) {
     const post = docSnap.data();
     post.id = docSnap.id;
 
-    post.createdAt = post.createdAt as Timestamp;
-    post.createdAt = post.createdAt.toDate().toString();
-
-    post.updatedAt = post.updatedAt as Timestamp;
-    post.updatedAt = post.updatedAt.toDate().toString();
+    post.createdAt = convertTimestampToDate(post.createdAt);
+    post.updatedAt = convertTimestampToDate(post.updatedAt);
 
     return post;
   } else {
