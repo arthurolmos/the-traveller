@@ -18,28 +18,33 @@ export default function AuthContainer({ open, toggle }: Props) {
   const AuthUser = useAuthUser();
   const user = AuthUser.id ? AuthUser : null;
 
+  const [isAdmin, setIsAdmin] = React.useState(false);
+
   React.useEffect(() => {
     async function isAdmin() {
       const docRef = doc(db, 'users', user.id);
-      const resp = await getDoc(docRef);
+      const docSnap = await getDoc(docRef);
 
-      console.log({ resp });
+      if (docSnap.exists()) {
+        const user = docSnap.data();
+
+        setIsAdmin(user.isAdmin);
+      }
     }
 
     if (user) isAdmin();
   }, [user]);
 
-  // const menu = React.useMemo(() => {
-  //   return user.isAdmin ?
-  // }, ]user)
+  const menu = React.useMemo(() => {
+    return isAdmin ? <AdminMenu user={user} /> : <UserMenu user={user} />;
+  }, [isAdmin, user]);
 
   return (
     <AuthContainerStyled>
       {user ? (
         <UserMenuContainerStyled>
           <span onClick={toggle}>Hello, {user.displayName}</span>
-          {open && <AdminMenu user={user} />}
-          {/* {open && <UserMenu user={user} />} */}
+          {open && menu}
         </UserMenuContainerStyled>
       ) : (
         <>
