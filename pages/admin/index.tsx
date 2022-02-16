@@ -20,8 +20,6 @@ import { PostsGridStyled } from '../../styles/pages/posts/Posts';
 import PostsSection from '../../components/admin/PostsSection';
 
 export function AdminPanel() {
-  const AuthUser = useAuthUser();
-
   const [postsPendingApproval, setPostsPendingApproval] = React.useState<
     IPost[]
   >([]);
@@ -59,14 +57,12 @@ export function AdminPanel() {
   return (
     <MainContainer title="Admin Panel">
       <PageComponent title="Admin Panel">
-        <PostsGridStyled>
-          <PostsSection
-            posts={postsPendingApproval}
-            title={IPostStatus.PENDING_APPROVAL}
-            loading={loadingPostsPendingApproval}
-            preview={true}
-          />
-        </PostsGridStyled>
+        <PostsSection
+          posts={postsPendingApproval}
+          title={IPostStatus.PENDING_APPROVAL}
+          loading={loadingPostsPendingApproval}
+          preview={true}
+        />
       </PageComponent>
     </MainContainer>
   );
