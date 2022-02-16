@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   AuthAction,
   withAuthUser,
@@ -7,7 +6,6 @@ import {
 import { db, getDoc, doc } from '../../../firebase/db';
 import { Post as PreviewPost } from '../[pid]';
 import { IPost } from '../../../interfaces';
-import { Timestamp } from 'firebase/firestore';
 import convertTimestampToDate from '../../../lib/covertTimestampToDate';
 
 interface Props {

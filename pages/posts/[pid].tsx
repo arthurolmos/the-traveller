@@ -3,8 +3,6 @@ import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import MainContainer from '../../components/layouts/MainContainer';
 import { db, getDoc, doc } from '../../firebase/db';
 import { storage, ref, getDownloadURL, listAll } from '../../firebase/storage';
-import Image from 'next/image';
-import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
 import {
   CoverImageContainerStyled,
   CoverImageDescriptionStyled,
@@ -18,7 +16,7 @@ import {
   ImageDisplayContainerStyled,
 } from '../../styles/pages/posts/Post';
 import { FaTimes } from 'react-icons/fa';
-import { IPost, IPostStatus } from '../../interfaces';
+import { IPost } from '../../interfaces';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import DefaultImage from '../../components/image/DefaultImage';
 
@@ -29,7 +27,6 @@ interface Props {
 export function Post(props: Props) {
   const { post } = props;
 
-  const [loading, setLoading] = React.useState(false);
   const [coverImage, setCoverImage] = React.useState<string | null>(null);
   const [galleryImages, setGalleryImages] = React.useState<string[]>([]);
   const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
@@ -37,8 +34,6 @@ export function Post(props: Props) {
   React.useEffect(() => {
     async function getCoverImage() {
       try {
-        setLoading(true);
-
         const coverImageRef = ref(
           storage,
           `posts/${post.id}/${post.coverImage}`
@@ -46,12 +41,10 @@ export function Post(props: Props) {
         const url = await getDownloadURL(coverImageRef);
 
         setCoverImage(url);
-        setLoading(false);
       } catch (err) {
         console.error(err);
 
         setCoverImage(null);
-        setLoading(false);
       }
     }
 
