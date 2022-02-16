@@ -23,7 +23,7 @@ export const CollapsableMenuStyled = styled.div<{ open: boolean }>`
   }
 
   @media (max-width: 600px) {
-    height: ${({ open }) => (open ? '450px' : 0)};
+    height: ${({ open }) => (open ? '500px' : 0)};
     flex-direction: column;
   }
 `;

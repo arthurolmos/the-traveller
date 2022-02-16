@@ -6,6 +6,8 @@ import {
 import SignButton from '../buttons/SignButton';
 import { useAuthUser } from 'next-firebase-auth';
 import UserMenu from './UserMenu';
+import AdminMenu from './AdminMenu';
+import { db, getDoc, doc } from '../../firebase/db';
 
 interface Props {
   open: boolean;
@@ -16,12 +18,28 @@ export default function AuthContainer({ open, toggle }: Props) {
   const AuthUser = useAuthUser();
   const user = AuthUser.id ? AuthUser : null;
 
+  React.useEffect(() => {
+    async function isAdmin() {
+      const docRef = doc(db, 'users', user.id);
+      const resp = await getDoc(docRef);
+
+      console.log({ resp });
+    }
+
+    if (user) isAdmin();
+  }, [user]);
+
+  // const menu = React.useMemo(() => {
+  //   return user.isAdmin ?
+  // }, ]user)
+
   return (
     <AuthContainerStyled>
       {user ? (
         <UserMenuContainerStyled>
           <span onClick={toggle}>Hello, {user.displayName}</span>
-          {open && <UserMenu user={user} />}
+          {open && <AdminMenu user={user} />}
+          {/* {open && <UserMenu user={user} />} */}
         </UserMenuContainerStyled>
       ) : (
         <>

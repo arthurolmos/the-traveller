@@ -10,6 +10,7 @@ import UserMenu from './UserMenu';
 import { useRouter } from 'next/router';
 import { menuOptions } from './menuOptions';
 import MenuItem from './MenuItem';
+import AdminMenu from './AdminMenu';
 
 interface Props {
   open: boolean;
@@ -32,7 +33,8 @@ export default function CollapsableMenu({ open }: Props) {
         {user ? (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div>Hello, {user.displayName}</div>
-            <UserMenu user={user} />
+            <AdminMenu user={user} />
+            {/* <UserMenu user={user} /> */}
           </div>
         ) : (
           <>
