@@ -46,11 +46,7 @@ export function LatestPostItem({ post }: Props) {
     <Link href={`/posts/${post.id}`} passHref>
       <LatestPostItemStyled>
         <PostImageContainerStyled>
-          {loading ? (
-            <BeatLoaderSpinner loading={loading} />
-          ) : (
-            <DefaultImage src={coverImage} layout="fill" objectFit="cover" />
-          )}
+          <DefaultImage objectFit="cover" layout="fill" src={coverImage} />
         </PostImageContainerStyled>
 
         <PostDescriptionContainerStyled>

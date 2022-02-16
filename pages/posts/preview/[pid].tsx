@@ -13,12 +13,8 @@ interface Props {
   post: IPost;
 }
 
-export const getServerSideProps = withAuthUserTokenSSR({
-  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
-})(async ({ AuthUser, params }) => {
-  const { pid } = params;
-
-  const docRef = doc(db, 'posts', pid as string);
+async function getPost(pid: string) {
+  const docRef = doc(db, 'posts', pid);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
@@ -31,10 +27,40 @@ export const getServerSideProps = withAuthUserTokenSSR({
     post.updatedAt = post.updatedAt as Timestamp;
     post.updatedAt = post.updatedAt.toDate().toString();
 
+    return post;
+  } else {
+    return null;
+  }
+}
+
+async function isUserAdmin(uid: string) {
+  const docRef = doc(db, 'users', uid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    const user = docSnap.data();
+
+    return user.isAdmin;
+  } else {
+    return false;
+  }
+}
+
+export const getServerSideProps = withAuthUserTokenSSR({
+  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+})(async ({ AuthUser, params }) => {
+  try {
+    const { pid } = params;
+
+    const post = await getPost(pid as string);
+
+    if (!post) throw new Error();
+
     if (AuthUser.id !== post.authorId) {
-      return {
-        notFound: true,
-      };
+      const isAdmin = await isUserAdmin(AuthUser.id);
+      if (!isAdmin) {
+        throw new Error();
+      }
     }
 
     return {
@@ -42,7 +68,7 @@ export const getServerSideProps = withAuthUserTokenSSR({
         post,
       },
     };
-  } else {
+  } catch (err) {
     return {
       notFound: true,
     };

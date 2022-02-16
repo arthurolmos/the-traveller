@@ -10,7 +10,7 @@ export default function DefaultImage(props: ImageProps) {
       src={src ? src : placeholder}
       {...rest}
       placeholder="blur"
-      blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg=="
+      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOsrAcAAXcA+tGTVsYAAAAASUVORK5CYII="
     />
   );
 }

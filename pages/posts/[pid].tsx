@@ -45,13 +45,13 @@ export function Post(props: Props) {
         );
         const url = await getDownloadURL(coverImageRef);
 
-        setLoading(false);
         setCoverImage(url);
+        setLoading(false);
       } catch (err) {
         console.error(err);
 
-        setLoading(false);
         setCoverImage(null);
+        setLoading(false);
       }
     }
 
@@ -107,11 +107,7 @@ export function Post(props: Props) {
       )}
       <PageContainerStyled>
         <CoverImageContainerStyled>
-          {loading ? (
-            <BeatLoaderSpinner loading={loading} />
-          ) : (
-            <DefaultImage objectFit="cover" layout="fill" src={coverImage} />
-          )}
+          <DefaultImage objectFit="cover" layout="fill" src={coverImage} />
           <CoverImageDescriptionStyled
             style={{ color: coverImage ? 'white' : 'black' }}
           >
