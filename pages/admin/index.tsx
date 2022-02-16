@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   AuthAction,
-  useAuthUser,
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
@@ -9,6 +8,8 @@ import MainContainer from '../../components/layouts/MainContainer';
 import PageComponent from '../../components/layouts/PageComponent';
 import {
   db,
+  getDoc,
+  doc,
   collection,
   onSnapshot,
   query,
@@ -16,7 +17,6 @@ import {
   orderBy,
 } from '../../firebase/db';
 import { IPost, IPostStatus } from '../../interfaces';
-import { PostsGridStyled } from '../../styles/pages/posts/Posts';
 import PostsSection from '../../components/admin/PostsSection';
 
 export function AdminPanel() {
@@ -68,9 +68,30 @@ export function AdminPanel() {
   );
 }
 
+async function isUserAdmin(uid: string) {
+  const docRef = doc(db, 'users', uid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    const user = docSnap.data();
+
+    return user.isAdmin;
+  } else {
+    return false;
+  }
+}
+
 export const getServerSideProps = withAuthUserTokenSSR({
   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
-})();
+})(async ({ AuthUser }) => {
+  const isAdmin = await isUserAdmin(AuthUser.id);
+
+  if (!isAdmin) {
+    return {
+      notFound: true,
+    };
+  }
+});
 
 export default withAuthUser({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
