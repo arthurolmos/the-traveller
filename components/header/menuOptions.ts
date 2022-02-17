@@ -14,8 +14,8 @@ export const menuOptions: IMenuOption[] = [
     link: '/guides',
   },
   {
-    title: 'Network ',
-    link: '/network',
+    title: 'Community ',
+    link: '/community',
   },
   {
     title: 'About Us ',
