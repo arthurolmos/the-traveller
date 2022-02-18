@@ -14,11 +14,13 @@ import {
   GalleryGridStyled,
   ImageDisplayStyled,
   ImageDisplayContainerStyled,
+  StyledGoBack,
 } from '../../styles/pages/posts/Post';
 import { FaTimes } from 'react-icons/fa';
 import { IPost } from '../../interfaces';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import DefaultImage from '../../components/image/DefaultImage';
+import { useRouter } from 'next/router';
 
 interface Props {
   post: IPost;
@@ -26,6 +28,8 @@ interface Props {
 
 export function Post(props: Props) {
   const { post } = props;
+
+  const router = useRouter();
 
   const [coverImage, setCoverImage] = React.useState<string | null>(null);
   const [galleryImages, setGalleryImages] = React.useState<string[]>([]);
@@ -123,6 +127,8 @@ export function Post(props: Props) {
               <GalleryGridStyled>{galleryImageItems}</GalleryGridStyled>
             </GallerySectionStyled>
           )}
+
+          <StyledGoBack onClick={() => router.back()}>Go Back </StyledGoBack>
         </ContentContainerStyled>
       </PageContainerStyled>
     </MainContainer>
