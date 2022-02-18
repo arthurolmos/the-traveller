@@ -36,7 +36,10 @@ export function NewPost() {
   const name = AuthUser.displayName;
 
   const [loading, setLoading] = React.useState(false);
+  const [countriesList, setCountriesList] = React.useState([]);
+  const [loadingCountriesList, setLoadingCountriesList] = React.useState(false);
   const [title, setTitle] = React.useState('');
+  const [country, setCountry] = React.useState('');
   const [text, setText] = React.useState('');
   const [coverImage, setCoverImage] = React.useState<File | null>(null);
   const [galleryImages, setGalleryImages] = React.useState<File[]>([]);
@@ -159,6 +162,22 @@ export function NewPost() {
     });
   }, [galleryImages]);
 
+  React.useEffect(() => {
+    async function getCountriesList() {
+      const resp = await fetch(
+        `http://api.worldbank.org/v2/country/${country}?format=json`
+      );
+      const countries = await resp.json();
+
+      const countryNames = countries[1]?.map((country) => country.name);
+
+      setCountriesList(countryNames);
+    }
+
+    if (country.length >= 3) getCountriesList();
+    else setCountriesList([]);
+  }, [country]);
+
   return (
     <MainContainer title="Write a Post!">
       <PageComponent title="Write a Post!">
@@ -169,6 +188,28 @@ export function NewPost() {
             type="text"
             onChange={(e) => setTitle(e.target.value)}
           />
+
+          <DefaultInput
+            value={country}
+            placeholder="Country"
+            type="text"
+            onChange={(e) => setCountry(e.target.value)}
+            style={{ position: 'relative' }}
+          />
+          {countriesList.length > 0 && (
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                left: 0,
+              }}
+            >
+              {countriesList.map((country) => (
+                <p>{country}</p>
+              ))}
+            </div>
+          )}
 
           <QuillInput
             value={text}
