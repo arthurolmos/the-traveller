@@ -84,8 +84,8 @@ export default function PostListItem({ item, index, preview }: Props) {
       <Link href={href} passHref>
         <PostDescriptionStyled>
           <h3>{item.title}</h3>
-          <span>Author Name: {item.authorName}</span>
-          <span>Author ID: {item.authorId}</span>
+          <span>Author Name: {item.author.name}</span>
+          <span>Author ID: {item.author.id}</span>
           <span>Published at: {createdAt}</span>
         </PostDescriptionStyled>
       </Link>

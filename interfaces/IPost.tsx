@@ -1,4 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
+import { ICountry } from './ICountry';
 
 export enum IPostStatus {
   PENDING_APPROVAL = 'Pending Approval',
@@ -9,9 +10,12 @@ export enum IPostStatus {
 export interface IPost {
   id?: string;
   title: string;
+  country: ICountry;
   text: string;
-  authorId: string;
-  authorName: string;
+  author: {
+    id: string;
+    name: string;
+  };
   status: IPostStatus;
   coverImage?: string;
   createdAt: Date | Timestamp;

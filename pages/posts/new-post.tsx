@@ -7,7 +7,7 @@ import {
 } from 'next-firebase-auth';
 import {
   LabelInput,
-  HintInput,
+  CountrySelectInput,
   QuillInput,
   DefaultInput,
 } from '../../components/inputs';
@@ -38,10 +38,8 @@ export function NewPost() {
   const name = AuthUser.displayName;
 
   const [loading, setLoading] = React.useState(false);
-  const [countriesList, setCountriesList] = React.useState([]);
-  const [loadingCountriesList, setLoadingCountriesList] = React.useState(false);
   const [title, setTitle] = React.useState('');
-  const [country, setCountry] = React.useState('');
+  const [country, setCountry] = React.useState<ICountry | null>(null);
   const [text, setText] = React.useState('');
   const [coverImage, setCoverImage] = React.useState<File | null>(null);
   const [galleryImages, setGalleryImages] = React.useState<File[]>([]);
@@ -63,9 +61,12 @@ export function NewPost() {
       }
 
       const newPost: IPost = {
-        authorId: uid,
-        authorName: name,
+        author: {
+          id: uid,
+          name: name,
+        },
         title,
+        country,
         text,
         status: IPostStatus.PENDING_APPROVAL,
         coverImage: coverImageTitle,
@@ -164,25 +165,6 @@ export function NewPost() {
     });
   }, [galleryImages]);
 
-  React.useEffect(() => {
-    async function getCountriesList() {
-      setLoadingCountriesList(true);
-
-      const resp = await fetch(
-        `http://api.worldbank.org/v2/country/${country}?format=json`
-      );
-      const countries = await resp.json();
-
-      const countryNames = countries[1]?.map((country) => country.name);
-
-      setCountriesList(countryNames);
-      setLoadingCountriesList(false);
-    }
-
-    if (country.length >= 3) getCountriesList();
-    else setCountriesList([]);
-  }, [country]);
-
   return (
     <MainContainer title="Write a Post!">
       <PageComponent title="Write a Post!">
@@ -194,27 +176,7 @@ export function NewPost() {
             onChange={(e) => setTitle(e.target.value)}
           />
 
-          <HintInput
-            loading={loadingCountriesList}
-            value={country}
-            placeholder="Country"
-            type="text"
-            onChange={(e) => setCountry(e.target.value)}
-          />
-          {countriesList.length > 0 && (
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                left: 0,
-              }}
-            >
-              {countriesList.map((country) => (
-                <p>{country}</p>
-              ))}
-            </div>
-          )}
+          <CountrySelectInput value={country} onChange={setCountry} />
 
           <QuillInput
             value={text}

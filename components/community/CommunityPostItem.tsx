@@ -8,6 +8,7 @@ import {
 } from '../../styles/components/community/CommunityPostItem';
 import DefaultImage from '../image/DefaultImage';
 import Link from 'next/link';
+import { GoLocation } from 'react-icons/go';
 
 interface Props {
   post: IPost;
@@ -48,9 +49,11 @@ export function CommunityPostItem({ post }: Props) {
 
         <PostDescriptionContainerStyled>
           <h2>{post.title}</h2>
-          <span>By {post.authorName}</span>
+          <span>
+            <GoLocation /> {post.country.label}
+          </span>
+          <span>By {post.author.name}</span>
           <span>Posted on {post.approvedAt}</span>
-          <div dangerouslySetInnerHTML={{ __html: shortDescription }} />
         </PostDescriptionContainerStyled>
       </CommunityPostItemStyled>
     </Link>

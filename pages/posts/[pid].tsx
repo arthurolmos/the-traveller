@@ -31,7 +31,7 @@ export function Post(props: Props) {
 
   const router = useRouter();
 
-  const [coverImage, setCoverImage] = React.useState<string | null>(null);
+  const [coverImage, setCoverImage] = React.useState<string | null>('');
   const [galleryImages, setGalleryImages] = React.useState<string[]>([]);
   const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
 
@@ -113,7 +113,7 @@ export function Post(props: Props) {
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Obcaecati, cupiditate?
             </h2>
-            <h3>By {post.authorName}</h3>
+            <h3>By {post.author.name}</h3>
           </CoverImageDescriptionStyled>
         </CoverImageContainerStyled>
 

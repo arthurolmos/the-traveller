@@ -5,8 +5,8 @@ import {
   GridStyled,
   LinkStyled,
 } from '../../styles/components/home/LatestPostsSection';
+import { CommunityPostItem } from '../community/CommunityPostItem';
 import HomeSection from './HomeSection';
-import { LatestPostItem } from './LatestPostItem';
 
 interface Props {
   latestPosts: IPost[];
@@ -17,7 +17,7 @@ export default function LatestPostsSection({ latestPosts }: Props) {
     <HomeSection title="Latest Community Posts">
       <GridStyled>
         {latestPosts.map((post) => {
-          return <LatestPostItem post={post} key={post.id} />;
+          return <CommunityPostItem post={post} key={post.id} />;
         })}
       </GridStyled>
       <Link href="/community" passHref>

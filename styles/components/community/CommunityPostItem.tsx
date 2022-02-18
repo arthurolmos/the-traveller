@@ -47,7 +47,7 @@ export const PostImageContainerStyled = styled.div`
 
 export const PostDescriptionContainerStyled = styled.div`
   display: flex;
-  flex: 2;
+  flex: 1;
   flex-direction: column;
 
   @media (max-width: 1200px) {

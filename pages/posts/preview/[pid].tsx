@@ -52,7 +52,7 @@ export const getServerSideProps = withAuthUserTokenSSR({
 
     if (!post) throw new Error();
 
-    if (AuthUser.id !== post.authorId) {
+    if (AuthUser.id !== post.author.id) {
       const isAdmin = await isUserAdmin(AuthUser.id);
       if (!isAdmin) {
         throw new Error();
