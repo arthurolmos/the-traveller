@@ -72,7 +72,9 @@ export function NewPost() {
 
       // Uploads Cover Image to Storage
       if (coverImageTitle !== '') {
+        console.log(docRef.id, coverImageTitle);
         const imagesRef = ref(storage, `posts/${docRef.id}/${coverImageTitle}`);
+        console.log({ imagesRef });
 
         await uploadBytes(imagesRef, coverImage);
       }
@@ -82,11 +84,13 @@ export function NewPost() {
           const name = image.name.split('.')[0];
           const ext = image.name.split('.').pop();
           const filename = `${name}-${Date.now()}.${ext}`;
+          console.log(docRef.id, { filename });
 
           const imagesRef = ref(
             storage,
             `posts/${docRef.id}/gallery/${filename}`
           );
+          console.log({ imagesRef });
 
           uploadBytes(imagesRef, image);
         });

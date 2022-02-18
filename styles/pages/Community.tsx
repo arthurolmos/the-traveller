@@ -6,8 +6,11 @@ export const CommunityPostsGridStyled = styled.div`
   grid-template-columns: 1fr 1fr;
   justify-content: center;
   align-items: center;
-  padding: 15px;
   gap: 20px;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const ImageContainerStyled = styled.div`
