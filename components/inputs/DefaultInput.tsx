@@ -1,7 +1,7 @@
 import React from 'react';
 import { DefaultInputStyled } from '../../styles/components/inputs/DefaultInput';
 
-const DefaultInput = React.forwardRef(
+export const DefaultInput = React.forwardRef(
   (
     props: React.InputHTMLAttributes<HTMLInputElement>,
     ref?: React.Ref<HTMLInputElement>
@@ -11,5 +11,3 @@ const DefaultInput = React.forwardRef(
     return <DefaultInputStyled ref={ref} {...rest} />;
   }
 );
-
-export default DefaultInput;

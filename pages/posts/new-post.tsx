@@ -5,10 +5,13 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
-import DefaultInput from '../../components/inputs/DefaultInput';
-import MainContainer from '../../components/layouts/MainContainer';
-import PageComponent from '../../components/layouts/PageComponent';
-import QuillInput from '../../components/inputs/QuillInput';
+import {
+  LabelInput,
+  HintInput,
+  QuillInput,
+  DefaultInput,
+} from '../../components/inputs';
+import { MainContainer, PageComponent } from '../../components/layouts';
 import DefaultButton from '../../components/buttons/DefaultButton';
 import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
 import { db, collection, addDoc } from '../../firebase/db';
@@ -24,7 +27,6 @@ import {
   ThumbnailPreviewContainerStyled,
   ThumbnailPreviewStyled,
 } from '../../styles/pages/posts/NewPost';
-import LabelInput from '../../components/inputs/LabelInput';
 import Image from 'next/image';
 import { IPost, IPostStatus } from '../../interfaces';
 
@@ -164,6 +166,8 @@ export function NewPost() {
 
   React.useEffect(() => {
     async function getCountriesList() {
+      setLoadingCountriesList(true);
+
       const resp = await fetch(
         `http://api.worldbank.org/v2/country/${country}?format=json`
       );
@@ -172,6 +176,7 @@ export function NewPost() {
       const countryNames = countries[1]?.map((country) => country.name);
 
       setCountriesList(countryNames);
+      setLoadingCountriesList(false);
     }
 
     if (country.length >= 3) getCountriesList();
@@ -189,12 +194,12 @@ export function NewPost() {
             onChange={(e) => setTitle(e.target.value)}
           />
 
-          <DefaultInput
+          <HintInput
+            loading={loadingCountriesList}
             value={country}
             placeholder="Country"
             type="text"
             onChange={(e) => setCountry(e.target.value)}
-            style={{ position: 'relative' }}
           />
           {countriesList.length > 0 && (
             <div

@@ -9,7 +9,7 @@ interface Props {
   placeholder: string;
 }
 
-export default function QuillInput({ ...rest }: Props) {
+export function QuillInput({ ...rest }: Props) {
   return (
     <QuillInputContainerStyled>
       <QuillInputStyled theme="snow" {...rest} />

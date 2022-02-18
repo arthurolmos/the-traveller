@@ -4,8 +4,7 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
-import MainContainer from '../../components/layouts/MainContainer';
-import PageComponent from '../../components/layouts/PageComponent';
+import { MainContainer, PageComponent } from '../../components/layouts';
 import {
   db,
   getDoc,

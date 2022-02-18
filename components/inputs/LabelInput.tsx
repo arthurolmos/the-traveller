@@ -11,7 +11,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   info?: string;
 }
 
-const LabelInput = React.forwardRef(
+export const LabelInput = React.forwardRef(
   (props: Props, ref?: React.Ref<HTMLInputElement>) => {
     const { label, info, ...rest } = props;
 
@@ -24,5 +24,3 @@ const LabelInput = React.forwardRef(
     );
   }
 );
-
-export default LabelInput;

@@ -4,9 +4,8 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from 'firebase/auth';
-import MainContainer from '../../components/layouts/MainContainer';
-import PageComponent from '../../components/layouts/PageComponent';
-import DefaultInput from '../../components/inputs/DefaultInput';
+import { MainContainer, PageComponent } from '../../components/layouts';
+import { DefaultInput } from '../../components/inputs';
 import DefaultButton from '../../components/buttons/DefaultButton';
 import { toast } from 'react-toastify';
 import exceptionHandler from '../../lib/exceptionHandler';

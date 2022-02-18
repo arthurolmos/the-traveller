@@ -1,8 +1,7 @@
 import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import React from 'react';
-import SearchInput from '../../components/inputs/SearchInput';
-import MainContainer from '../../components/layouts/MainContainer';
-import PageComponent from '../../components/layouts/PageComponent';
+import { SearchInput } from '../../components/inputs/SearchInput';
+import { MainContainer, PageComponent } from '../../components/layouts';
 import SimpleMap from '../../components/map/SimpleMap';
 import {
   ListStyled,

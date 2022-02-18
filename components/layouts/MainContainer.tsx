@@ -9,7 +9,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export default function MainContainer({ title, children }: Props) {
+export function MainContainer({ title, children }: Props) {
   return (
     <>
       <Head>

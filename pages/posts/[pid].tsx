@@ -1,6 +1,6 @@
 import React from 'react';
 import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
-import MainContainer from '../../components/layouts/MainContainer';
+import { MainContainer } from '../../components/layouts';
 import { db, getDoc, doc } from '../../firebase/db';
 import { storage, ref, getDownloadURL, listAll } from '../../firebase/storage';
 import {

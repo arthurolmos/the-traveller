@@ -1,6 +1,6 @@
 import FadeCarousel from '../components/carousel/FadeCarousel';
 import HomeSection from '../components/home/HomeSection';
-import MainContainer from '../components/layouts/MainContainer';
+import { MainContainer } from '../components/layouts';
 import { ContentContainerStyled } from '../styles/pages/Home';
 import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import {

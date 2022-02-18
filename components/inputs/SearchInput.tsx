@@ -7,7 +7,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   onClick: (e: React.FormEvent) => void;
 }
 
-export default function SearchInput({ onClick, ...rest }: Props) {
+export function SearchInput({ onClick, ...rest }: Props) {
   return (
     <div style={{ position: 'relative' }}>
       <DefaultInputStyled {...rest} />

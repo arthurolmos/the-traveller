@@ -10,8 +10,7 @@ import {
   getDocs,
 } from '../../firebase/db';
 import { IPost, IPostStatus } from '../../interfaces';
-import MainContainer from '../../components/layouts/MainContainer';
-import PageComponent from '../../components/layouts/PageComponent';
+import { MainContainer, PageComponent } from '../../components/layouts';
 import { CommunityPostsGridStyled } from '../../styles/pages/Community';
 import { CommunityPostItem } from '../../components/community/CommunityPostItem';
 
