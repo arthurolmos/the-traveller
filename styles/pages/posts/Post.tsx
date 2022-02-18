@@ -128,3 +128,9 @@ export const ImageDisplayContainerStyled = styled.div`
     height: 200px;
   }
 `;
+
+export const StyledGoBack = styled.a`
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+`;
