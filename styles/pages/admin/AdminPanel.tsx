@@ -1,15 +1,36 @@
 import styled from 'styled-components';
 
-export const AdminPostsGridStyled = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 40px;
+export const PostTabContainerStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
-  @media (max-width: 1040px) {
-    grid-template-columns: 1fr 1fr;
-  }
+export const TabRowStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+  border-bottom: ${({ theme }) => `1px solid ${theme.main.gray}`};
+  margin-bottom: 25px;
+`;
 
-  @media (max-width: 680px) {
-    grid-template-columns: 1fr;
+export const TabItemStyled = styled.div<{ selected?: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  border-right: ${({ theme }) => `1px solid ${theme.main.gray}`};
+  background: ${({ selected, theme }) =>
+    selected ? theme.main.white : theme.main.lightgray};
+  flex: 1;
+  font-weight: bold;
+
+  &:last-child {
+    border: none;
   }
+`;
+
+export const PostContainerStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;

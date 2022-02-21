@@ -29,6 +29,7 @@ import {
 } from '../../styles/pages/posts/NewPost';
 import Image from 'next/image';
 import { IPost, IPostStatus } from '../../interfaces';
+import { ICountry } from '../../interfaces/ICountry';
 
 export function NewPost() {
   const router = useRouter();

@@ -16,17 +16,38 @@ import {
   orderBy,
 } from '../../firebase/db';
 import { IPost, IPostStatus } from '../../interfaces';
-import PostsSection from '../../components/admin/PostsSection';
+import {
+  PostContainerStyled,
+  PostTabContainerStyled,
+  TabItemStyled,
+  TabRowStyled,
+} from '../../styles/pages/admin/AdminPanel';
+import { ClipLoaderSpinner } from '../../components/spinners/ClipLoader';
+import PostListItem from '../../components/admin/PostListItem';
+
+const tabs = Object.values(IPostStatus);
 
 export function AdminPanel() {
+  const [selectedTab, setSelectedTab] = React.useState(
+    IPostStatus.PENDING_APPROVAL
+  );
+  const [loading, setLoading] = React.useState({
+    [IPostStatus.APPROVED]: false,
+    [IPostStatus.REJECTED]: false,
+    [IPostStatus.PENDING_APPROVAL]: false,
+  });
   const [postsPendingApproval, setPostsPendingApproval] = React.useState<
     IPost[]
   >([]);
-  const [loadingPostsPendingApproval, setLoadingPostsPendingApproval] =
-    React.useState(false);
 
   React.useEffect(() => {
-    setLoadingPostsPendingApproval(true);
+    const loading = {
+      [IPostStatus.REJECTED]: false,
+      [IPostStatus.APPROVED]: false,
+      [IPostStatus.PENDING_APPROVAL]: true,
+    };
+
+    setLoading(loading);
 
     const postsPendingApprovalQuery = query(
       collection(db, 'posts'),
@@ -43,7 +64,13 @@ export function AdminPanel() {
           post.id = doc.id;
           posts.push(post);
         });
-        setLoadingPostsPendingApproval(false);
+
+        setLoading((prevState) => {
+          return {
+            ...prevState,
+            [IPostStatus.PENDING_APPROVAL]: false,
+          };
+        });
         setPostsPendingApproval([...posts]);
       }
     );
@@ -56,12 +83,30 @@ export function AdminPanel() {
   return (
     <MainContainer title="Admin Panel">
       <PageComponent title="Admin Panel">
-        <PostsSection
-          posts={postsPendingApproval}
-          title={IPostStatus.PENDING_APPROVAL}
-          loading={loadingPostsPendingApproval}
-          preview={true}
-        />
+        <PostTabContainerStyled>
+          <TabRowStyled>
+            <TabItemStyled selected={true}>
+              {IPostStatus.PENDING_APPROVAL}
+            </TabItemStyled>
+          </TabRowStyled>
+
+          <PostContainerStyled>
+            {<ClipLoaderSpinner loading={loading[selectedTab]} />}
+            {postsPendingApproval.length === 0 && !loading[selectedTab] && (
+              <span>No posts to show</span>
+            )}
+            {postsPendingApproval.map((item, index) => {
+              return (
+                <PostListItem
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  preview={selectedTab !== IPostStatus.APPROVED}
+                />
+              );
+            })}
+          </PostContainerStyled>
+        </PostTabContainerStyled>
       </PageComponent>
     </MainContainer>
   );

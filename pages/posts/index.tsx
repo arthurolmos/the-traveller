@@ -8,27 +8,43 @@ import {
 import { MainContainer, PageComponent } from '../../components/layouts';
 import { db, collection, onSnapshot, query, where } from '../../firebase/db';
 import { IPost, IPostStatus } from '../../interfaces';
-import { PostsGridStyled } from '../../styles/pages/posts/Posts';
-import PostsSection from '../../components/posts/PostsSection';
+import {
+  PostContainerStyled,
+  PostTabContainerStyled,
+  TabItemStyled,
+  TabRowStyled,
+} from '../../styles/pages/posts/Posts';
+import PostListItem from '../../components/posts/PostListItem';
+import { ClipLoaderSpinner } from '../../components/spinners/ClipLoader';
+
+const tabs = Object.values(IPostStatus);
 
 export function Posts() {
   const AuthUser = useAuthUser();
   const uid = AuthUser.id;
 
+  const [selectedTab, setSelectedTab] = React.useState(
+    IPostStatus.PENDING_APPROVAL
+  );
+  const [loading, setLoading] = React.useState({
+    [IPostStatus.APPROVED]: false,
+    [IPostStatus.REJECTED]: false,
+    [IPostStatus.PENDING_APPROVAL]: false,
+  });
   const [approvedPosts, setApprovedPosts] = React.useState<IPost[]>([]);
-  const [loadingApprovedPosts, setLoadingApprovedPosts] = React.useState(false);
   const [postsPendingApproval, setPostsPendingApproval] = React.useState<
     IPost[]
   >([]);
-  const [loadingPostsPendingApproval, setLoadingPostsPendingApproval] =
-    React.useState(false);
   const [rejectedPosts, setRejectedPosts] = React.useState<IPost[]>([]);
-  const [loadingRejectedPosts, setLoadingRejectedPosts] = React.useState(false);
 
   React.useEffect(() => {
-    setLoadingApprovedPosts(true);
-    setLoadingPostsPendingApproval(true);
-    setLoadingRejectedPosts(true);
+    const loading = {
+      [IPostStatus.REJECTED]: true,
+      [IPostStatus.APPROVED]: true,
+      [IPostStatus.PENDING_APPROVAL]: true,
+    };
+
+    setLoading(loading);
 
     const approvedPostsQuery = query(
       collection(db, 'posts'),
@@ -46,7 +62,13 @@ export function Posts() {
 
           posts.push(post);
         });
-        setLoadingApprovedPosts(false);
+
+        setLoading((prevState) => {
+          return {
+            ...prevState,
+            [IPostStatus.APPROVED]: false,
+          };
+        });
         setApprovedPosts([...posts]);
       }
     );
@@ -66,7 +88,13 @@ export function Posts() {
           post.id = doc.id;
           posts.push(post);
         });
-        setLoadingPostsPendingApproval(false);
+
+        setLoading((prevState) => {
+          return {
+            ...prevState,
+            [IPostStatus.PENDING_APPROVAL]: false,
+          };
+        });
         setPostsPendingApproval([...posts]);
       }
     );
@@ -86,7 +114,13 @@ export function Posts() {
           post.id = doc.id;
           posts.push(post);
         });
-        setLoadingRejectedPosts(false);
+
+        setLoading((prevState) => {
+          return {
+            ...prevState,
+            [IPostStatus.REJECTED]: false,
+          };
+        });
         setRejectedPosts([...posts]);
       }
     );
@@ -98,30 +132,48 @@ export function Posts() {
     };
   }, []);
 
+  const posts =
+    selectedTab === IPostStatus.APPROVED
+      ? approvedPosts
+      : selectedTab === IPostStatus.REJECTED
+      ? rejectedPosts
+      : postsPendingApproval;
+
   return (
     <MainContainer title="My Posts">
       <PageComponent title="My Posts">
-        <PostsGridStyled>
-          <PostsSection
-            posts={approvedPosts}
-            title={IPostStatus.APPROVED}
-            loading={loadingApprovedPosts}
-          />
+        <PostTabContainerStyled>
+          <TabRowStyled>
+            {tabs.map((item) => {
+              return (
+                <TabItemStyled
+                  key={item}
+                  selected={selectedTab === item}
+                  onClick={() => setSelectedTab(item)}
+                >
+                  {item}
+                </TabItemStyled>
+              );
+            })}
+          </TabRowStyled>
 
-          <PostsSection
-            posts={postsPendingApproval}
-            title={IPostStatus.PENDING_APPROVAL}
-            loading={loadingPostsPendingApproval}
-            preview={true}
-          />
-
-          <PostsSection
-            posts={rejectedPosts}
-            title={IPostStatus.REJECTED}
-            loading={loadingRejectedPosts}
-            preview={true}
-          />
-        </PostsGridStyled>
+          <PostContainerStyled>
+            {<ClipLoaderSpinner loading={loading[selectedTab]} />}
+            {posts.length === 0 && !loading[selectedTab] && (
+              <span>No posts to show</span>
+            )}
+            {posts.map((item, index) => {
+              return (
+                <PostListItem
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  preview={selectedTab !== IPostStatus.APPROVED}
+                />
+              );
+            })}
+          </PostContainerStyled>
+        </PostTabContainerStyled>
       </PageComponent>
     </MainContainer>
   );

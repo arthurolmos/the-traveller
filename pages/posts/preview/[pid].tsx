@@ -5,7 +5,7 @@ import {
 } from 'next-firebase-auth';
 import { db, getDoc, doc } from '../../../firebase/db';
 import { Post as PreviewPost } from '../[pid]';
-import { IPost } from '../../../interfaces';
+import { IPost, IPostStatus } from '../../../interfaces';
 import convertTimestampToDate from '../../../lib/covertTimestampToDate';
 
 interface Props {
@@ -19,6 +19,8 @@ async function getPost(pid: string) {
   if (docSnap.exists()) {
     const post = docSnap.data();
     post.id = docSnap.id;
+
+    if (post.status === IPostStatus.APPROVED) throw new Error('Not found');
 
     post.createdAt = convertTimestampToDate(post.createdAt);
     post.updatedAt = convertTimestampToDate(post.updatedAt);

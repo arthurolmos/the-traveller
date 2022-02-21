@@ -17,7 +17,7 @@ import {
   StyledGoBack,
 } from '../../styles/pages/posts/Post';
 import { FaTimes } from 'react-icons/fa';
-import { IPost } from '../../interfaces';
+import { IPost, IPostStatus } from '../../interfaces';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import DefaultImage from '../../components/image/DefaultImage';
 import { useRouter } from 'next/router';
@@ -143,6 +143,8 @@ async function getPost(pid: string) {
     const post = docSnap.data();
     post.id = docSnap.id;
 
+    if (post.status !== IPostStatus.APPROVED) throw new Error('Not approved');
+
     post.createdAt = convertTimestampToDate(post.createdAt);
     post.updatedAt = convertTimestampToDate(post.updatedAt);
     post.approvedAt = convertTimestampToDate(post.approvedAt);
@@ -171,9 +173,7 @@ export const getServerSideProps = withAuthUserTokenSSR({})(
       console.error(err);
 
       return {
-        props: {
-          post: null,
-        },
+        notFound: true,
       };
     }
   }

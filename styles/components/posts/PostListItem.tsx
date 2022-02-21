@@ -7,9 +7,10 @@ export const PostListItemStyled = styled.li<{ index: number }>`
   animation-fill-mode: forwards;
   transition: color 0.5s ease;
   cursor: pointer;
-  border: ${({ theme }) => `1px solid ${theme.main.gray}`};
-  border-radius: 15px 0 0 15px;
-  padding: 10px;
+  padding: 20px;
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 10px 10px 10px lightgray;
 
   display: flex;
   flex: 1;
