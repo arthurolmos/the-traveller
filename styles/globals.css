@@ -25,17 +25,10 @@ div {
   line-height: 1.6em;
 }
 
-@media (max-width: 660px) {
-  h1 {
-    font-size: 2em !important;
-  }
+h1 {
+  font-size: 3em;
+}
 
-  h2 {
-    font-size: 1em !important;
-  }
-
-  p,
-  span,
-  div {
-  }
+h2 {
+  font-size: 1.75em;
 }
