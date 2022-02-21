@@ -4,6 +4,7 @@ import { fadeIn } from '../components/animations';
 export const ListStyled = styled.ul`
   padding: 0;
   list-style-type: none;
+  flex: 1;
 `;
 
 export const ListItemStyled = styled.li<{ index: number }>`
@@ -13,10 +14,14 @@ export const ListItemStyled = styled.li<{ index: number }>`
   animation-duration: ${({ index }) => `calc(${index}s + 3s)`};
   animation-fill-mode: forwards;
   font-size: 12px;
+  border-radius: 25px;
+  box-shadow: 10px 10px 10px lightgray;
+  width: 90%;
+  cursor: pointer;
+  transition: all 0.5s ease;
 
-  > h1 {
-    color: black;
-    // font-size: 20px;
+  &:hover {
+    color: ${({ theme }) => theme.main.orange};
   }
 `;
 

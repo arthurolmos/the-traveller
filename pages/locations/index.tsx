@@ -1,8 +1,9 @@
 import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import React from 'react';
-import { SearchInput } from '../../components/inputs/SearchInput';
+import { CountrySelectInput } from '../../components/inputs';
 import { MainContainer, PageComponent } from '../../components/layouts';
 import SimpleMap from '../../components/map/SimpleMap';
+import { ICountry } from '../../interfaces/ICountry';
 import {
   ListStyled,
   ListItemStyled,
@@ -13,29 +14,28 @@ import {
   ContentReviewsDefaultContainer,
   ContentReviewsSmallContainer,
 } from '../../styles/pages/Locations';
+import { db, getDocs, collection, query, where } from '../../firebase/db';
+import { IPost } from '../../interfaces';
+import Link from 'next/link';
 
 export function Locations() {
   const [loading, setLoading] = React.useState(false);
-  const [search, setSearch] = React.useState('');
-  const [location, setLocation] = React.useState({
-    name: '',
+  const [country, setCountry] = React.useState<ICountry | null>(null);
+  const [latlng, setLatLng] = React.useState({
     lat: 0,
     lng: 0,
   });
-  const [reviews, setReviews] = React.useState<
-    { title: string; author: string; review: string; id: string }[]
-  >([]);
+  const [posts, setPosts] = React.useState<IPost[]>([]);
 
   React.useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         const location = {
-          name: '',
           lat: coords.latitude,
           lng: coords.longitude,
         };
 
-        setLocation(location);
+        setLatLng(location);
       },
       (error) => {
         console.error({ error });
@@ -43,58 +43,77 @@ export function Locations() {
     );
   }, []);
 
-  const submit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  React.useEffect(() => {
+    submit();
+  }, [country]);
 
-    setLoading(true);
+  async function getCountry() {
+    try {
+      const resp = await fetch(
+        `https://restcountries.com/v3.1/alpha/${country.value}`
+      );
 
-    let loc = { ...location };
+      const data = await resp.json();
+      console.log({ data });
 
-    if (search == 'japan')
-      loc = {
-        name: 'japan',
-        lat: 35.658581,
-        lng: 139.745438,
-      };
+      return data[0]?.latlng;
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
-    if (search == 'finland')
-      loc = {
-        name: 'finland',
-        lat: 60.192059,
-        lng: 24.945831,
-      };
+  async function getPosts() {
+    try {
+      const q = query(
+        collection(db, 'posts'),
+        where('country.value', '==', country.value)
+      );
 
-    setLocation(loc);
+      const posts: IPost[] = [];
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        const post = doc.data() as IPost;
+        post.id = doc.id;
 
-    const url = new URL('http://localhost:3000/api/locations');
-    url.searchParams.append('location', search);
-
-    fetch(url.toString())
-      .then((resp) => resp.json())
-      .then((data) => setReviews(data))
-      .catch(console.error)
-      .finally(() => {
-        setLoading(false);
+        posts.push(post);
       });
-  };
+
+      setPosts([...posts]);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function submit() {
+    try {
+      if (!country) return;
+
+      setLoading(true);
+
+      const [lat, lng] = await getCountry();
+
+      setLatLng({ lat, lng });
+
+      await getPosts();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const items = React.useMemo(() => {
-    return reviews?.map(
-      (
-        item: { title: string; author: string; review: string; id: string },
-        i: number
-      ) => {
-        return (
+    return posts?.map((item: IPost, i: number) => {
+      return (
+        <Link href={`/posts/${item.id}`} passHref>
           <ListItemStyled index={i} key={item.id}>
-            <h1>{item.title}</h1>
-            <span>{item.id}</span>
-            <span>{item.author}</span>
-            <p>{item.review}</p>
+            <h2>{item.title}</h2>
+            <span>{item.author.name}</span>
           </ListItemStyled>
-        );
-      }
-    );
-  }, [reviews]);
+        </Link>
+      );
+    });
+  }, [posts]);
 
   return (
     <MainContainer title="Locations">
@@ -109,12 +128,7 @@ export function Locations() {
             <ContentSearchStyled>
               <span>Where do you wanna go?</span>
 
-              <form onSubmit={submit}>
-                <SearchInput
-                  onClick={submit}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </form>
+              <CountrySelectInput onChange={setCountry} value={country} />
 
               <ContentReviewsDefaultContainer>
                 {!loading && <ListStyled>{items}</ListStyled>}
@@ -122,7 +136,7 @@ export function Locations() {
             </ContentSearchStyled>
           </ContentPanelStyled>
           <ContentMapStyled>
-            <SimpleMap lat={location.lat} lng={location.lng} />
+            <SimpleMap lat={latlng.lat} lng={latlng.lng} />
 
             <ContentReviewsSmallContainer>
               {!loading && <ListStyled>{items}</ListStyled>}
