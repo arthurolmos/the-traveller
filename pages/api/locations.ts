@@ -63,8 +63,13 @@ const finlandReviews = [
 ];
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log(req.query.location);
-  if (req.query.location == 'japan') return res.status(200).json(japanReviews);
-  if (req.query.location == 'finland')
+  const query = req.query.location as string;
+
+  console.log({ query });
+
+  if (query.toLowerCase() == 'japan') return res.status(200).json(japanReviews);
+  if (query.toLowerCase() == 'finland')
     return res.status(200).json(finlandReviews);
+
+  return res.status(404).json({ error: 'Not Found' });
 }
