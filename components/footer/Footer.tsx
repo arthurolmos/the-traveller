@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
   FooterContainerLeftStyled,
   FooterContainerRightStyled,
   FooterStyled,
   FooterStyledLink,
-} from "../../styles/components/footer";
-import { FaTwitter, FaFacebookF, FaInstagram } from "react-icons/fa";
+} from '../../styles/components/footer';
+import { FaTwitter, FaFacebookF, FaInstagram } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -23,7 +23,7 @@ export default function Footer() {
       </FooterContainerLeftStyled>
       <FooterContainerRightStyled>
         <span>
-          Developed by{" "}
+          Developed by{' '}
           <FooterStyledLink
             href="https://www.scrumlaunch.com"
             target="_blank"

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const FooterStyled = styled.footer`
   border-top: 1px solid gray;
@@ -6,6 +6,7 @@ export const FooterStyled = styled.footer`
   display: flex;
   flex-direction: row;
   flex: 1;
+  background: ${({ theme }) => theme.main.white};
 
   svg {
     transition: all 0.5s ease;
