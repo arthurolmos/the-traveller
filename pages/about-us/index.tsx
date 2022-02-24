@@ -1,17 +1,23 @@
 import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import React from 'react';
-import { MainContainer, PageComponent } from '../../components/layouts';
+import {
+  DiscoverSection,
+  ExperiencesSection,
+  IntroSection,
+  JoinSection,
+} from '../../components/about-us';
+import { MainContainer } from '../../components/layouts';
 
 export function AboutUs() {
   return (
     <MainContainer title="About Us">
-      <PageComponent title="About Us">
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam,
-          impedit quo. Harum atque reprehenderit aliquam odio, illo ullam
-          provident numquam.
-        </p>
-      </PageComponent>
+      <IntroSection />
+
+      <DiscoverSection />
+
+      <ExperiencesSection />
+
+      <JoinSection />
     </MainContainer>
   );
 }
