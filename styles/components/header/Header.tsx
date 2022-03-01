@@ -18,6 +18,7 @@ export const HeaderStyled = styled.nav`
 export const LogoStyled = styled.img`
   object-fit: contain;
   width: 250px;
+  cursor: pointer;
 
   @media (max-width: 600px) {
     width: 200px;
