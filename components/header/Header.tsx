@@ -10,7 +10,7 @@ import {
 import { FaBars } from 'react-icons/fa';
 import CollapsableMenu from './CollapsableMenu';
 import AuthContainer from './AuthContainer';
-import { menuOptions } from './menuOptions';
+import { headerOptions } from './headerOptions';
 import MenuItem from './MenuItem';
 
 function HamburgerButton({
@@ -38,7 +38,7 @@ export default function Header() {
     <HeaderStyled>
       <LogoStyled src="/assets/logo.png" />
       <MenuStyled>
-        {menuOptions.map((item) => {
+        {headerOptions.map((item) => {
           return <MenuItem item={item} key={item.title} route={route} />;
         })}
       </MenuStyled>

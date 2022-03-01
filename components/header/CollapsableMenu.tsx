@@ -8,7 +8,7 @@ import SignButton from '../buttons/SignButton';
 import { useAuthUser } from 'next-firebase-auth';
 import UserMenu from './UserMenu';
 import { useRouter } from 'next/router';
-import { menuOptions } from './menuOptions';
+import { headerOptions } from './headerOptions';
 import MenuItem from './MenuItem';
 import AdminMenu from './AdminMenu';
 import { db, getDoc, doc } from '../../firebase/db';
@@ -47,7 +47,7 @@ export default function CollapsableMenu({ open }: Props) {
   return (
     <CollapsableMenuStyled open={open}>
       <CollapsableMenuListContainerStyled>
-        {menuOptions.map((item, index) => {
+        {headerOptions.map((item, index) => {
           return <MenuItem item={item} key={index} route={route} />;
         })}
       </CollapsableMenuListContainerStyled>

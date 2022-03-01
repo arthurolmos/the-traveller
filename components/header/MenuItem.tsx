@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import React from 'react';
-import { IMenuOption } from '../../interfaces/IMenuOption';
+import { IHeaderOption } from '../../interfaces/IHeaderOption';
 
-interface ItemMenuProps {
-  item: IMenuOption;
+interface Props {
+  item: IHeaderOption;
   route: string;
 }
 
-export default function MenuItem({ item, route }: ItemMenuProps) {
+export default function MenuItem({ item, route }: Props) {
   const active = route === item.link;
 
   return (

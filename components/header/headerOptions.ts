@@ -1,6 +1,6 @@
-import { IMenuOption } from '../../interfaces/IMenuOption';
+import { IHeaderOption } from '../../interfaces/IHeaderOption';
 
-export const menuOptions: IMenuOption[] = [
+export const headerOptions: IHeaderOption[] = [
   {
     title: 'Home',
     link: '/',

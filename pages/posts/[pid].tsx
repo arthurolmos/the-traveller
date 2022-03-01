@@ -21,6 +21,7 @@ import { IPost, IPostStatus } from '../../interfaces';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import DefaultImage from '../../components/image/DefaultImage';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface Props {
   post: IPost;
@@ -113,7 +114,14 @@ export function Post(props: Props) {
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Obcaecati, cupiditate?
             </h2>
-            <h3>By {post.author.name}</h3>
+            <span>
+              By{' '}
+              <Link href={`/users/${post.author.id}`} passHref>
+                <a>
+                  <b>{post.author.name}</b>
+                </a>
+              </Link>
+            </span>
           </CoverImageDescriptionStyled>
         </CoverImageContainerStyled>
 

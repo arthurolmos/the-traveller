@@ -25,18 +25,27 @@ import {
 import { ClipLoaderSpinner } from '../../components/spinners/ClipLoader';
 import PostListItem from '../../components/admin/PostListItem';
 
-const tabs = Object.values(IPostStatus);
-
 export function AdminPanel() {
   const [selectedTab, setSelectedTab] = React.useState(
     IPostStatus.PENDING_APPROVAL
   );
-  const [loading, setLoading] = React.useState(false);
-  const [postsPendingApproval, setPostsPendingApproval] =
-    React.useState<number>(0);
+  const [loading, setLoading] = React.useState({
+    [IPostStatus.APPROVED]: false,
+    [IPostStatus.REJECTED]: false,
+    [IPostStatus.PENDING_APPROVAL]: false,
+  });
+  const [postsPendingApproval, setPostsPendingApproval] = React.useState<
+    IPost[]
+  >([]);
 
   React.useEffect(() => {
-    setLoading(true);
+    const loading = {
+      [IPostStatus.REJECTED]: false,
+      [IPostStatus.APPROVED]: false,
+      [IPostStatus.PENDING_APPROVAL]: true,
+    };
+
+    setLoading(loading);
 
     const postsPendingApprovalQuery = query(
       collection(db, 'posts'),
@@ -47,8 +56,20 @@ export function AdminPanel() {
     const unsubPostsPendingApproval = onSnapshot(
       postsPendingApprovalQuery,
       (querySnapshot) => {
-        setLoading(false);
-        setPostsPendingApproval(querySnapshot.size);
+        const posts = [];
+        querySnapshot.forEach((doc) => {
+          const post = doc.data();
+          post.id = doc.id;
+          posts.push(post);
+        });
+
+        setLoading((prevState) => {
+          return {
+            ...prevState,
+            [IPostStatus.PENDING_APPROVAL]: false,
+          };
+        });
+        setPostsPendingApproval([...posts]);
       }
     );
 
@@ -60,22 +81,30 @@ export function AdminPanel() {
   return (
     <MainContainer title="Admin Panel">
       <PageComponent title="Admin Panel">
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
-          }}
-        >
-          <div style={{ display: 'flex', flex: 1 }}>Write Guide</div>
-          <div style={{ display: 'flex', flex: 1 }}>
-            Review Community's Posts{' '}
-            {loading ? (
-              <ClipLoaderSpinner loading={loading} size={16} />
-            ) : (
-              postsPendingApproval
+        <PostTabContainerStyled>
+          <TabRowStyled>
+            <TabItemStyled selected={true}>
+              {IPostStatus.PENDING_APPROVAL}
+            </TabItemStyled>
+          </TabRowStyled>
+
+          <PostContainerStyled>
+            {<ClipLoaderSpinner loading={loading[selectedTab]} />}
+            {postsPendingApproval.length === 0 && !loading[selectedTab] && (
+              <span>No posts to show</span>
             )}
-          </div>
-        </div>
+            {postsPendingApproval.map((item, index) => {
+              return (
+                <PostListItem
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  preview={selectedTab !== IPostStatus.APPROVED}
+                />
+              );
+            })}
+          </PostContainerStyled>
+        </PostTabContainerStyled>
       </PageComponent>
     </MainContainer>
   );

@@ -19,6 +19,7 @@ import { SpinnerContainerStyled } from '../../styles/pages/SignUp';
 import Link from 'next/link';
 import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
 import SignForm from '../../components/forms/SignForm';
+import { db, doc, setDoc } from '../../firebase/db';
 
 export function SignUp() {
   const auth = getAuth();
@@ -45,14 +46,24 @@ export function SignUp() {
 
         setLoading(true);
 
+        // Creates the user on Auth
         const { user } = await createUserWithEmailAndPassword(
           auth,
           email,
           password
         );
 
+        // Updates Auth profile
         await updateProfile(user, {
           displayName: `${firstName} ${lastName}`,
+        });
+
+        // Creates user on DB
+        await setDoc(doc(db, 'users', user.uid), {
+          firstName,
+          lastName,
+          email,
+          isAdmin: false,
         });
 
         setLoading(false);
