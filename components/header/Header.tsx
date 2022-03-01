@@ -12,6 +12,7 @@ import CollapsableMenu from './CollapsableMenu';
 import AuthContainer from './AuthContainer';
 import { headerOptions } from './headerOptions';
 import MenuItem from './MenuItem';
+import Link from 'next/link';
 
 function HamburgerButton({
   onClick,
@@ -36,7 +37,9 @@ export default function Header() {
 
   return (
     <HeaderStyled>
-      <LogoStyled src="/assets/logo.png" />
+      <Link href="/" passHref>
+        <LogoStyled src="/assets/logo.png" />
+      </Link>
       <MenuStyled>
         {headerOptions.map((item) => {
           return <MenuItem item={item} key={item.title} route={route} />;
