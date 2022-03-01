@@ -150,7 +150,7 @@ export function Users(props: Props) {
 
             {user.social?.facebook && (
               <UserSocialNetworkWrapper
-                href={`https://instagram.com/${user.social.facebook}`}
+                href={`https://facebook.com/${user.social.facebook}`}
                 target="_blank"
               >
                 <FaFacebookF /> {user.social.facebook}
