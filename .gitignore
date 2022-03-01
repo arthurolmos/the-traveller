@@ -36,3 +36,6 @@ yarn-error.log*
 # local
 .vscode
 .env*
+
+# assets
+public/assets/users
