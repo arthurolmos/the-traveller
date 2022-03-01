@@ -17,6 +17,12 @@ import {
   query,
   where,
 } from '../../firebase/db';
+import {
+  ref,
+  storage,
+  uploadBytes,
+  getDownloadURL,
+} from '../../firebase/storage';
 import { IPost, IPostStatus, IUser } from '../../models';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import placeholder from '../../public/assets/users/placeholder.svg';
@@ -26,7 +32,12 @@ import {
   UserPostsGridStyled,
   UserImageContainerStyled,
   UserPostsContainerHeaderStyled,
+  UserContentWrapperStyled,
+  UserSocialNetworkContainer,
+  UserSocialNetworkWrapper,
 } from '../../styles/pages/users';
+import { FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
+import {} from '../../styles/pages/profile';
 
 interface Props {
   user: IUser;
@@ -37,7 +48,12 @@ export function Users(props: Props) {
   const name = `${user.firstName} ${user.lastName}`;
 
   const [loading, setLoading] = React.useState(false);
+  const [loadingProfilePicture, setLoadingProfilePicture] =
+    React.useState(false);
   const [posts, setPosts] = React.useState<IPost[]>([]);
+  const [profilePicture, setProfilePicture] = React.useState<string | null>(
+    null
+  );
 
   React.useEffect(() => {
     async function getUserPosts() {
@@ -73,39 +89,101 @@ export function Users(props: Props) {
       }
     }
 
-    if (user) getUserPosts();
+    async function getProfilePicture() {
+      try {
+        setLoadingProfilePicture(true);
+
+        const pathReference = ref(
+          storage,
+          `/users/${user.id}/${user.profilePicture}`
+        );
+        console.log({ pathReference });
+
+        const url = await getDownloadURL(pathReference);
+        console.log({ url });
+
+        setProfilePicture(url);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoadingProfilePicture(false);
+      }
+    }
+
+    if (user.profilePicture) getProfilePicture();
+
+    if (user) {
+      getProfilePicture();
+      getUserPosts();
+    }
   }, [user]);
 
   return (
     <MainContainer title="User Profile">
       <PageComponent title={name}>
-        <UserProfileHeaderStyled>
-          <UserImageContainerStyled>
-            <Image
-              src={user.profilePicture ? user.profilePicture : placeholder}
-              alt="Profile Picture"
-              layout="fill"
-            />
-          </UserImageContainerStyled>
-          <a>{user.email}</a>
-        </UserProfileHeaderStyled>
+        <UserContentWrapperStyled>
+          <UserProfileHeaderStyled>
+            <UserImageContainerStyled>
+              {loadingProfilePicture ? (
+                <ClipLoaderSpinner loading={loadingProfilePicture} size={180} />
+              ) : (
+                <UserImageContainerStyled>
+                  <Image
+                    src={profilePicture ? profilePicture : placeholder}
+                    alt="Profile Picture"
+                    layout="fill"
+                  />
+                </UserImageContainerStyled>
+              )}
+            </UserImageContainerStyled>
+          </UserProfileHeaderStyled>
 
-        <UserPostsContainerStyled>
-          <UserPostsContainerHeaderStyled>
-            <h2>{name}'s Posts </h2>
-            {loading ? (
-              <ClipLoaderSpinner loading={loading} size={16} />
-            ) : (
-              posts.length
+          <UserSocialNetworkContainer>
+            {user.social?.instagram && (
+              <UserSocialNetworkWrapper
+                href={`https://instagram.com/${user.social.instagram}`}
+                target="_blank"
+              >
+                <FaInstagram /> @{user.social.instagram}
+              </UserSocialNetworkWrapper>
             )}
-          </UserPostsContainerHeaderStyled>
 
-          <UserPostsGridStyled>
-            {posts.map((post) => {
-              return <CommunityPostItem post={post} key={post.id} />;
-            })}
-          </UserPostsGridStyled>
-        </UserPostsContainerStyled>
+            {user.social?.facebook && (
+              <UserSocialNetworkWrapper
+                href={`https://instagram.com/${user.social.facebook}`}
+                target="_blank"
+              >
+                <FaFacebookF /> {user.social.facebook}
+              </UserSocialNetworkWrapper>
+            )}
+
+            {user.social?.twitter && (
+              <UserSocialNetworkWrapper
+                href={`https://twitter.com/${user.social.twitter}`}
+                target="_blank"
+              >
+                <FaTwitter /> {user.social.twitter}
+              </UserSocialNetworkWrapper>
+            )}
+          </UserSocialNetworkContainer>
+
+          <UserPostsContainerStyled>
+            <UserPostsContainerHeaderStyled>
+              <h2>{name}'s Posts </h2>
+              {loading ? (
+                <ClipLoaderSpinner loading={loading} size={16} />
+              ) : (
+                posts.length
+              )}
+            </UserPostsContainerHeaderStyled>
+
+            <UserPostsGridStyled>
+              {posts.map((post) => {
+                return <CommunityPostItem post={post} key={post.id} />;
+              })}
+            </UserPostsGridStyled>
+          </UserPostsContainerStyled>
+        </UserContentWrapperStyled>
       </PageComponent>
     </MainContainer>
   );

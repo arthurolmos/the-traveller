@@ -6,12 +6,6 @@ export const UserProfileHeaderStyled = styled.div`
   justify-content: center;
   align-items: center;
 `;
-export const UserImageContainerStyled = styled.div`
-  position: relative;
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-`;
 
 export const UserPostsContainerStyled = styled.div`
   display: flex;
@@ -34,4 +28,44 @@ export const UserPostsContainerHeaderStyled = styled.div`
 export const UserPostsGridStyled = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+`;
+
+export const UserImageContainerStyled = styled.div`
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+`;
+
+export const UserContentWrapperStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+`;
+
+export const UserSocialNetworkContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+`;
+
+export const UserSocialNetworkWrapper = styled.a`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  gap: 5px;
+
+  > svg {
+    stroke: ${({ theme }) => theme.main.orange};
+    fill: ${({ theme }) => theme.main.orange};
+  }
+
+  &: hover {
+    opacity: 0.8;
+  }
 `;

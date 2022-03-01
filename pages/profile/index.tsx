@@ -25,11 +25,7 @@ import {
   ProfileSocialStyled,
 } from '../../styles/pages/profile';
 import placeholder from '../../public/assets/users/placeholder.svg';
-import {
-  DefaultInput,
-  LabelInput,
-  SocialNetworkInput,
-} from '../../components/inputs';
+import { LabelInput, SocialNetworkInput } from '../../components/inputs';
 import { IUser } from '../../models';
 import DefaultButton from '../../components/buttons/DefaultButton';
 import { FaCamera } from 'react-icons/fa';
