@@ -28,8 +28,8 @@ import {
   ThumbnailPreviewStyled,
 } from '../../styles/pages/posts/NewPost';
 import Image from 'next/image';
-import { IPost, IPostStatus } from '../../interfaces';
-import { ICountry } from '../../interfaces/ICountry';
+import { IPost, IPostStatus } from '../../models';
+import { ICountry } from '../../models/ICountry';
 
 export function NewPost() {
   const router = useRouter();

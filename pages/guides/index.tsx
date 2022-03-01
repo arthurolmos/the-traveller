@@ -2,7 +2,7 @@ import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import React from 'react';
 import GuideItem from '../../components/guides/GuideItem';
 import { MainContainer, PageComponent } from '../../components/layouts';
-import { IGuideItem } from '../../interfaces/IGuideItem';
+import { IGuideItem } from '../../models/IGuideItem';
 import { GuidesContentStyled } from '../../styles/pages/Guides';
 
 interface Props {

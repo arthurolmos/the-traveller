@@ -5,7 +5,7 @@ import {
 } from 'next-firebase-auth';
 import { db, getDoc, doc } from '../../../firebase/db';
 import { Post as PreviewPost } from '../[pid]';
-import { IPost, IPostStatus } from '../../../interfaces';
+import { IPost, IPostStatus } from '../../../models';
 import convertTimestampToDate from '../../../lib/covertTimestampToDate';
 
 interface Props {

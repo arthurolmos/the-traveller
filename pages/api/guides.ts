@@ -1,30 +1,30 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { IGuideItem } from "../../interfaces/IGuideItem";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { IGuideItem } from '../../models/IGuideItem';
 
 const guideItems: IGuideItem[] = [
   {
-    title: "Tibet",
-    subtitle: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-    image: "/assets/guides/tibet.jpg",
-    author: "Ville",
+    title: 'Tibet',
+    subtitle: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
+    image: '/assets/guides/tibet.jpg',
+    author: 'Ville',
   },
   {
-    title: "Egypt",
-    subtitle: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-    image: "/assets/guides/egypt.jpg",
-    author: "Linde",
+    title: 'Egypt',
+    subtitle: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
+    image: '/assets/guides/egypt.jpg',
+    author: 'Linde',
   },
   {
-    title: "Paris",
-    subtitle: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-    image: "/assets/guides/paris.jpg",
-    author: "Mige",
+    title: 'Paris',
+    subtitle: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
+    image: '/assets/guides/paris.jpg',
+    author: 'Mige',
   },
   {
-    title: "Machu Picchu",
-    subtitle: "Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-    image: "/assets/guides/machupicchu.jpg",
-    author: "Gas",
+    title: 'Machu Picchu',
+    subtitle: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
+    image: '/assets/guides/machupicchu.jpg',
+    author: 'Gas',
   },
 ];
 

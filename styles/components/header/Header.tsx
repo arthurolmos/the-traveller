@@ -32,12 +32,12 @@ export const MenuStyled = styled.ul`
 
   > li {
     list-style: none;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
 
     &:hover {
       color: ${({ theme }) => theme.main.orange};
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
   }
 

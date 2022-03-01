@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { IGuideItem } from '../../interfaces/IGuideItem';
+import { IGuideItem } from '../../models/IGuideItem';
 import {
   GuideItemDescriptionStyled,
   GuideItemHeaderStyled,

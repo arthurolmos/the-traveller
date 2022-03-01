@@ -1,6 +1,7 @@
 // ./initAuth.js
 import { init } from 'next-firebase-auth';
 import { firebaseConfig } from './config';
+export * from 'firebase/auth';
 
 const initAuth = () => {
   init({

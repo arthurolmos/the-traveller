@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { IPost } from '../../interfaces';
+import { IPost } from '../../models';
 import { PostListItemStyled } from '../../styles/components/posts/PostListItem';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import { Timestamp } from 'firebase/firestore';

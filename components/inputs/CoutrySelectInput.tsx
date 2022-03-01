@@ -1,7 +1,7 @@
 import React from 'react';
 import countryList from 'react-select-country-list';
 import { SelectInput } from '.';
-import { ICountry } from '../../interfaces/ICountry';
+import { ICountry } from '../../models/ICountry';
 
 interface Props {
   value: ICountry;

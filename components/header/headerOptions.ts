@@ -1,4 +1,4 @@
-import { IHeaderOption } from '../../interfaces/IHeaderOption';
+import { IHeaderOption } from '../../models/IHeaderOption';
 
 export const headerOptions: IHeaderOption[] = [
   {

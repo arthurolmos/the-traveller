@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  DefaultInputStyled,
   LabelInputWrapperStyled,
   InputInfoStyled,
   InputLabelStyled,
 } from '../../styles/components/inputs/LabelInput';
+import { DefaultInput } from './DefaultInput';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -18,7 +18,7 @@ export const LabelInput = React.forwardRef(
     return (
       <LabelInputWrapperStyled>
         {label && <InputLabelStyled>{label}</InputLabelStyled>}
-        <DefaultInputStyled ref={ref} {...rest} />
+        <DefaultInput ref={ref} {...rest} />
         {info && <InputInfoStyled>{info}</InputInfoStyled>}
       </LabelInputWrapperStyled>
     );

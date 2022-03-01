@@ -3,7 +3,7 @@ import React from 'react';
 import { CountrySelectInput } from '../../components/inputs';
 import { MainContainer, PageComponent } from '../../components/layouts';
 import SimpleMap from '../../components/map/SimpleMap';
-import { ICountry } from '../../interfaces/ICountry';
+import { ICountry } from '../../models/ICountry';
 import {
   ListStyled,
   ListItemStyled,
@@ -15,7 +15,7 @@ import {
   ContentReviewsSmallContainer,
 } from '../../styles/pages/Locations';
 import { db, getDocs, collection, query, where } from '../../firebase/db';
-import { IPost } from '../../interfaces';
+import { IPost } from '../../models';
 import Link from 'next/link';
 
 export function Locations() {

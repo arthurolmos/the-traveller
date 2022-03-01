@@ -1,9 +1,7 @@
-import Image from 'next/image';
 import React from 'react';
 import {
   JoinDescriptionStyled,
   JoinContainerStyled,
-  JoinImageContainerStyled,
   JoinSectionStyled,
 } from '../../styles/components/about-us/JoinSection';
 

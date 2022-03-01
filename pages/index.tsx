@@ -12,7 +12,7 @@ import {
   limit,
   getDocs,
 } from '../firebase/db';
-import { IPost, IPostStatus } from '../interfaces';
+import { IPost, IPostStatus } from '../models';
 import convertTimestampToDate from '../lib/covertTimestampToDate';
 import LatestPostsSection from '../components/home/LatestPostsSection';
 

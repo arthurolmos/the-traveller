@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { IHeaderOption } from '../../interfaces/IHeaderOption';
+import { IHeaderOption } from '../../models/IHeaderOption';
 
 interface Props {
   item: IHeaderOption;

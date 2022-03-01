@@ -5,4 +5,9 @@ export interface IUser {
   email: string;
   profilePicture: string;
   isAdmin: boolean;
+  social: {
+    instagram: string;
+    facebook: string;
+    twitter: string;
+  };
 }

@@ -17,7 +17,7 @@ import {
   query,
   where,
 } from '../../firebase/db';
-import { IPost, IPostStatus, IUser } from '../../interfaces';
+import { IPost, IPostStatus, IUser } from '../../models';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import placeholder from '../../public/assets/users/placeholder.svg';
 import {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { IPost, IPostStatus } from '../../interfaces';
+import { IPost, IPostStatus } from '../../models';
 import {
   AdminPostListItemStyled,
   ItemButtonsStyled,

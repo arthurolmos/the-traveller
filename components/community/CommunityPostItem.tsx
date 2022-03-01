@@ -1,5 +1,5 @@
 import React from 'react';
-import { IPost } from '../../interfaces';
+import { IPost } from '../../models';
 import { storage, ref, getDownloadURL } from '../../firebase/storage';
 import {
   CommunityPostItemStyled,
@@ -16,9 +16,6 @@ interface Props {
 
 export function CommunityPostItem({ post }: Props) {
   const [coverImage, setCoverImage] = React.useState(null);
-
-  const shortDescription =
-    post.text.length > 120 ? post.text.substring(0, 120) + '...' : post.text;
 
   React.useEffect(() => {
     async function getCoverImage() {

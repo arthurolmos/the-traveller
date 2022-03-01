@@ -15,7 +15,7 @@ import {
   where,
   orderBy,
 } from '../../firebase/db';
-import { IPost, IPostStatus } from '../../interfaces';
+import { IPost, IPostStatus } from '../../models';
 import {
   PostContainerStyled,
   PostTabContainerStyled,

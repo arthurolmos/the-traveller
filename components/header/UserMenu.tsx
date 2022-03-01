@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { UserMenuStyled } from '../../styles/components/header/UserMenu';
 import { AuthUser } from 'next-firebase-auth';
 import { FaPen, FaUser, FaDoorOpen, FaSign } from 'react-icons/fa';
-import { IMenuOption } from '../../interfaces/IMenuOption';
+import { IMenuOption } from '../../models/IMenuOption';
 
 interface Props {
   user: AuthUser;
@@ -21,7 +21,7 @@ const menuOptions: IMenuOption[] = [
     icon: <FaSign />,
   },
   {
-    title: 'User Profile',
+    title: 'My Profile',
     link: '/profile',
     icon: <FaUser />,
   },

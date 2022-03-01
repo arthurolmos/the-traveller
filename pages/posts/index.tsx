@@ -7,7 +7,7 @@ import {
 } from 'next-firebase-auth';
 import { MainContainer, PageComponent } from '../../components/layouts';
 import { db, collection, onSnapshot, query, where } from '../../firebase/db';
-import { IPost, IPostStatus } from '../../interfaces';
+import { IPost, IPostStatus } from '../../models';
 import {
   PostContainerStyled,
   PostTabContainerStyled,

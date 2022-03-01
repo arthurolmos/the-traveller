@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { IPostStatus } from '../../../interfaces';
+import { IPostStatus } from '../../../models';
 
 export const PostsSectionStyled = styled.section<{ title: string }>`
   display: flex;

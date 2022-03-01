@@ -17,7 +17,7 @@ import {
   StyledGoBack,
 } from '../../styles/pages/posts/Post';
 import { FaTimes } from 'react-icons/fa';
-import { IPost, IPostStatus } from '../../interfaces';
+import { IPost, IPostStatus } from '../../models';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import DefaultImage from '../../components/image/DefaultImage';
 import { useRouter } from 'next/router';

@@ -9,7 +9,7 @@ import {
   query,
   getDocs,
 } from '../../firebase/db';
-import { IPost, IPostStatus } from '../../interfaces';
+import { IPost, IPostStatus } from '../../models';
 import { MainContainer, PageComponent } from '../../components/layouts';
 import { CommunityPostsGridStyled } from '../../styles/pages/Community';
 import { CommunityPostItem } from '../../components/community/CommunityPostItem';
