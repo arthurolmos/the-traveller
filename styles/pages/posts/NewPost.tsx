@@ -7,12 +7,12 @@ export const CoverImagePreviewStyled = styled.div`
   align-items: center;
   cursor: pointer;
   position: relative;
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
   height: 400px;
   width: 800px;
 
   &:hover:after {
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     position: absolute;
     inset: 0;
     display: flex;
@@ -86,7 +86,7 @@ export const ThumbnailPreviewStyled = styled.div`
   height: 250px;
 
   &:hover:after {
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     position: absolute;
     inset: 0;
     display: flex;

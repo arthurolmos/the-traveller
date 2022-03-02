@@ -69,3 +69,16 @@ export const UserSocialNetworkWrapper = styled.a`
     opacity: 0.8;
   }
 `;
+
+export const UsersPostsLengthStyled = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.main.orange};
+  font-weight: bold;
+  color: white;
+  min-width: 30px;
+  min-height: 30px;
+`;

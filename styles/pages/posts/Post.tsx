@@ -8,7 +8,7 @@ export const GalleryImageContainerStyled = styled.div`
   cursor: pointer;
 
   img {
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
   }
 
   &:hover {
@@ -38,6 +38,13 @@ export const CoverImageDescriptionStyled = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-shadow: 1px 1px 2px black;
+
+  a {
+    &:hover {
+      color: ${({ theme }) => theme.main.lightgray};
+    }
+  }
 `;
 
 export const PageContainerStyled = styled.div`

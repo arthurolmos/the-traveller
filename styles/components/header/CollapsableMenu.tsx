@@ -11,7 +11,7 @@ export const CollapsableMenuStyled = styled.div<{ open: boolean }>`
   display: flex;
   flex-direction: row;
   overflow: hidden;
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
   height: ${({ open }) => (open ? '250px' : 0)};
 
   * {
@@ -33,7 +33,7 @@ export const CollapsableMenuListContainerStyled = styled.ul`
 
   > li {
     list-style: none;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
     font-weight: bold;
     text-transform: uppercase;

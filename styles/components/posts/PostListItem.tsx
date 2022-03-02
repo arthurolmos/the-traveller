@@ -5,7 +5,7 @@ export const PostListItemStyled = styled.li<{ index: number }>`
   animation: ${fadeIn};
   animation-duration: ${({ index }) => `calc(${index}s + 3s)`};
   animation-fill-mode: forwards;
-  transition: color 0.5s ease;
+  transition: color 0.3s ease;
   cursor: pointer;
   padding: 20px;
   width: 100%;

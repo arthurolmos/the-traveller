@@ -8,13 +8,13 @@ export const CommunityPostItemStyled = styled.div`
   height: 250px;
   gap: 20px;
   cursor: pointer;
-  transition: color 0.5s ease;
+  transition: color 0.3s ease;
   overflow: hidden;
   border-radius: 15px;
   box-shadow: 5px 5px 10px lightgray;
 
   img {
-    transition: transform 0.5s ease;
+    transition: transform 0.3s ease;
   }
 
   &:hover {

@@ -9,7 +9,7 @@ export const HeaderStyled = styled.nav`
   padding: 1rem;
   border-bottom: ${({ theme }) => `1px solid ${theme.main.gray}`};
   background: white;
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
   box-shadow: 0 5px 10px gray;
   z-index: 9;
   height: 80px;
@@ -71,7 +71,7 @@ export const HamburgerButtonStyled = styled.div<{ open: boolean }>`
   width: 40px;
 
   > svg {
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     fill: ${({ open, theme }) => (open ? theme.main.orange : theme.main.gray)};
   }
 

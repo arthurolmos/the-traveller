@@ -10,7 +10,7 @@ export const ProfileHeaderStyled = styled.section`
 
 export const ImageContainerWrapperStyled = styled.div`
   position: relative;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.3s ease;
   cursor: pointer;
 
   &:hover {

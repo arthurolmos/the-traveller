@@ -36,12 +36,12 @@ export const GuideItemStyled = styled.div`
 
   &:hover {
     ${GuideItemDescriptionStyled} {
-      transition: background 0.5s ease;
+      transition: background 0.3s ease;
       background: rgba(0, 0, 0, 0.8);
 
       h2,
       span {
-        transition: color 0.5s ease;
+        transition: color 0.3s ease;
         color: white;
       }
 
@@ -52,7 +52,7 @@ export const GuideItemStyled = styled.div`
     }
 
     img {
-      transition: transform 0.5s ease;
+      transition: transform 0.3s ease;
       transform: scale(1.1);
       opacity: 0.8;
     }

@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { css, keyframes } from 'styled-components';
 
 const fadeIn = keyframes`
     from { opacity: .2 }
@@ -14,7 +14,7 @@ export const FadeCarouselItemDescription = styled.div`
 
   > h1,
   h2 {
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
   }
 `;
 
@@ -47,7 +47,7 @@ export const FadeCarouselStyled = styled.div`
 export const FadeCarouselIndicatorStyled = styled.span<{ direction: string }>`
   position: absolute;
   top: 40%;
-  ${({ direction }) => (direction === "left" ? "left: 30px" : "right: 30px")};
+  ${({ direction }) => (direction === 'left' ? 'left: 30px' : 'right: 30px')};
   z-index: 2;
   cursor: pointer;
   display: flex;
@@ -69,8 +69,8 @@ export const FadeCarouselItemStyled = styled.div<{
 }>`
   position: relative;
   flex: 1;
-  visibility: ${({ active }) => (active ? "visible" : "hidden")};
-  display: ${({ active }) => (active ? "block" : "none")};
+  visibility: ${({ active }) => (active ? 'visible' : 'hidden')};
+  display: ${({ active }) => (active ? 'block' : 'none')};
 
 
   animation: ${({ active }) =>

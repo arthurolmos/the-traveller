@@ -11,14 +11,14 @@ export const ListItemStyled = styled.li<{ index: number }>`
   padding: 10px;
   opacity: 0;
   animation: ${fadeIn};
-  animation-duration: ${({ index }) => `calc(${index}s + 3s)`};
+  animation-duration: ${({ index }) => `calc(${index}s + 1s)`};
   animation-fill-mode: forwards;
   font-size: 12px;
   border-radius: 25px;
   box-shadow: 10px 10px 10px lightgray;
   width: 90%;
   cursor: pointer;
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
 
   &:hover {
     color: ${({ theme }) => theme.main.orange};

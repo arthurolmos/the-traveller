@@ -9,7 +9,7 @@ export const FooterStyled = styled.footer`
   background: ${({ theme }) => theme.main.white};
 
   svg {
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
   }
 
@@ -37,7 +37,7 @@ export const FooterContainerRightStyled = styled(FooterContainerStyled)`
 export const FooterStyledLink = styled.a`
   text-decoration: underline;
   font-weight: bold;
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
 
   &:hover {
     color: ${({ theme }) => theme.main.orange};

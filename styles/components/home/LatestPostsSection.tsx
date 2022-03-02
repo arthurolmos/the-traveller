@@ -12,7 +12,7 @@ export const GridStyled = styled.div`
 `;
 
 export const LinkStyled = styled.a`
-  transition: color 0.5s ease;
+  transition: color 0.3s ease;
 
   &:hover {
     color: ${({ theme }) => theme.main.orange};
