@@ -11,7 +11,7 @@ export function PageComponent({ title, children }: Props) {
     <PageComponentStyled>
       <h1>{title}</h1>
 
-      <div>{children}</div>
+      {children}
     </PageComponentStyled>
   );
 }

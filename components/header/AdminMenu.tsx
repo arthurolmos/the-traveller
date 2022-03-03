@@ -38,7 +38,7 @@ export default function AdminMenu({ user }: Props) {
       <ul>
         {menuOptions.map((item) => {
           return (
-            <Link href={item.link} passHref>
+            <Link href={item.link} passHref key={item.title}>
               <li>
                 {item.icon} {item.title}
               </li>

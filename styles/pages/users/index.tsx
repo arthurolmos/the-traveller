@@ -70,7 +70,7 @@ export const UserSocialNetworkWrapper = styled.a`
   }
 `;
 
-export const UsersPostsLengthStyled = styled.div`
+export const UserPostsLengthStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

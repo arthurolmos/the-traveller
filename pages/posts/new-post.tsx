@@ -79,7 +79,7 @@ export function NewPost() {
 
       // Uploads Cover Image to Storage
       if (coverImageTitle !== '') {
-        console.log(docRef.id, coverImageTitle);
+        console.log(docRef.id, coverImageTitle, storage);
         const imagesRef = ref(storage, `posts/${docRef.id}/${coverImageTitle}`);
         console.log({ imagesRef });
 
@@ -111,6 +111,7 @@ export function NewPost() {
     } catch (e) {
       setLoading(false);
       console.error('Error adding document: ', e);
+      toast.error(e.message);
     }
   };
 

@@ -93,7 +93,7 @@ export function Profile(props: Props) {
   async function updateDB({
     firstName,
     lastName,
-    profilePicture = user.profilePicture,
+    profilePicture = null,
     social = null,
   }: {
     firstName: string;

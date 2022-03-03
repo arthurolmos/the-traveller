@@ -7,10 +7,10 @@ import {
 import { db, getDoc, doc } from '../../firebase/db';
 import { AdminPageLayout } from '../../components/admin/AdminPageLayout';
 
-export function AdminPanel() {
+export function AdminWriteGuide() {
   return (
-    <AdminPageLayout title="Home">
-      <div>Home Page</div>
+    <AdminPageLayout title="Review Posts">
+      <div>Posts</div>
     </AdminPageLayout>
   );
 }
@@ -42,4 +42,4 @@ export const getServerSideProps = withAuthUserTokenSSR({
 
 export default withAuthUser({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
-})(AdminPanel);
+})(AdminWriteGuide);

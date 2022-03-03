@@ -106,9 +106,7 @@ export function Post(props: Props) {
       <PageContainerStyled>
         <CoverImageContainerStyled>
           <DefaultImage objectFit="cover" layout="fill" src={coverImage} />
-          <CoverImageDescriptionStyled
-            style={{ color: coverImage ? 'white' : 'black' }}
-          >
+          <CoverImageDescriptionStyled>
             <h1>{post.title}</h1>
             <h2>
               Lorem ipsum dolor sit amet consectetur adipisicing elit.

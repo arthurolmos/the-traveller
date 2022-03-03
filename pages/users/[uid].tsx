@@ -17,12 +17,7 @@ import {
   query,
   where,
 } from '../../firebase/db';
-import {
-  ref,
-  storage,
-  uploadBytes,
-  getDownloadURL,
-} from '../../firebase/storage';
+import { ref, storage, getDownloadURL } from '../../firebase/storage';
 import { IPost, IPostStatus, IUser } from '../../models';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import placeholder from '../../public/assets/users/placeholder.svg';
@@ -35,6 +30,7 @@ import {
   UserContentWrapperStyled,
   UserSocialNetworkContainer,
   UserSocialNetworkWrapper,
+  UserPostsLengthStyled,
 } from '../../styles/pages/users';
 import { FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
 import {} from '../../styles/pages/profile';
@@ -153,7 +149,7 @@ export function Users(props: Props) {
                 href={`https://facebook.com/${user.social.facebook}`}
                 target="_blank"
               >
-                <FaFacebookF /> {user.social.facebook}
+                <FaFacebookF /> /{user.social.facebook}
               </UserSocialNetworkWrapper>
             )}
 
@@ -162,7 +158,7 @@ export function Users(props: Props) {
                 href={`https://twitter.com/${user.social.twitter}`}
                 target="_blank"
               >
-                <FaTwitter /> {user.social.twitter}
+                <FaTwitter /> /{user.social.twitter}
               </UserSocialNetworkWrapper>
             )}
           </UserSocialNetworkContainer>
@@ -173,7 +169,7 @@ export function Users(props: Props) {
               {loading ? (
                 <ClipLoaderSpinner loading={loading} size={16} />
               ) : (
-                posts.length
+                <UserPostsLengthStyled>{posts.length}</UserPostsLengthStyled>
               )}
             </UserPostsContainerHeaderStyled>
 
@@ -227,4 +223,6 @@ export const getServerSideProps = withAuthUserTokenSSR({
   }
 });
 
-export default withAuthUser<Props>()(Users);
+export default withAuthUser<Props>({
+  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+})(Users);
