@@ -8,7 +8,7 @@ interface Props {
   inverted?: boolean;
 }
 
-export default function SignButton(props: Props) {
+export function SignButton(props: Props) {
   const { title, href, inverted = false } = props;
 
   return (

@@ -8,9 +8,8 @@ import {
 } from '../../styles/components/admin/PostListItem';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import { Timestamp } from 'firebase/firestore';
-import DefaultButton from '../buttons/DefaultButton';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import { DefaultButton } from '../buttons';
+import { confirmAlert } from '../../components/alerts/ConfirmAlert';
 import { db, updateDoc, doc } from '../../firebase/db';
 import { toast } from 'react-toastify';
 

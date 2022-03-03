@@ -7,7 +7,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   onClick: (e: React.FormEvent) => void;
 }
 
-export default function DefaultButton(props: Props) {
+export function DefaultButton(props: Props) {
   const { title, inverted = false, onClick } = props;
 
   return (

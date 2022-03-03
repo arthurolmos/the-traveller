@@ -12,7 +12,7 @@ import {
   DefaultInput,
 } from '../../components/inputs';
 import { MainContainer, PageComponent } from '../../components/layouts';
-import DefaultButton from '../../components/buttons/DefaultButton';
+import { DefaultButton } from '../../components/buttons';
 import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
 import { db, collection, addDoc } from '../../firebase/db';
 import { storage, ref, uploadBytes } from '../../firebase/storage';

@@ -27,7 +27,7 @@ import {
 import placeholder from '../../public/assets/users/placeholder.svg';
 import { LabelInput, SocialNetworkInput } from '../../components/inputs';
 import { IUser } from '../../models';
-import DefaultButton from '../../components/buttons/DefaultButton';
+import { DefaultButton } from '../../components/buttons';
 import { FaCamera } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';

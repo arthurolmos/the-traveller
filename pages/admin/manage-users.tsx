@@ -22,6 +22,8 @@ import {
   TableActionButtonStyled,
   TableActionContainerStyled,
 } from '../../styles/components/tables/DefaultTable';
+import DefaultModalLayout from '../../components/modals/DefaultModalLayout';
+import AdminEditUserModal from '../../components/admin/AdminEditUserModal';
 
 // // Get the last visible document
 // const lastVisible =
@@ -37,6 +39,40 @@ import {
 
 export function AdminManageUsers() {
   const [users, setUsers] = React.useState<IUser[]>([]);
+
+  const [selected, setSelected] = React.useState<IUser | null>(null);
+  const [open, setOpen] = React.useState<{
+    view: boolean;
+    edit: boolean;
+  }>({
+    view: false,
+    edit: false,
+  });
+
+  const openViewModal = (user: IUser) => {
+    setSelected(user);
+
+    setOpen({
+      view: true,
+      edit: false,
+    });
+  };
+
+  const openEditModal = (user: IUser) => {
+    setSelected(user);
+
+    setOpen({
+      view: false,
+      edit: true,
+    });
+  };
+
+  const closeModal = () => {
+    setOpen({
+      view: false,
+      edit: false,
+    });
+  };
 
   React.useEffect(() => {
     async function getUsers() {
@@ -70,7 +106,7 @@ export function AdminManageUsers() {
     () => [
       {
         Header: 'ID',
-        accessor: 'id', // accessor is the "key" in the data
+        accessor: 'id',
       },
       {
         Header: 'FIRST NAME',
@@ -88,10 +124,10 @@ export function AdminManageUsers() {
         Header: 'ACTIONS',
         accessor: (originalRow, rowIndex) => (
           <TableActionContainerStyled>
-            <TableActionButtonStyled onClick={() => console.log(originalRow)}>
+            <TableActionButtonStyled onClick={() => openViewModal(originalRow)}>
               <FaEye />
             </TableActionButtonStyled>
-            <TableActionButtonStyled onClick={() => console.log(originalRow)}>
+            <TableActionButtonStyled onClick={() => openEditModal(originalRow)}>
               <FaEdit />
             </TableActionButtonStyled>
             <TableActionButtonStyled onClick={() => console.log(originalRow)}>
@@ -107,6 +143,8 @@ export function AdminManageUsers() {
 
   return (
     <AdminPageLayout title="Manage Users">
+      {/* <AdminViewUserModal open={open.edit} user={selected} close={closeModal}/> */}
+      <AdminEditUserModal open={open.edit} user={selected} close={closeModal} />
       <DefaultTable columns={columns} data={data} />
     </AdminPageLayout>
   );

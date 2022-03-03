@@ -6,7 +6,7 @@ import {
 } from 'firebase/auth';
 import { MainContainer, PageComponent } from '../../components/layouts';
 import { DefaultInput } from '../../components/inputs';
-import DefaultButton from '../../components/buttons/DefaultButton';
+import { DefaultButton } from '../../components/buttons';
 import { toast } from 'react-toastify';
 import exceptionHandler from '../../lib/exceptionHandler';
 import { useRouter } from 'next/router';
