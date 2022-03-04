@@ -1,8 +1,8 @@
+import '../firebase';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
 import Toast from '../components/toast/Toast';
 import '../styles/globals.css';
-import '../firebase';
 
 function MyApp({ Component, pageProps }) {
   return (

@@ -3,7 +3,7 @@ import {
   UserMenuContainerStyled,
   AuthContainerStyled,
 } from '../../styles/components/header/AuthContainer';
-import SignButton from '../buttons/SignButton';
+import { SignButton } from '../buttons';
 import { useAuthUser } from 'next-firebase-auth';
 import UserMenu from './UserMenu';
 import AdminMenu from './AdminMenu';

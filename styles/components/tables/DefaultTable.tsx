@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const TableContainerStyled = styled.div`
   padding: 1rem;
+  flex: 1;
 `;
 
 export const TableStyled = styled.div`
@@ -48,7 +49,11 @@ export const TableStyled = styled.div`
   }
 `;
 
-export const TableHeaderStyled = styled.div``;
+export const TableHeaderStyled = styled.div`
+  .th:last-child {
+    text-align: center;
+  }
+`;
 
 export const TableBodyStyled = styled.div``;
 

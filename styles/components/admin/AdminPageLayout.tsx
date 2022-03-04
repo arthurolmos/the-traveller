@@ -11,5 +11,5 @@ export const AdminContainerStyled = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  gap: 40px;
+  gap: 20px;
 `;

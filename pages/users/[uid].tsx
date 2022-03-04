@@ -33,7 +33,6 @@ import {
   UserPostsLengthStyled,
 } from '../../styles/pages/users';
 import { FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
-import {} from '../../styles/pages/profile';
 
 interface Props {
   user: IUser;

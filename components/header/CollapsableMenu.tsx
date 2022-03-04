@@ -4,7 +4,7 @@ import {
   CollapsableMenuListContainerStyled,
   CollapsablePanelContainerStyled,
 } from '../../styles/components/header/CollapsableMenu';
-import SignButton from '../buttons/SignButton';
+import { SignButton } from '../buttons';
 import { useAuthUser } from 'next-firebase-auth';
 import UserMenu from './UserMenu';
 import { useRouter } from 'next/router';

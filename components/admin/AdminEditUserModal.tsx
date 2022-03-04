@@ -12,6 +12,10 @@ interface Props {
 }
 
 export default function AdminEditUserModal({ open, user, close }: Props) {
+  const submit = async () => {
+    console.log('submit');
+  };
+
   return (
     <DefaultModalLayout title="Edit User" open={open} close={close}>
       <ModalRowStyled>
@@ -33,7 +37,7 @@ export default function AdminEditUserModal({ open, user, close }: Props) {
           alignSelf: 'center',
         }}
       >
-        <DefaultButton inverted onClick={close} title="Save" />
+        <DefaultButton inverted onClick={submit} title="Save" />
       </div>
     </DefaultModalLayout>
   );

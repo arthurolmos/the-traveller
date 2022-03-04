@@ -19,23 +19,16 @@ export function DefaultTable({ columns, data }) {
     []
   );
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    state,
-    resetResizing,
-  } = useTable(
-    {
-      columns,
-      data,
-      defaultColumn,
-    },
-    useBlockLayout,
-    useResizeColumns
-  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        columns,
+        data,
+        defaultColumn,
+      },
+      useBlockLayout,
+      useResizeColumns
+    );
 
   return (
     <TableContainerStyled>
@@ -60,7 +53,7 @@ export function DefaultTable({ columns, data }) {
         </TableHeaderStyled>
 
         <TableBodyStyled {...getTableBodyProps()}>
-          {rows.map((row, i) => {
+          {rows.map((row) => {
             prepareRow(row);
             return (
               <TableBodyRowStyled {...row.getRowProps()}>

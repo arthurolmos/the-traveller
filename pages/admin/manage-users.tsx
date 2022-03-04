@@ -17,13 +17,14 @@ import {
 } from '../../firebase/db';
 import { Column } from 'react-table';
 import { DefaultTable } from '../../components/tables';
-import { FaEye, FaEdit, FaTimes } from 'react-icons/fa';
+import { FaEye, FaTimes } from 'react-icons/fa';
 import {
   TableActionButtonStyled,
   TableActionContainerStyled,
 } from '../../styles/components/tables/DefaultTable';
-import DefaultModalLayout from '../../components/modals/DefaultModalLayout';
-import AdminEditUserModal from '../../components/admin/AdminEditUserModal';
+import AdminViewUserModal from '../../components/admin/AdminViewUserModal';
+import { ClipLoaderSpinner } from '../../components/spinners';
+import { confirmAlert } from '../../components/alerts/ConfirmAlert';
 
 // // Get the last visible document
 // const lastVisible =
@@ -38,63 +39,69 @@ import AdminEditUserModal from '../../components/admin/AdminEditUserModal';
 //     limit(25));
 
 export function AdminManageUsers() {
+  const [loading, setLoading] = React.useState(false);
   const [users, setUsers] = React.useState<IUser[]>([]);
-
   const [selected, setSelected] = React.useState<IUser | null>(null);
-  const [open, setOpen] = React.useState<{
-    view: boolean;
-    edit: boolean;
-  }>({
-    view: false,
-    edit: false,
-  });
+  const [open, setOpen] = React.useState(false);
 
   const openViewModal = (user: IUser) => {
     setSelected(user);
-
-    setOpen({
-      view: true,
-      edit: false,
-    });
-  };
-
-  const openEditModal = (user: IUser) => {
-    setSelected(user);
-
-    setOpen({
-      view: false,
-      edit: true,
-    });
+    setOpen(true);
   };
 
   const closeModal = () => {
-    setOpen({
-      view: false,
-      edit: false,
+    setOpen(false);
+    setSelected(null);
+  };
+
+  const handleDeleteUser = (user: IUser) => {
+    const { id, firstName, lastName } = user;
+
+    confirmAlert({
+      title: 'Confirmation',
+      message: `Confirm exclusion of user ${firstName} ${lastName}?`,
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => null,
+        },
+        {
+          label: 'No',
+          onClick: () => null,
+        },
+      ],
     });
   };
 
   React.useEffect(() => {
     async function getUsers() {
-      // Query the first page of docs
-      const first = query(
-        collection(db, 'users'),
-        orderBy('firstName'),
-        orderBy('lastName'),
-        limit(25)
-      );
+      try {
+        setLoading(true);
 
-      const documentSnapshots = await getDocs(first);
+        // Query the first page of docs
+        const first = query(
+          collection(db, 'users'),
+          orderBy('firstName'),
+          orderBy('lastName'),
+          limit(25)
+        );
 
-      const users: IUser[] = [];
-      documentSnapshots.forEach((doc) => {
-        const user = doc.data();
-        user.id = doc.id;
+        const documentSnapshots = await getDocs(first);
 
-        users.push(user as IUser);
-      });
+        const users: IUser[] = [];
+        documentSnapshots.forEach((doc) => {
+          const user = doc.data();
+          user.id = doc.id;
 
-      setUsers(users);
+          users.push(user as IUser);
+        });
+
+        setUsers(users);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     }
 
     getUsers();
@@ -122,15 +129,15 @@ export function AdminManageUsers() {
       },
       {
         Header: 'ACTIONS',
-        accessor: (originalRow, rowIndex) => (
+        accessor: (originalRow) => (
           <TableActionContainerStyled>
             <TableActionButtonStyled onClick={() => openViewModal(originalRow)}>
               <FaEye />
             </TableActionButtonStyled>
-            <TableActionButtonStyled onClick={() => openEditModal(originalRow)}>
-              <FaEdit />
-            </TableActionButtonStyled>
-            <TableActionButtonStyled onClick={() => console.log(originalRow)}>
+
+            <TableActionButtonStyled
+              onClick={() => handleDeleteUser(originalRow)}
+            >
               <FaTimes />
             </TableActionButtonStyled>
           </TableActionContainerStyled>
@@ -143,9 +150,13 @@ export function AdminManageUsers() {
 
   return (
     <AdminPageLayout title="Manage Users">
-      {/* <AdminViewUserModal open={open.edit} user={selected} close={closeModal}/> */}
-      <AdminEditUserModal open={open.edit} user={selected} close={closeModal} />
-      <DefaultTable columns={columns} data={data} />
+      <AdminViewUserModal open={open} user={selected} close={closeModal} />
+      {/* <AdminEditUserModal open={open.edit} user={selected} close={closeModal} /> */}
+      {loading ? (
+        <ClipLoaderSpinner loading={loading} />
+      ) : (
+        <DefaultTable columns={columns} data={data} />
+      )}
     </AdminPageLayout>
   );
 }

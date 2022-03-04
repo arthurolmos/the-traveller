@@ -16,6 +16,15 @@ import {
 } from '../../firebase/db';
 import { IPost, IPostStatus } from '../../models';
 import { AdminPageLayout } from '../../components/admin/AdminPageLayout';
+import { ClipLoaderSpinner } from '../../components/spinners';
+import PostsSection from '../../components/admin/PostsSection';
+import {
+  TableActionButtonStyled,
+  TableActionContainerStyled,
+} from '../../styles/components/tables/DefaultTable';
+import { FaCheck, FaTimes } from 'react-icons/fa';
+import { Column } from 'react-table';
+import { DefaultTable } from '../../components/tables';
 
 export function AdminReviewPosts() {
   const [loading, setLoading] = React.useState(false);
@@ -42,12 +51,7 @@ export function AdminReviewPosts() {
           posts.push(post);
         });
 
-        setLoading((prevState) => {
-          return {
-            ...prevState,
-            [IPostStatus.PENDING_APPROVAL]: false,
-          };
-        });
+        setLoading(false);
         setPostsPendingApproval([...posts]);
       }
     );
@@ -57,9 +61,63 @@ export function AdminReviewPosts() {
     };
   }, []);
 
+  const data = React.useMemo(
+    () =>
+      postsPendingApproval.map((post) => {
+        return {
+          id: post.id,
+          title: post.title,
+          author: post.author.name,
+        };
+      }),
+    [postsPendingApproval]
+  );
+
+  const columns: Array<Column<IPost>> = React.useMemo(
+    () => [
+      {
+        Header: 'ID',
+        accessor: 'id',
+      },
+      {
+        Header: 'TITLE',
+        accessor: 'title',
+      },
+      {
+        Header: 'AUTHOR',
+        accessor: (originalRow) => originalRow.author,
+        id: 'author',
+      },
+      // {
+      //   Header: 'PUBLISHED AT',
+      //   accessor: 'createdAt',
+      // },
+      {
+        Header: 'ACTIONS',
+        accessor: (originalRow) => (
+          <TableActionContainerStyled>
+            <TableActionButtonStyled onClick={() => console.log(originalRow)}>
+              <FaCheck />
+            </TableActionButtonStyled>
+
+            <TableActionButtonStyled onClick={() => console.log(originalRow)}>
+              <FaTimes />
+            </TableActionButtonStyled>
+          </TableActionContainerStyled>
+        ),
+        id: 'action',
+      },
+    ],
+    []
+  );
+
   return (
     <AdminPageLayout title="Review Posts">
-      <div>Posts</div>
+      {loading ? (
+        <ClipLoaderSpinner loading={loading} />
+      ) : (
+        <DefaultTable columns={columns} data={data} />
+      )}
     </AdminPageLayout>
   );
 }

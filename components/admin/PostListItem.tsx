@@ -24,7 +24,7 @@ export default function PostListItem({ item, index, preview }: Props) {
 
   const createdAt = convertTimestampToDate(item.createdAt as Timestamp);
 
-  const handleApprove = async (pid: string) => {
+  const handleApprove = (pid: string) => {
     confirmAlert({
       title: 'Confirmation',
       message: 'Approve this post?',
@@ -41,7 +41,7 @@ export default function PostListItem({ item, index, preview }: Props) {
     });
   };
 
-  const handleReject = async (pid: string) => {
+  const handleReject = (pid: string) => {
     confirmAlert({
       title: 'Confirmation',
       message: 'Reject this post?',
