@@ -13,6 +13,7 @@ import {
   query,
   where,
   orderBy,
+  Timestamp,
 } from 'firebase/firestore';
 import { IPost, IPostStatus } from '../../models';
 import { AdminPageLayout } from '../../components/admin/AdminPageLayout';
@@ -21,9 +22,11 @@ import {
   TableActionButtonStyled,
   TableActionContainerStyled,
 } from '../../styles/components/tables/DefaultTable';
-import { FaCheck, FaTimes } from 'react-icons/fa';
+import { FaCheck, FaEye, FaTimes } from 'react-icons/fa';
 import { Column } from 'react-table';
 import { DefaultTable } from '../../components/tables';
+import convertTimestampToDate from '../../lib/covertTimestampToDate';
+import Link from 'next/link';
 
 export function AdminReviewPosts() {
   const [loading, setLoading] = React.useState(false);
@@ -67,6 +70,7 @@ export function AdminReviewPosts() {
           id: post.id,
           title: post.title,
           author: post.author.name,
+          createdAt: convertTimestampToDate(post.createdAt as Timestamp),
         };
       }),
     [postsPendingApproval]
@@ -87,14 +91,22 @@ export function AdminReviewPosts() {
         accessor: (originalRow) => originalRow.author,
         id: 'author',
       },
-      // {
-      //   Header: 'PUBLISHED AT',
-      //   accessor: 'createdAt',
-      // },
+      {
+        Header: 'PUBLISHED AT',
+        accessor: 'createdAt',
+      },
       {
         Header: 'ACTIONS',
         accessor: (originalRow) => (
           <TableActionContainerStyled>
+            <TableActionButtonStyled onClick={() => console.log(originalRow)}>
+              <Link href={`/posts/preview/${originalRow.id}`} passHref>
+                <a>
+                  <FaEye />
+                </a>
+              </Link>
+            </TableActionButtonStyled>
+
             <TableActionButtonStyled onClick={() => console.log(originalRow)}>
               <FaCheck />
             </TableActionButtonStyled>
