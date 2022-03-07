@@ -14,6 +14,7 @@ import {
   where,
   orderBy,
   Timestamp,
+  updateDoc,
 } from 'firebase/firestore';
 import { IPost, IPostStatus } from '../../models';
 import { AdminPageLayout } from '../../components/admin/AdminPageLayout';
@@ -27,6 +28,8 @@ import { Column } from 'react-table';
 import { DefaultTable } from '../../components/tables';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import Link from 'next/link';
+import { confirmAlert } from '../../components/alerts/ConfirmAlert';
+import { toast } from 'react-toastify';
 
 export function AdminReviewPosts() {
   const [loading, setLoading] = React.useState(false);
@@ -76,6 +79,60 @@ export function AdminReviewPosts() {
     [postsPendingApproval]
   );
 
+  const handleApprove = (pid: string) => {
+    confirmAlert({
+      title: 'Confirmation',
+      message: 'Approve this post?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => updatePostStatus(pid, IPostStatus.APPROVED),
+        },
+        {
+          label: 'No',
+          onClick: () => null,
+        },
+      ],
+    });
+  };
+
+  const handleReject = (pid: string) => {
+    confirmAlert({
+      title: 'Confirmation',
+      message: 'Reject this post?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => updatePostStatus(pid, IPostStatus.REJECTED),
+        },
+        {
+          label: 'No',
+          onClick: () => null,
+        },
+      ],
+    });
+  };
+
+  async function updatePostStatus(pid: string, status: IPostStatus) {
+    try {
+      const docRef = doc(db, 'posts', pid);
+
+      if (status === IPostStatus.APPROVED)
+        await updateDoc(docRef, {
+          status: status,
+          approvedAt: new Date(),
+        });
+      else
+        await updateDoc(docRef, {
+          status: status,
+        });
+
+      toast.success(`Post ${status.toLowerCase()} updated successfully`);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   const columns: Array<Column<IPost>> = React.useMemo(
     () => [
       {
@@ -99,7 +156,7 @@ export function AdminReviewPosts() {
         Header: 'ACTIONS',
         accessor: (originalRow) => (
           <TableActionContainerStyled>
-            <TableActionButtonStyled onClick={() => console.log(originalRow)}>
+            <TableActionButtonStyled>
               <Link href={`/posts/preview/${originalRow.id}`} passHref>
                 <a>
                   <FaEye />
@@ -107,12 +164,16 @@ export function AdminReviewPosts() {
               </Link>
             </TableActionButtonStyled>
 
-            <TableActionButtonStyled onClick={() => console.log(originalRow)}>
-              <FaCheck />
+            <TableActionButtonStyled
+              onClick={() => handleApprove(originalRow.id)}
+            >
+              <FaCheck color="lightgreen" />
             </TableActionButtonStyled>
 
-            <TableActionButtonStyled onClick={() => console.log(originalRow)}>
-              <FaTimes />
+            <TableActionButtonStyled
+              onClick={() => handleReject(originalRow.id)}
+            >
+              <FaTimes color="red" />
             </TableActionButtonStyled>
           </TableActionContainerStyled>
         ),

@@ -5,14 +5,22 @@ import { collection, where, orderBy, query, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase/db';
 import { IPost, IPostStatus } from '../../models';
 import { MainContainer, PageComponent } from '../../components/layouts';
-import { CommunityPostsGridStyled } from '../../styles/pages/Community';
+import {
+  CommunityInputContainer,
+  CommunityPostsGridStyled,
+} from '../../styles/pages/Community';
 import { CommunityPostItem } from '../../components/community/CommunityPostItem';
+import { SearchInput } from '../../components/inputs';
 
 interface Props {
   posts: IPost[];
 }
 
 export function Community({ posts }: Props) {
+  function submit() {
+    console.log('aa');
+  }
+
   return (
     <MainContainer title="Community">
       <PageComponent title="Community">
@@ -21,6 +29,11 @@ export function Community({ posts }: Props) {
           impedit quo. Harum atque reprehenderit aliquam odio, illo ullam
           provident numquam.
         </p>
+
+        <CommunityInputContainer>
+          <SearchInput onClick={submit} />
+        </CommunityInputContainer>
+
         <CommunityPostsGridStyled>
           {posts.map((item) => {
             return <CommunityPostItem key={item.id} post={item} />;

@@ -68,7 +68,7 @@ export function SignIn() {
               <BeatLoaderSpinner loading={loading} />
             </SpinnerContainerStyled>
           ) : (
-            <DefaultButton title="Create Account" inverted onClick={submit} />
+            <DefaultButton title="Sign In" inverted onClick={submit} />
           )}
         </SignForm>
 

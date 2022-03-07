@@ -7,7 +7,7 @@ export const SearchButtonStyled = styled.div`
   right: 0;
   bottom: 0;
   width: 60px;
-  border-radius: 0 15px 15px 0;
+  border-radius: 0 5px 5px 0;
   display: flex;
   align-items: center;
   justify-content: center;

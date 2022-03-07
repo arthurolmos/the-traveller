@@ -11,21 +11,19 @@ import {
   collection,
   query,
   orderBy,
-  limit,
   getDocs,
 } from 'firebase/firestore';
 import { AdminPageLayout } from '../../components/admin/AdminPageLayout';
 import { IUser } from '../../models';
 import { Column } from 'react-table';
 import { DefaultTable } from '../../components/tables';
-import { FaEye, FaTimes } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa';
 import {
   TableActionButtonStyled,
   TableActionContainerStyled,
 } from '../../styles/components/tables/DefaultTable';
 import AdminViewUserModal from '../../components/admin/AdminViewUserModal';
 import { ClipLoaderSpinner } from '../../components/spinners';
-import { confirmAlert } from '../../components/alerts/ConfirmAlert';
 
 export function AdminManageUsers() {
   const [loading, setLoading] = React.useState(false);
@@ -43,36 +41,15 @@ export function AdminManageUsers() {
     setSelected(null);
   };
 
-  const handleDeleteUser = (user: IUser) => {
-    const { id, firstName, lastName } = user;
-
-    confirmAlert({
-      title: 'Confirmation',
-      message: `Confirm exclusion of user ${firstName} ${lastName}?`,
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => null,
-        },
-        {
-          label: 'No',
-          onClick: () => null,
-        },
-      ],
-    });
-  };
-
   React.useEffect(() => {
     async function getUsers() {
       try {
         setLoading(true);
 
-        // Query the first page of docs
         const first = query(
           collection(db, 'users'),
           orderBy('firstName'),
-          orderBy('lastName'),
-          limit(25)
+          orderBy('lastName')
         );
 
         const documentSnapshots = await getDocs(first);
@@ -123,12 +100,6 @@ export function AdminManageUsers() {
             <TableActionButtonStyled onClick={() => openViewModal(originalRow)}>
               <FaEye />
             </TableActionButtonStyled>
-
-            <TableActionButtonStyled
-              onClick={() => handleDeleteUser(originalRow)}
-            >
-              <FaTimes />
-            </TableActionButtonStyled>
           </TableActionContainerStyled>
         ),
         id: 'action',
@@ -140,7 +111,6 @@ export function AdminManageUsers() {
   return (
     <AdminPageLayout title="Manage Users">
       <AdminViewUserModal open={open} user={selected} close={closeModal} />
-      {/* <AdminEditUserModal open={open.edit} user={selected} close={closeModal} /> */}
       {loading ? (
         <ClipLoaderSpinner loading={loading} />
       ) : (

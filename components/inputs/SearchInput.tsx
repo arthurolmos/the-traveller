@@ -4,14 +4,20 @@ import { SearchButtonStyled } from '../../styles/components/inputs/SearchInput';
 import { FaSearch } from 'react-icons/fa';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  onClick: (e: React.FormEvent) => void;
+  onClick: () => void;
 }
 
 export function SearchInput({ onClick, ...rest }: Props) {
+  function submit(e: React.FormEvent) {
+    e.preventDefault();
+
+    onClick();
+  }
+
   return (
     <div style={{ position: 'relative' }}>
       <DefaultInput {...rest} />
-      <SearchButtonStyled onClick={onClick}>
+      <SearchButtonStyled onClick={submit}>
         <FaSearch />
       </SearchButtonStyled>
     </div>

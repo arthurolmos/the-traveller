@@ -13,6 +13,11 @@ export const CommunityPostsGridStyled = styled.div`
   }
 `;
 
+export const CommunityInputContainer = styled.div`
+  width: 80%;
+  margin: 20px 0 40px;
+`;
+
 export const ImageContainerStyled = styled.div`
   display: flex;
   flex: 1;

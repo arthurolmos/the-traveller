@@ -50,12 +50,16 @@ export const TableStyled = styled.div`
 `;
 
 export const TableHeaderStyled = styled.div`
+  border-bottom: ${({ theme }) => `1px solid ${theme.main.lightgray}`};
+
   .th:last-child {
     text-align: center;
   }
 `;
 
-export const TableBodyStyled = styled.div``;
+export const TableBodyStyled = styled.div`
+  margin-bottom: 20px;
+`;
 
 export const TableHeaderRowStyled = styled.div`
   cursor: pointer;
@@ -97,5 +101,24 @@ export const TableActionButtonStyled = styled.div`
 
   &:hover {
     opacity: 0.6;
+  }
+`;
+
+export const TablePaginationStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  > div {
+    flex: 1;
+  }
+
+  > div:last-child {
+    flex: 2;
+    display: flex;
+    justify-content: end;
+
+    > select {
+      margin-left: 10px;
+    }
   }
 `;
