@@ -4,8 +4,8 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
+import { db } from '../../firebase/db';
 import {
-  db,
   getDoc,
   doc,
   collection,
@@ -13,11 +13,10 @@ import {
   query,
   where,
   orderBy,
-} from '../../firebase/db';
+} from 'firebase/firestore';
 import { IPost, IPostStatus } from '../../models';
 import { AdminPageLayout } from '../../components/admin/AdminPageLayout';
 import { ClipLoaderSpinner } from '../../components/spinners';
-import PostsSection from '../../components/admin/PostsSection';
 import {
   TableActionButtonStyled,
   TableActionContainerStyled,

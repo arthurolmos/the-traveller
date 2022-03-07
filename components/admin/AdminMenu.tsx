@@ -1,12 +1,12 @@
 import React from 'react';
+import { db } from '../../firebase/db';
 import {
-  db,
   collection,
   onSnapshot,
   query,
   where,
   orderBy,
-} from '../../firebase/db';
+} from 'firebase/firestore';
 import { IPostStatus } from '../../models';
 import { ClipLoaderSpinner } from '../../components/spinners/ClipLoader';
 import Link from 'next/link';

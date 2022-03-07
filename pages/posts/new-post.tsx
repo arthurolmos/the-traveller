@@ -14,8 +14,10 @@ import {
 import { MainContainer, PageComponent } from '../../components/layouts';
 import { DefaultButton } from '../../components/buttons';
 import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
-import { db, collection, addDoc } from '../../firebase/db';
-import { storage, ref, uploadBytes } from '../../firebase/storage';
+import { db } from '../../firebase/db';
+import { collection, addDoc } from 'firebase/firestore';
+import { storage } from '../../firebase/storage';
+import { ref, uploadBytes } from 'firebase/storage';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import {

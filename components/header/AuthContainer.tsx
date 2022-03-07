@@ -7,7 +7,8 @@ import { SignButton } from '../buttons';
 import { useAuthUser } from 'next-firebase-auth';
 import UserMenu from './UserMenu';
 import AdminMenu from './AdminMenu';
-import { db, getDoc, doc } from '../../firebase/db';
+import { db } from '../../firebase/db';
+import { getDoc, doc } from 'firebase/firestore';
 
 interface Props {
   open: boolean;
