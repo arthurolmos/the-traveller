@@ -1,8 +1,10 @@
 import React from 'react';
 import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import { MainContainer } from '../../components/layouts';
-import { db, getDoc, doc } from '../../firebase/db';
-import { storage, ref, getDownloadURL, listAll } from '../../firebase/storage';
+import { db } from '../../firebase/db';
+import { getDoc, doc } from 'firebase/firestore';
+import { storage } from '../../firebase/storage';
+import { ref, getDownloadURL, listAll } from 'firebase/storage';
 import {
   CoverImageContainerStyled,
   CoverImageDescriptionStyled,

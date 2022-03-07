@@ -11,7 +11,8 @@ import { useRouter } from 'next/router';
 import { headerOptions } from './headerOptions';
 import MenuItem from './MenuItem';
 import AdminMenu from './AdminMenu';
-import { db, getDoc, doc } from '../../firebase/db';
+import { db } from '../../firebase/db';
+import { getDoc, doc } from 'firebase/firestore';
 
 interface Props {
   open: boolean;

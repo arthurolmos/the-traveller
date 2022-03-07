@@ -1,14 +1,8 @@
 import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import React from 'react';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
-import {
-  db,
-  collection,
-  where,
-  orderBy,
-  query,
-  getDocs,
-} from '../../firebase/db';
+import { collection, where, orderBy, query, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase/db';
 import { IPost, IPostStatus } from '../../models';
 import { MainContainer, PageComponent } from '../../components/layouts';
 import { CommunityPostsGridStyled } from '../../styles/pages/Community';

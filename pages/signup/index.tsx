@@ -19,7 +19,8 @@ import { SpinnerContainerStyled } from '../../styles/pages/SignUp';
 import Link from 'next/link';
 import { BeatLoaderSpinner } from '../../components/spinners/BeatLoader';
 import SignForm from '../../components/forms/SignForm';
-import { db, doc, setDoc } from '../../firebase/db';
+import { db } from '../../firebase/db';
+import { doc, setDoc } from 'firebase/firestore';
 
 export function SignUp() {
   const auth = getAuth();

@@ -14,7 +14,8 @@ import {
   ContentReviewsDefaultContainer,
   ContentReviewsSmallContainer,
 } from '../../styles/pages/Locations';
-import { db, getDocs, collection, query, where } from '../../firebase/db';
+import { db } from '../../firebase/db';
+import { getDocs, collection, query, where } from 'firebase/firestore';
 import { IPost } from '../../models';
 import Link from 'next/link';
 

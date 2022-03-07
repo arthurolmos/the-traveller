@@ -10,7 +10,8 @@ import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import { Timestamp } from 'firebase/firestore';
 import { DefaultButton } from '../buttons';
 import { confirmAlert } from '../../components/alerts/ConfirmAlert';
-import { db, updateDoc, doc } from '../../firebase/db';
+import { db } from '../../firebase/db';
+import { updateDoc, doc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
 interface Props {

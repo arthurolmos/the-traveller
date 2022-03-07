@@ -4,7 +4,8 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
-import { db, getDoc, doc } from '../../firebase/db';
+import { db } from '../../firebase/db';
+import { getDoc, doc } from 'firebase/firestore';
 import { AdminPageLayout } from '../../components/admin/AdminPageLayout';
 
 export function AdminWriteGuide() {

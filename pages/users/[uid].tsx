@@ -8,16 +8,17 @@ import React from 'react';
 import { CommunityPostItem } from '../../components/community/CommunityPostItem';
 import { MainContainer, PageComponent } from '../../components/layouts';
 import { ClipLoaderSpinner } from '../../components/spinners/ClipLoader';
+import { db } from '../../firebase/db';
 import {
-  db,
   doc,
   getDoc,
   getDocs,
   collection,
   query,
   where,
-} from '../../firebase/db';
-import { ref, storage, getDownloadURL } from '../../firebase/storage';
+} from 'firebase/firestore';
+import { storage } from '../../firebase/storage';
+import { ref, getDownloadURL } from 'firebase/storage';
 import { IPost, IPostStatus, IUser } from '../../models';
 import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import placeholder from '../../public/assets/users/placeholder.svg';

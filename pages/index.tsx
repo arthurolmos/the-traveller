@@ -4,14 +4,14 @@ import { MainContainer } from '../components/layouts';
 import { ContentContainerStyled } from '../styles/pages/Home';
 import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
 import {
-  db,
   query,
   collection,
   where,
   orderBy,
   limit,
   getDocs,
-} from '../firebase/db';
+} from 'firebase/firestore';
+import { db } from '../firebase/db';
 import { IPost, IPostStatus } from '../models';
 import convertTimestampToDate from '../lib/covertTimestampToDate';
 import LatestPostsSection from '../components/home/LatestPostsSection';

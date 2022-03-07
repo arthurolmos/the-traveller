@@ -3,7 +3,8 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
-import { db, getDoc, doc } from '../../../firebase/db';
+import { db } from '../../../firebase/db';
+import { getDoc, doc } from 'firebase/firestore';
 import { Post as PreviewPost } from '../[pid]';
 import { IPost, IPostStatus } from '../../../models';
 import convertTimestampToDate from '../../../lib/covertTimestampToDate';

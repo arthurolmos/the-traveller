@@ -12,16 +12,10 @@ import {
   AdminViewUserSocialNetworkWrapper,
   // AdminViewUserPostsLengthStyled,
 } from '../../styles/components/admin/AdminViewUserModal';
-import {
-  db,
-  doc,
-  getDoc,
-  getDocs,
-  collection,
-  query,
-  where,
-} from '../../firebase/db';
-import { ref, storage, getDownloadURL } from '../../firebase/storage';
+import { db } from '../../firebase/db';
+import { getDocs, collection, query, where } from 'firebase/firestore';
+import { storage } from '../../firebase/storage';
+import { ref, getDownloadURL } from 'firebase/storage';
 import { ClipLoaderSpinner } from '../spinners';
 import Image from 'next/image';
 import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';

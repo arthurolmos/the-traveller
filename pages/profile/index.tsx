@@ -6,15 +6,12 @@ import {
 } from 'next-firebase-auth';
 import Image from 'next/image';
 import React from 'react';
-import { db, doc, getDoc, updateDoc } from '../../firebase/db';
-import {
-  ref,
-  storage,
-  uploadBytes,
-  getDownloadURL,
-} from '../../firebase/storage';
+import { db } from '../../firebase/db';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { storage } from '../../firebase/storage';
+import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
 import { MainContainer, PageComponent } from '../../components/layouts';
-import { updateProfile } from '../../firebase/auth';
+import { updateProfile } from 'firebase/auth';
 import {
   CameraIconContainerStyled,
   ContentWrapperStyled,

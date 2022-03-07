@@ -6,7 +6,8 @@ import {
   withAuthUserTokenSSR,
 } from 'next-firebase-auth';
 import { MainContainer, PageComponent } from '../../components/layouts';
-import { db, collection, onSnapshot, query, where } from '../../firebase/db';
+import { db } from '../../firebase/db';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { IPost, IPostStatus } from '../../models';
 import {
   PostContainerStyled,
