@@ -54,6 +54,13 @@ export function AdminMenu() {
             Home
           </AdminPageMenuListItemStyled>
         </Link>
+        <Link href="/admin/manage-guides" passHref>
+          <AdminPageMenuListItemStyled
+            active={route.pathname === '/admin/manage-guides'}
+          >
+            Manage Guides
+          </AdminPageMenuListItemStyled>
+        </Link>
         <Link href="/admin/write-guide" passHref>
           <AdminPageMenuListItemStyled
             active={route.pathname === '/admin/write-guide'}

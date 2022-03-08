@@ -9,84 +9,72 @@ import {
   getDoc,
   doc,
   collection,
-  onSnapshot,
   query,
-  where,
   orderBy,
+  onSnapshot,
   Timestamp,
-  updateDoc,
+  deleteDoc,
 } from 'firebase/firestore';
-import { IPost, IPostStatus } from '../../models';
 import { AdminPageLayout } from '../../components/admin/AdminPageLayout';
-import { ClipLoaderSpinner } from '../../components/spinners';
+import { IGuide } from '../../models';
+import { Column } from 'react-table';
+import { DefaultTable } from '../../components/tables';
+import { FaEye, FaTimes } from 'react-icons/fa';
 import {
   TableActionButtonStyled,
   TableActionContainerStyled,
 } from '../../styles/components/tables/DefaultTable';
-import { FaCheck, FaEye, FaTimes } from 'react-icons/fa';
-import { Column } from 'react-table';
-import { DefaultTable } from '../../components/tables';
-import convertTimestampToDate from '../../lib/covertTimestampToDate';
+import { ClipLoaderSpinner } from '../../components/spinners';
 import Link from 'next/link';
+import convertTimestampToDate from '../../lib/covertTimestampToDate';
 import { confirmAlert } from '../../components/alerts/ConfirmAlert';
 import { toast } from 'react-toastify';
 
-export function AdminReviewPosts() {
+export function AdminManageGuides() {
   const [loading, setLoading] = React.useState(false);
-  const [postsPendingApproval, setPostsPendingApproval] = React.useState<
-    IPost[]
-  >([]);
+  const [guides, setGuides] = React.useState<IGuide[]>([]);
 
   React.useEffect(() => {
-    setLoading(true);
+    const guidesQuery = query(collection(db, 'guides'), orderBy('createdAt'));
 
-    const postsPendingApprovalQuery = query(
-      collection(db, 'posts'),
-      where('status', '==', IPostStatus.PENDING_APPROVAL),
-      orderBy('createdAt')
-    );
+    const unsubGuides = onSnapshot(guidesQuery, (querySnapshot) => {
+      const guides = [];
+      querySnapshot.forEach((doc) => {
+        const guide = doc.data();
+        guide.id = doc.id;
+        guides.push(guide);
+      });
 
-    const unsubPostsPendingApproval = onSnapshot(
-      postsPendingApprovalQuery,
-      (querySnapshot) => {
-        const posts = [];
-        querySnapshot.forEach((doc) => {
-          const post = doc.data();
-          post.id = doc.id;
-          posts.push(post);
-        });
-
-        setLoading(false);
-        setPostsPendingApproval([...posts]);
-      }
-    );
+      setLoading(false);
+      setGuides([...guides]);
+    });
 
     return () => {
-      unsubPostsPendingApproval();
+      unsubGuides();
     };
   }, []);
 
   const data = React.useMemo(
     () =>
-      postsPendingApproval.map((post) => {
+      guides.map((guide) => {
         return {
-          id: post.id,
-          title: post.title,
-          author: post.author.name,
-          createdAt: convertTimestampToDate(post.createdAt as Timestamp),
+          id: guide.id,
+          title: guide.title,
+          author: guide.author.name,
+          createdAt: convertTimestampToDate(guide.createdAt as Timestamp),
         };
       }),
-    [postsPendingApproval]
+    [guides]
   );
 
-  const handleApprove = (pid: string) => {
+  const handleDelete = (gid: string) => {
     confirmAlert({
       title: 'Confirmation',
-      message: 'Approve this post?',
+      message: 'Delete this Guide?',
       buttons: [
         {
           label: 'Yes',
-          onClick: () => updatePostStatus(pid, IPostStatus.APPROVED),
+          onClick: () => deleteGuide(gid),
         },
         {
           label: 'No',
@@ -96,40 +84,14 @@ export function AdminReviewPosts() {
     });
   };
 
-  const handleReject = (pid: string) => {
-    confirmAlert({
-      title: 'Confirmation',
-      message: 'Reject this post?',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => updatePostStatus(pid, IPostStatus.REJECTED),
-        },
-        {
-          label: 'No',
-          onClick: () => null,
-        },
-      ],
-    });
-  };
-
-  async function updatePostStatus(pid: string, status: IPostStatus) {
+  async function deleteGuide(gid: string) {
     try {
       setLoading(true);
+      const docRef = doc(db, 'guides', gid);
 
-      const docRef = doc(db, 'posts', pid);
+      await deleteDoc(docRef);
 
-      if (status === IPostStatus.APPROVED)
-        await updateDoc(docRef, {
-          status: status,
-          approvedAt: new Date(),
-        });
-      else
-        await updateDoc(docRef, {
-          status: status,
-        });
-
-      toast.success(`Post ${status.toLowerCase()} updated successfully`);
+      toast.success(`Guide deleted successfully`);
     } catch (err) {
       console.error(err);
     } finally {
@@ -137,7 +99,7 @@ export function AdminReviewPosts() {
     }
   }
 
-  const columns: Array<Column<IPost>> = React.useMemo(
+  const columns: Array<Column<IGuide>> = React.useMemo(
     () => [
       {
         Header: 'ID',
@@ -161,7 +123,7 @@ export function AdminReviewPosts() {
         accessor: (originalRow) => (
           <TableActionContainerStyled>
             <TableActionButtonStyled>
-              <Link href={`/posts/preview/${originalRow.id}`} passHref>
+              <Link href={`/guides/${originalRow.id}`} passHref>
                 <a>
                   <FaEye />
                 </a>
@@ -169,13 +131,7 @@ export function AdminReviewPosts() {
             </TableActionButtonStyled>
 
             <TableActionButtonStyled
-              onClick={() => handleApprove(originalRow.id)}
-            >
-              <FaCheck color="lightgreen" />
-            </TableActionButtonStyled>
-
-            <TableActionButtonStyled
-              onClick={() => handleReject(originalRow.id)}
+              onClick={() => handleDelete(originalRow.id)}
             >
               <FaTimes color="red" />
             </TableActionButtonStyled>
@@ -188,7 +144,7 @@ export function AdminReviewPosts() {
   );
 
   return (
-    <AdminPageLayout title="Review Posts">
+    <AdminPageLayout title="Manage Guides">
       {loading ? (
         <ClipLoaderSpinner loading={loading} />
       ) : (
@@ -225,4 +181,4 @@ export const getServerSideProps = withAuthUserTokenSSR({
 
 export default withAuthUser({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
-})(AdminReviewPosts);
+})(AdminManageGuides);

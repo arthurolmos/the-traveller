@@ -46,13 +46,13 @@ export function AdminManageUsers() {
       try {
         setLoading(true);
 
-        const first = query(
+        const q = query(
           collection(db, 'users'),
           orderBy('firstName'),
           orderBy('lastName')
         );
 
-        const documentSnapshots = await getDocs(first);
+        const documentSnapshots = await getDocs(q);
 
         const users: IUser[] = [];
         documentSnapshots.forEach((doc) => {
